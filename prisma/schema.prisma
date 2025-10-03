@@ -1,0 +1,304 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  MASTER_ADMIN
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  TRIAL
+}
+
+enum SubscriptionPlan {
+  PRO
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  avatarUrl     String?
+  role          UserRole  @default(USER)
+  subscription  Subscription?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts            Account[]
+  sessions            Session[]
+  accountConnections  AccountConnection[]
+  holdings            Holding[]
+  portfolioSnapshots  PortfolioSnapshot[]
+  rebalanceSuggestions RebalanceSuggestion[]
+  userBadges          UserBadge[]
+  referralsGiven      Referral[] @relation("ReferrerUser")
+  referralsReceived   Referral[] @relation("ReferredUser")
+  chessSeasons        ChessSeason[]
+  userBookProgress    UserBookProgress[]
+  auditLogs           AuditLog[]
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model AccountConnection {
+  id                     String   @id @default(cuid())
+  userId                 String
+  provider               String   // 'wallet' | 'exchange' | 'broker' | 'custom'
+  label                  String
+  readOnlyApiKeyEncrypted String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  holdings Holding[]
+
+  @@index([userId])
+}
+
+model Asset {
+  id       String @id @default(cuid())
+  symbol   String @unique
+  name     String
+  category String // 'stock' | 'crypto' | 'commodity' | 'nft' | 'other'
+
+  holdings             Holding[]
+  newsItems            NewsItem[]
+  rebalanceSuggestionsFrom RebalanceSuggestion[] @relation("FromAsset")
+  rebalanceSuggestionsTo   RebalanceSuggestion[] @relation("ToAsset")
+
+  @@index([symbol])
+  @@index([category])
+}
+
+model Holding {
+  id                  String    @id @default(cuid())
+  userId              String
+  assetId             String
+  quantityDecimal     Decimal
+  avgCostDecimal      Decimal
+  sourceConnectionId  String?
+  lastSyncedAt        DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset             Asset              @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  sourceConnection  AccountConnection? @relation(fields: [sourceConnectionId], references: [id])
+
+  @@index([userId])
+  @@index([assetId])
+}
+
+model PortfolioSnapshot {
+  id               String   @id @default(cuid())
+  userId           String
+  totalValueDecimal Decimal
+  healthScoreInt   Int
+  createdAt        DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model NewsItem {
+  id          String   @id @default(cuid())
+  symbol      String?
+  title       String
+  url         String
+  publishedAt DateTime
+  sentiment   String   // 'pos' | 'neg' | 'neutral'
+  source      String
+  createdAt   DateTime @default(now())
+
+  asset Asset? @relation(fields: [symbol], references: [symbol])
+
+  @@index([symbol])
+  @@index([publishedAt])
+  @@index([sentiment])
+}
+
+model RebalanceSuggestion {
+  id                 String   @id @default(cuid())
+  userId             String
+  fromAssetId        String
+  toAssetId          String
+  percentMoveDecimal Decimal
+  rationale          String
+  simulatedOnly      Boolean  @default(true)
+  createdAt          DateTime @default(now())
+
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fromAsset Asset @relation("FromAsset", fields: [fromAssetId], references: [id])
+  toAsset   Asset @relation("ToAsset", fields: [toAssetId], references: [id])
+
+  @@index([userId])
+}
+
+model Badge {
+  id          String @id @default(cuid())
+  slug        String @unique
+  tier        String // 'bronze' | 'silver' | 'gold' | 'platinum'
+  title       String
+  description String
+  points      Int
+
+  userBadges UserBadge[]
+
+  @@index([tier])
+}
+
+model UserBadge {
+  id       String   @id @default(cuid())
+  userId   String
+  badgeId  String
+  earnedAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeId])
+  @@index([userId])
+}
+
+model Referral {
+  id             String   @id @default(cuid())
+  referrerUserId String
+  referredUserId String?
+  status         String   // 'clicked' | 'trial' | 'active'
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  referrer User  @relation("ReferrerUser", fields: [referrerUserId], references: [id], onDelete: Cascade)
+  referred User? @relation("ReferredUser", fields: [referredUserId], references: [id])
+
+  @@index([referrerUserId])
+  @@index([status])
+}
+
+model ChessSeason {
+  id             String    @id @default(cuid())
+  userId         String
+  quarterISO     String    // e.g., "2024-Q1"
+  boardStateJSON String?   @db.Text
+  result         String?   // 'win' | 'loss' | 'draw' | null
+  startedAt      DateTime  @default(now())
+  endedAt        DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quarterISO])
+  @@index([userId])
+}
+
+model Book {
+  id            String  @id @default(cuid())
+  title         String
+  author        String
+  category      String
+  filePathOrUrl String
+  isReadOnly    Boolean @default(true)
+  createdAt     DateTime @default(now())
+
+  userBookProgress UserBookProgress[]
+
+  @@index([category])
+}
+
+model UserBookProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  bookId          String
+  progressPct     Decimal  @default(0)
+  lastLocation    String?
+  highlightsJSON  String?  @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
+  @@index([userId])
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  userId       String
+  action       String
+  metadataJSON String?  @db.Text
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Subscription {
+  id                String             @id @default(cuid())
+  userId            String             @unique
+  plan              SubscriptionPlan   @default(PRO)
+  status            SubscriptionStatus @default(TRIAL)
+  currentPeriodStart DateTime          @default(now())
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean           @default(false)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([currentPeriodEnd])
+}

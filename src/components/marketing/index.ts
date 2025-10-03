@@ -1,0 +1,12 @@
+// Marketing Components Export
+export { HeroComposite } from './hero-composite'
+export { LiveStatsMarquee } from './live-stats-marquee'
+export { ValuePillars } from './value-pillars'
+export { FeatureSections } from './feature-sections'
+export { IntegrationsGrid } from './integrations-grid'
+export { SecurityStrip } from './security-strip'
+export { PricingTable } from './pricing-table'
+export { TestimonialsCarousel } from './testimonials-carousel'
+export { CTASection } from './cta-section'
+export { MarketingNav } from './marketing-nav'
+export { MarketingFooter } from './marketing-footer'
