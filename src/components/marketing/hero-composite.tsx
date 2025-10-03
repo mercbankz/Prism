@@ -62,7 +62,7 @@ export function HeroComposite() {
         
         {/* Large Logo Background */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10">
-          <Logo size="xl" variant="gold" animated={false} />
+          <Logo size="xl" />
         </div>
         
         {/* Additional glow effects */}
@@ -84,7 +84,7 @@ export function HeroComposite() {
               className="inline-flex items-center space-x-2 px-4 py-2 glass-card rounded-full"
               variants={itemVariants}
             >
-              <Logo size="sm" variant="default" animated={false} />
+              <Logo size="sm" />
               <span className="text-sm font-medium text-fg">
                 AI Portfolio Intelligence
               </span>

@@ -31,6 +31,7 @@ interface Message {
   timestamp: Date
   marketData?: MarketData
   dataSources?: string[]
+  suggestions?: string[]
   isLoading?: boolean
 }
 
@@ -148,32 +149,50 @@ export default function AIPage() {
     setIsLoading(true)
 
     try {
-      // Extract symbols from user message
+      // Call the API route
+      const response = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: input,
+          context: portfolioContext
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to get AI response')
+      }
+
+      const data = await response.json()
+      
+      // Extract symbols from user message for market data
       const symbolMatches = input.match(/\b([A-Z]{1,5})\b/g)
       const symbols = symbolMatches || []
       
       let marketData: MarketData | undefined
-      let dataSources: string[] = []
       
       // Fetch market data for mentioned symbols
       if (symbols.length > 0) {
         const symbol = symbols[0] // Focus on first mentioned symbol
         const isCrypto = ['BTC', 'ETH', 'ADA', 'DOT', 'LINK', 'UNI', 'AAVE'].includes(symbol || '')
         
-        marketData = await financialDataService.getMarketData(symbol || '', isCrypto)
-        dataSources = financialDataService.getDataSources()
+        try {
+          marketData = await financialDataService.getMarketData(symbol || '', isCrypto)
+        } catch (error) {
+          console.error('Failed to fetch market data:', error)
+        }
       }
-      
-      // Generate AI response with live data
-      const responseContent = await generateAIResponse(input, marketData)
       
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: responseContent,
+        content: data.response || 'I apologize, but I cannot provide a response at this time.',
         timestamp: new Date(),
         marketData,
-        dataSources
+        dataSources: data.dataSources || [],
+        suggestions: data.suggestions || []
       }
       
       setMessages(prev => [...prev, assistantMessage])
@@ -183,7 +202,7 @@ export default function AIPage() {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "I apologize, but I encountered an error fetching live market data. Please try again in a moment, or ask about general investing concepts.",
+        content: "I apologize, but I encountered an error. Please try again in a moment, or ask about general investing concepts.",
         timestamp: new Date()
       }
       setMessages(prev => [...prev, errorMessage])
@@ -389,6 +408,43 @@ export default function AIPage() {
                                 {message.marketData.sentiment.score.toFixed(2)}
                               </Badge>
                             </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Data Sources */}
+                      {message.dataSources && message.dataSources.length > 0 && message.role === 'assistant' && (
+                        <div className="mt-3 p-2 bg-background/30 rounded border">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Info className="w-3 h-3 text-muted-foreground" />
+                            <span className="text-xs font-medium text-muted-foreground">Data Sources:</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            {message.dataSources.map((source, index) => (
+                              <Badge key={index} variant="secondary" className="text-xs px-1 py-0 h-5">
+                                {source}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Suggestions */}
+                      {message.suggestions && message.suggestions.length > 0 && message.role === 'assistant' && (
+                        <div className="mt-3">
+                          <p className="text-xs text-muted-foreground mb-2">Suggested follow-ups:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {message.suggestions.slice(0, 3).map((suggestion, index) => (
+                              <Button
+                                key={index}
+                                variant="outline"
+                                size="sm"
+                                className="text-xs h-6 px-2"
+                                onClick={() => setInput(suggestion)}
+                              >
+                                {suggestion}
+                              </Button>
+                            ))}
                           </div>
                         </div>
                       )}

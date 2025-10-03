@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { Logo } from "@/components/shared/Logo"
 import {
   BarChart3,
   Bot,
@@ -42,19 +43,7 @@ export function Navigation() {
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           <div className="flex items-center justify-between px-4">
-            <div className="flex items-center space-x-2">
-              <motion.div 
-                className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <BarChart3 className="w-5 h-5 text-white" />
-              </motion.div>
-              <div>
-                <h1 className="text-xl font-bold">Prism</h1>
-                <p className="text-xs text-muted-foreground">AI Portfolio Intelligence</p>
-              </div>
-            </div>
+            <Logo size="md" showText={true} />
             <ThemeToggle />
           </div>
           <div className="mt-8 flex-grow flex flex-col">
@@ -95,12 +84,7 @@ export function Navigation() {
       {/* Mobile menu button */}
       <div className="md:hidden">
         <div className="flex items-center justify-between p-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-white" />
-            </div>
-            <h1 className="text-xl font-bold">Prism</h1>
-          </div>
+          <Logo size="md" showText={true} />
           <div className="flex items-center space-x-2">
             <ThemeToggle />
             <Button

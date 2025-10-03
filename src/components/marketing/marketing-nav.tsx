@@ -54,7 +54,7 @@ export function MarketingNav() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <Logo size="sm" variant="default" animated={false} />
+            <Logo size="sm" />
             <span className="font-heading text-xl font-bold text-fg group-hover:text-primary transition-colors">
               Prism
             </span>

@@ -1,316 +1,166 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+import { ChessGame } from '@/components/chess-game'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { motion } from 'framer-motion'
 import { 
   Crown, 
-  Play, 
-  RotateCcw, 
   Trophy, 
+  Calendar,
   Target,
-  TrendingDown,
   TrendingUp,
-  Minus
-} from "lucide-react"
-import { mapPortfolioToChessPieces, getPieceSymbol, type AssetMapping, type PortfolioHolding } from "@/lib/chess/mapping"
-import { FinancialChessEngine, generateMockMarketEvents, type MarketEvent } from "@/lib/chess/engine"
-import { getCurrentQuarter } from "@/lib/utils"
+  Users
+} from 'lucide-react'
 
-// Mock portfolio data
-const mockPortfolio: PortfolioHolding[] = [
-  { symbol: 'BTC', name: 'Bitcoin', value: 30000, category: 'crypto', volatility: 0.8 },
-  { symbol: 'AAPL', name: 'Apple Inc.', value: 25000, category: 'stock', volatility: 0.3 },
-  { symbol: 'ETH', name: 'Ethereum', value: 20000, category: 'crypto', volatility: 0.7 },
-  { symbol: 'SPY', name: 'SPDR S&P 500', value: 35000, category: 'stock', volatility: 0.2 },
-  { symbol: 'TSLA', name: 'Tesla Inc.', value: 15000, category: 'stock', volatility: 0.6 },
-]
-
-// Mock game history
-const gameHistory = [
-  { quarter: '2024-Q1', result: 'win' as const, score: 1200 },
-  { quarter: '2023-Q4', result: 'loss' as const, score: 800 },
-  { quarter: '2023-Q3', result: 'draw' as const, score: 1000 },
+const seasons = [
+  { id: 1, name: 'Q1 2024: Market Volatility', status: 'completed', winner: 'AI' },
+  { id: 2, name: 'Q2 2024: Tech Rally', status: 'completed', winner: 'User' },
+  { id: 3, name: 'Q3 2024: Crypto Surge', status: 'active', winner: null },
+  { id: 4, name: 'Q4 2024: Year-End Strategy', status: 'upcoming', winner: null },
 ]
 
 export default function ChessPage() {
-  const [gameState, setGameState] = useState<'setup' | 'playing' | 'finished'>('setup')
-  const [assetMappings, setAssetMappings] = useState<AssetMapping[]>([])
-  const [marketEvents, setMarketEvents] = useState<MarketEvent[]>([])
-  const [engine, setEngine] = useState<FinancialChessEngine | null>(null)
-  const [currentQuarter] = useState(getCurrentQuarter())
-  const [gameResult, setGameResult] = useState<'win' | 'loss' | 'draw' | null>(null)
-  const [moveCount, setMoveCount] = useState(0)
+  const currentSeason = seasons[2]
+  const userScore = 7
+  const aiScore = 5
+  const gamesPlayed = 12
 
-  useEffect(() => {
-    // Initialize asset mappings and market events
-    const mappings = mapPortfolioToChessPieces(mockPortfolio)
-    const events = generateMockMarketEvents()
-    
-    setAssetMappings(mappings)
-    setMarketEvents(events)
-    
-    // Create asset position mappings for the engine
-    const assetPositions: Record<string, string> = {}
-    mappings.forEach((mapping, index) => {
-      // Mock positions - in a real implementation, these would be actual board positions
-      assetPositions[mapping.symbol] = `${String.fromCharCode(97 + (index % 8))}${Math.floor(index / 8) + 1}`
-    })
-    
-    const chessEngine = new FinancialChessEngine(
-      'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-      {
-        difficulty: 'medium',
-        marketEvents: events,
-        userAssetMappings: assetPositions
-      }
-    )
-    
-    setEngine(chessEngine)
-  }, [])
-
-  const startGame = () => {
-    setGameState('playing')
-    setGameResult(null)
-    setMoveCount(0)
-    engine?.reset()
-  }
-
-  const resetGame = () => {
-    setGameState('setup')
-    setGameResult(null)
-    setMoveCount(0)
-    engine?.reset()
-  }
-
-  const simulateMove = () => {
-    if (!engine || gameState !== 'playing') return
-    
-    // Simulate a move (in real implementation, this would be user interaction with the board)
-    const legalMoves = engine.getLegalMoves()
-    if (legalMoves.length > 0) {
-      const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)]
-      engine.makeUserMove(randomMove)
-      setMoveCount(prev => prev + 1)
-      
-      // AI responds
-      setTimeout(() => {
-        const aiMove = engine.makeAIMove()
-        if (aiMove) {
-          setMoveCount(prev => prev + 1)
-        }
-        
-        // Check if game is over
-        if (engine.isGameOver()) {
-          const result = engine.getGameResult()
-          setGameResult(result)
-          setGameState('finished')
-        }
-      }, 1000)
-    }
-  }
-
-  const getSentimentIcon = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return <TrendingUp className="w-4 h-4 text-green-500" />
-      case 'negative': return <TrendingDown className="w-4 h-4 text-red-500" />
-      default: return <Minus className="w-4 h-4 text-gray-500" />
-    }
-  }
-
-  const getSentimentColor = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-      case 'negative': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
-    }
+  const handleGameEnd = (result: string) => {
+    console.log('Game ended:', result)
+    // In a real app, this would update user stats and achievements
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold flex items-center gap-2">
-          <Crown className="w-8 h-8 text-primary" />
-          Financial Chess
-        </h1>
-        <p className="text-muted-foreground">
-          Quarterly strategic game where your portfolio becomes the board
-        </p>
-      </div>
+      <motion.div 
+        className="flex items-center justify-between"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div>
+          <h1 className="text-3xl font-bold flex items-center gap-2">
+            <Crown className="w-8 h-8 text-primary" />
+            Financial Chess
+          </h1>
+          <p className="text-muted-foreground">
+            Strategic portfolio management through chess
+          </p>
+        </div>
+      </motion.div>
 
-      {/* Current Season Info */}
-      <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 rounded-lg border">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">Current Season: {currentQuarter}</h2>
-            <p className="text-sm text-muted-foreground">
-              Your portfolio assets are mapped to chess pieces based on their financial characteristics
+      {/* Current Season */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Calendar className="w-5 h-5" />
+              Current Season
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <h3 className="font-semibold">{currentSeason.name}</h3>
+                <div className="flex gap-2">
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    currentSeason.status === 'active' 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-gray-100 text-gray-800'
+                  }`}>
+                    {currentSeason.status}
+                  </span>
+                  {currentSeason.winner && (
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      Winner: {currentSeason.winner}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span>Progress</span>
+                  <span>75%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-primary h-2 rounded-full" style={{ width: '75%' }}></div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span>Games Played</span>
+                  <span>{gamesPlayed}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Days Remaining</span>
+                  <span>23</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Chess Game */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <ChessGame onGameEnd={handleGameEnd} />
+      </motion.div>
+
+      {/* Statistics */}
+      <motion.div 
+        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Your Score</CardTitle>
+            <Trophy className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{userScore}</div>
+            <p className="text-xs text-muted-foreground">
+              +2 from last week
             </p>
-          </div>
-          <div className="text-right">
-            <p className="text-sm text-muted-foreground">Game State</p>
-            <Badge variant={gameState === 'playing' ? 'default' : 'secondary'}>
-              {gameState === 'setup' ? 'Ready to Play' : gameState === 'playing' ? 'In Progress' : 'Completed'}
-            </Badge>
-          </div>
-        </div>
-      </div>
+          </CardContent>
+        </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Game Board Area */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Chess Board Placeholder */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Game Board</CardTitle>
-              <CardDescription>
-                {gameState === 'setup' && "Click 'Start Game' to begin your quarterly chess match"}
-                {gameState === 'playing' && `Move ${moveCount} - Your turn`}
-                {gameState === 'finished' && `Game Over - ${gameResult === 'win' ? 'You Won!' : gameResult === 'loss' ? 'You Lost' : 'Draw'}`}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="chess-board bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 rounded-lg p-8 aspect-square flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">♔</div>
-                  <p className="text-lg font-medium mb-4">
-                    {gameState === 'setup' && 'Ready to Start'}
-                    {gameState === 'playing' && 'Game in Progress'}
-                    {gameState === 'finished' && 'Game Complete'}
-                  </p>
-                  <div className="flex gap-2 justify-center">
-                    {gameState === 'setup' && (
-                      <Button onClick={startGame}>
-                        <Play className="w-4 h-4 mr-2" />
-                        Start Game
-                      </Button>
-                    )}
-                    {gameState === 'playing' && (
-                      <Button onClick={simulateMove}>
-                        Make Move
-                      </Button>
-                    )}
-                    {(gameState === 'playing' || gameState === 'finished') && (
-                      <Button variant="outline" onClick={resetGame}>
-                        <RotateCcw className="w-4 h-4 mr-2" />
-                        Reset
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-              
-              {/* Game Progress */}
-              {gameState === 'playing' && (
-                <div className="mt-4">
-                  <div className="flex justify-between text-sm text-muted-foreground mb-2">
-                    <span>Game Progress</span>
-                    <span>{moveCount} moves</span>
-                  </div>
-                  <Progress value={Math.min((moveCount / 50) * 100, 100)} />
-                </div>
-              )}
-            </CardContent>
-          </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">AI Score</CardTitle>
+            <Target className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{aiScore}</div>
+            <p className="text-xs text-muted-foreground">
+              -1 from last week
+            </p>
+          </CardContent>
+        </Card>
 
-          {/* Asset Mappings */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Your Chess Army</CardTitle>
-              <CardDescription>Portfolio assets mapped to chess pieces</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {assetMappings.map((mapping) => (
-                  <div key={mapping.symbol} className="flex items-center gap-3 p-3 border rounded-lg">
-                    <div className="text-2xl">
-                      {getPieceSymbol(mapping.pieceType, true)}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">{mapping.symbol}</span>
-                        <Badge variant="outline" className="text-xs">
-                          {mapping.pieceType}
-                        </Badge>
-                      </div>
-                      <p className="text-sm text-muted-foreground">{mapping.reasoning}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Market Events */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Market Events</CardTitle>
-              <CardDescription>Events affecting AI strategy</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {marketEvents.map((event, index) => (
-                <div key={index} className="p-3 border rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium">{event.symbol}</span>
-                    <div className="flex items-center gap-1">
-                      {getSentimentIcon(event.sentiment)}
-                      <Badge variant="outline" className={getSentimentColor(event.sentiment)}>
-                        {event.impact}
-                      </Badge>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{event.description}</p>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Game History */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Season History</CardTitle>
-              <CardDescription>Your quarterly performance</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {gameHistory.map((game) => (
-                <div key={game.quarter} className="flex items-center justify-between p-2 border rounded">
-                  <span className="text-sm font-medium">{game.quarter}</span>
-                  <div className="flex items-center gap-2">
-                    {game.result === 'win' && <Trophy className="w-4 h-4 text-yellow-500" />}
-                    {game.result === 'loss' && <Target className="w-4 h-4 text-red-500" />}
-                    {game.result === 'draw' && <Minus className="w-4 h-4 text-gray-500" />}
-                    <Badge 
-                      variant={game.result === 'win' ? 'default' : game.result === 'loss' ? 'destructive' : 'secondary'}
-                    >
-                      {game.result}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Rules */}
-          <Card>
-            <CardHeader>
-              <CardTitle>How It Works</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm">
-              <p>• Your portfolio assets become chess pieces based on their financial characteristics</p>
-              <p>• The AI opponent uses market events to influence its strategy</p>
-              <p>• Negative news makes AI more aggressive against affected pieces</p>
-              <p>• Games are played quarterly with results tracked privately</p>
-              <p>• Learn market dynamics through strategic gameplay</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Games Played</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{gamesPlayed}</div>
+            <p className="text-xs text-muted-foreground">
+              This season
+            </p>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   )
 }
