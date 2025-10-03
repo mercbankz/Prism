@@ -7,15 +7,55 @@ import { Badge } from "@/components/ui/badge"
 import { BarChart3, Shield, Brain, TrendingUp, Users, Zap, ArrowRight, Star, Globe, Activity } from "lucide-react"
 import { Logo } from "@/components/shared/Logo"
 import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+import { useAnimatedCounter } from "@/hooks/useAnimatedCounter"
+
+interface LiveMetrics {
+  portfoliosAnalyzed: number
+  badgesEarned: number
+  booksCompleted: number
+  activeUsers: number
+  lastUpdated: string
+}
 
 export default function HomePage() {
-  // Mock stats for the live metrics section
-  const liveStats = {
-    portfoliosAnalyzed: 61400,
-    badgesEarned: 190500,
-    booksCompleted: 30000,
-    activeUsers: 12500
-  }
+  const [liveMetrics, setLiveMetrics] = useState<LiveMetrics | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Animated counters
+  const portfoliosCounter = useAnimatedCounter(liveMetrics?.portfoliosAnalyzed || 0, { startOnMount: false })
+  const badgesCounter = useAnimatedCounter(liveMetrics?.badgesEarned || 0, { startOnMount: false })
+  const booksCounter = useAnimatedCounter(liveMetrics?.booksCompleted || 0, { startOnMount: false })
+  const usersCounter = useAnimatedCounter(liveMetrics?.activeUsers || 0, { startOnMount: false })
+
+  // Fetch live metrics
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const response = await fetch('/api/metrics')
+        const data = await response.json()
+        setLiveMetrics(data)
+        setIsLoading(false)
+        
+        // Start animations after data is loaded
+        setTimeout(() => {
+          portfoliosCounter.animate()
+          badgesCounter.animate()
+          booksCounter.animate()
+          usersCounter.animate()
+        }, 300)
+      } catch (error) {
+        console.error('Failed to fetch metrics:', error)
+        setIsLoading(false)
+      }
+    }
+
+    fetchMetrics()
+    
+    // Refresh metrics every 30 seconds
+    const interval = setInterval(fetchMetrics, 30000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
@@ -53,7 +93,9 @@ export default function HomePage() {
               AI Portfolio Intelligence.
             </span>
             <br />
-            <span className="bg-gradient-to-r from-primary-2 to-accent bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-yellow-500 bg-clip-text text-transparent drop-shadow-2xl" style={{
+              filter: 'drop-shadow(0 0 20px rgba(59, 130, 246, 0.5)) drop-shadow(0 0 40px rgba(147, 51, 234, 0.3)) drop-shadow(0 0 60px rgba(234, 179, 8, 0.2))'
+            }}>
               Learn. Grow. Win.
             </span>
           </motion.h1>
@@ -91,7 +133,7 @@ export default function HomePage() {
             </Button>
           </motion.div>
 
-          {/* Live Stats Marquee - Spheron style */}
+          {/* Live Stats Marquee - Spheron style with real-time animation */}
           <motion.div 
             className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto"
             initial={{ y: 50, opacity: 0 }}
@@ -100,27 +142,166 @@ export default function HomePage() {
           >
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">
-                {liveStats.portfoliosAnalyzed.toLocaleString()}+
+                {isLoading ? (
+                  <div className="animate-pulse bg-primary/20 rounded h-10 w-24 mx-auto"></div>
+                ) : (
+                  <motion.span
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {portfoliosCounter.value.toLocaleString()}+
+                  </motion.span>
+                )}
               </div>
               <div className="text-sm text-slate-400 uppercase tracking-wider">Portfolios Analyzed</div>
+              {liveMetrics && (
+                <div className="text-xs text-green-400 mt-1">
+                  +{liveMetrics.lastUpdated ? 'Live' : 'Real-time'}
+                </div>
+              )}
             </div>
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-primary-2 mb-2">
-                {liveStats.badgesEarned.toLocaleString()}+
+                {isLoading ? (
+                  <div className="animate-pulse bg-primary-2/20 rounded h-10 w-24 mx-auto"></div>
+                ) : (
+                  <motion.span
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {badgesCounter.value.toLocaleString()}+
+                  </motion.span>
+                )}
               </div>
               <div className="text-sm text-slate-400 uppercase tracking-wider">Badges Earned</div>
+              {liveMetrics && (
+                <div className="text-xs text-green-400 mt-1">
+                  +{liveMetrics.lastUpdated ? 'Live' : 'Real-time'}
+                </div>
+              )}
             </div>
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-accent mb-2">
-                {liveStats.booksCompleted.toLocaleString()}+
+                {isLoading ? (
+                  <div className="animate-pulse bg-accent/20 rounded h-10 w-24 mx-auto"></div>
+                ) : (
+                  <motion.span
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {booksCounter.value.toLocaleString()}+
+                  </motion.span>
+                )}
               </div>
               <div className="text-sm text-slate-400 uppercase tracking-wider">Books Completed</div>
+              {liveMetrics && (
+                <div className="text-xs text-green-400 mt-1">
+                  +{liveMetrics.lastUpdated ? 'Live' : 'Real-time'}
+                </div>
+              )}
             </div>
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-warning mb-2">
-                {liveStats.activeUsers.toLocaleString()}+
+                {isLoading ? (
+                  <div className="animate-pulse bg-warning/20 rounded h-10 w-24 mx-auto"></div>
+                ) : (
+                  <motion.span
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {usersCounter.value.toLocaleString()}+
+                  </motion.span>
+                )}
               </div>
               <div className="text-sm text-slate-400 uppercase tracking-wider">Active Users</div>
+              {liveMetrics && (
+                <div className="text-xs text-green-400 mt-1">
+                  +{liveMetrics.lastUpdated ? 'Live' : 'Real-time'}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* About Prism Section */}
+      <section className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Background with Prism logo watermark */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"></div>
+        <div className="absolute inset-0 opacity-5">
+          <div className="flex items-center justify-center h-full">
+            <Logo size="xl" showText={false} animated={false} />
+          </div>
+        </div>
+        
+        <div className="relative max-w-5xl mx-auto text-center">
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl sm:text-6xl font-black mb-8 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+              About Prism
+            </h2>
+            
+            <div className="max-w-4xl mx-auto">
+              <p className="text-xl sm:text-2xl text-slate-300 leading-relaxed font-light mb-8">
+                Prism is being built to empower investors. Our mission is to give you the tools to learn from mistakes, adapt quickly to market conditions, and always stay three steps ahead.
+              </p>
+              
+              <p className="text-lg sm:text-xl text-slate-400 leading-relaxed font-light mb-12">
+                Unlike traditional platforms, Prism combines AI-powered portfolio intelligence, gamified learning, and real-time insights so you can strategize and grow with confidence. Prism isn&apos;t just analytics—it&apos;s a movement to give power back to the investor.
+              </p>
+            </div>
+
+            {/* Mission highlights */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                  <Brain className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Learn from Mistakes</h3>
+                <p className="text-slate-400">Turn every loss into a lesson with AI-powered insights</p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                  <TrendingUp className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Adapt Quickly</h3>
+                <p className="text-slate-400">Real-time market insights keep you ahead of the curve</p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                  <Shield className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Stay Ahead</h3>
+                <p className="text-slate-400">Three steps ahead with predictive analytics</p>
+              </motion.div>
             </div>
           </motion.div>
         </div>
