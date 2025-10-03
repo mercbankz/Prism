@@ -81,7 +81,7 @@ npm run prisma:seed
 - [ ] Custom domain added to Vercel
 - [ ] DNS records configured
 - [ ] SSL certificate verified
-- [ ] NEXTAUTH_URL updated
+- [ ] 
 
 ### Post-Deployment Verification
 
@@ -149,8 +149,8 @@ npm run prisma:seed
 - Verify endpoint URLs
 
 **Authentication Issues:**
-- Confirm NEXTAUTH_SECRET is set
-- Verify NEXTAUTH_URL matches domain
+- Confirm 
+- Verify 
 - Check OAuth provider settings
 
 **Performance Issues:**

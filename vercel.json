@@ -9,10 +9,7 @@
     }
   },
   "env": {
-    "UPSTASH_REDIS_REST_URL": "@upstash_redis_url",
-    "UPSTASH_REDIS_REST_TOKEN": "@upstash_redis_token",
-    "OPENAI_API_KEY": "@openai_api_key",
-    "ENCRYPTION_KEY": "@encryption_key"
+    "OPENAI_API_KEY": "@openai_api_key"
   },
   "headers": [
     {

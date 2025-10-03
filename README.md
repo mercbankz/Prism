@@ -302,7 +302,7 @@ npx prisma migrate deploy
 
 ### 4. Custom Domain (Optional)
 1. Add your domain in Vercel dashboard
-2. Update `NEXTAUTH_URL` to your custom domain
+2. Update `
 3. Configure DNS records
 
 ## 🧪 Testing
