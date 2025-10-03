@@ -10,6 +10,9 @@ export interface Book {
   highlights: string[]
   bookmarks: number[]
   progress: number
+  readTime: string
+  isBookmarked: boolean
+  coverColor?: string
 }
 
 export const booksData: Book[] = [
@@ -21,6 +24,9 @@ export const booksData: Book[] = [
     description: 'The definitive book on value investing and defensive stock market investing.',
     coverImage: '/images/books/intelligent-investor.jpg',
     pages: 640,
+    readTime: '12 hours',
+    isBookmarked: false,
+    coverColor: 'bg-blue-600',
     content: [
       `# Chapter 1: Investment vs. Speculation
 
@@ -49,2090 +55,1687 @@ The enterprising investor is willing to devote time and care to the selection of
 
 ## Margin of Safety
 
-The concept of margin of safety is central to Graham's philosophy. An investor should never pay more for a stock than its intrinsic value, and preferably should pay significantly less to provide a margin of safety.
-
-The margin of safety protects the investor against:
-- Errors in calculation or judgment
-- Unforeseen market conditions
-- Changes in the company's prospects
-
-## Market Fluctuations
-
-Graham compares the stock market to a voting machine in the short term and a weighing machine in the long term. In the short term, stock prices fluctuate based on sentiment and speculation. In the long term, they reflect the underlying value of the business.
-
-The intelligent investor should take advantage of these fluctuations rather than be controlled by them.`,
+The central concept of investment is the margin of safety. This means buying securities at prices sufficiently below their intrinsic value to provide a cushion against future declines.`,
 
       `# Chapter 2: The Investor and Inflation
 
-Inflation is one of the greatest threats to the long-term investor. Over time, inflation erodes the purchasing power of money, making it essential for investors to maintain real returns above the inflation rate.
+Inflation is the silent thief that erodes purchasing power over time. For investors, understanding inflation and its impact on different asset classes is crucial for long-term wealth preservation.
 
-## Historical Inflation Rates
+## Historical Impact of Inflation
 
-From 1926 to 1970, the average annual inflation rate was approximately 2.5%. However, inflation rates can vary significantly over different periods and can pose serious threats to fixed-income investments.
+From 1913 to 2023, the U.S. dollar has lost approximately 96% of its purchasing power due to inflation. This means that what cost $1 in 1913 would cost about $30 today.
 
-## Protection Against Inflation
+### Inflation's Effect on Different Assets:
 
-### Real Estate
-Real estate has historically provided good protection against inflation, as property values and rental income tend to rise with inflation.
+**Stocks**: Historically, stocks have provided the best protection against inflation over long periods. Companies can raise prices to maintain profit margins, and dividends often increase with inflation.
 
-### Common Stocks
-Over long periods, common stocks have provided better protection against inflation than bonds or cash, as companies can adjust their prices and costs to maintain profitability.
+**Bonds**: Fixed-income securities are particularly vulnerable to inflation. When inflation rises, bond yields must increase to maintain real returns, causing bond prices to fall.
 
-### Gold and Commodities
-While these can provide inflation protection, they don't generate income and can be volatile in the short term.
+**Real Estate**: Property values and rental income typically rise with inflation, making real estate a good hedge against inflation.
 
-## The Investor's Dilemma
+**Commodities**: Direct commodity investments can provide inflation protection, but they're volatile and don't generate income.
 
-The investor faces a dilemma: how to protect against inflation while maintaining safety of principal. The solution lies in a balanced approach that includes both stocks and bonds, with the stock portion providing growth potential and inflation protection.
+## Strategies for Inflationary Periods:
 
-## Modern Portfolio Theory
-
-While Graham's approach predates modern portfolio theory, his emphasis on diversification and risk management aligns well with contemporary thinking about portfolio construction.`,
+1. **Focus on quality companies** with pricing power
+2. **Consider inflation-protected securities** like TIPS
+3. **Diversify internationally** to reduce country-specific inflation risk
+4. **Maintain a portion in real assets** like real estate or commodities`,
 
       `# Chapter 3: A Century of Stock-Market History
 
-Understanding market history is crucial for investors. Graham provides a comprehensive analysis of stock market performance from 1900 to 1970, showing both the opportunities and risks inherent in stock investing.
+Understanding market history helps investors avoid the emotional pitfalls that lead to poor decisions. Market cycles repeat themselves, and those who understand history are better prepared for the future.
 
-## Major Market Cycles
+## Major Market Cycles (1900-2023):
 
-### The 1920s Bull Market
-The period from 1924 to 1929 saw one of the greatest bull markets in history, with the Dow Jones Industrial Average rising from around 100 to over 380.
+**1900-1929**: The Roaring Twenties saw unprecedented speculation and leverage, culminating in the 1929 crash.
 
-### The 1930s Depression
-The crash of 1929 and subsequent depression saw the market fall by nearly 90% from its peak, teaching investors about the importance of valuation and margin of safety.
+**1930-1949**: The Great Depression and WWII created a lost generation for investors, with stocks remaining below 1929 levels until 1954.
 
-### Post-War Recovery
-The period from 1949 to 1970 saw generally strong market performance, with some notable corrections along the way.
+**1950-1966**: Post-war prosperity led to a secular bull market, with the Dow rising from 200 to 1000.
 
-## Lessons from History
+**1967-1982**: High inflation and economic uncertainty created a volatile period with no real gains for buy-and-hold investors.
 
-1. **Markets are cyclical** - Periods of high returns are often followed by periods of low or negative returns
-2. **Valuation matters** - Buying at high valuations leads to poor long-term returns
-3. **Patience is rewarded** - Long-term investors who stay the course tend to do well
-4. **Diversification helps** - Spreading risk across different investments reduces overall portfolio volatility
+**1983-2000**: The greatest bull market in history, driven by falling interest rates, technological innovation, and the internet boom.
 
-## The Role of Psychology
+**2001-2009**: The dot-com crash and financial crisis created significant volatility and losses.
 
-Market history shows that investor psychology plays a crucial role in market movements. Periods of excessive optimism lead to overvaluation, while periods of excessive pessimism lead to undervaluation.
+**2010-2023**: Recovery and growth, driven by low interest rates and technological advancement.
 
-The intelligent investor learns to control their emotions and make decisions based on rational analysis rather than market sentiment.`
+## Key Lessons from History:
+
+1. **Markets are cyclical** - Bull markets are followed by bear markets
+2. **Long-term trends matter** - Despite short-term volatility, stocks have provided superior returns over decades
+3. **Valuation matters** - Buying at high valuations leads to poor long-term returns
+4. **Diversification works** - Spreading risk across assets and time reduces portfolio volatility`,
+
+      `# Chapter 4: General Portfolio Policy
+
+The foundation of successful investing lies in establishing sound portfolio policies that align with your risk tolerance, time horizon, and financial goals.
+
+## Asset Allocation Principles:
+
+### Age-Based Allocation:
+- **100 - Age = Stock Allocation**: A simple rule suggests subtracting your age from 100 to determine stock allocation
+- **Conservative Approach**: Some suggest 110 - age for those with longer life expectancies
+- **Risk-Adjusted**: Consider your risk tolerance, not just age
+
+### Core Asset Classes:
+
+**Stocks (Equities)**: 40-80% depending on age and risk tolerance
+- Provide growth and inflation protection
+- Higher volatility but superior long-term returns
+- Include both domestic and international exposure
+
+**Bonds (Fixed Income)**: 20-60% depending on age and risk tolerance
+- Provide income and stability
+- Lower volatility but modest long-term returns
+- Include government, corporate, and international bonds
+
+**Real Estate**: 5-15% for diversification
+- REITs provide exposure without direct ownership
+- Offers inflation protection and income generation
+
+**Commodities**: 0-10% for inflation hedge
+- Gold, oil, agricultural products
+- High volatility, no income generation
+
+## Rebalancing Strategy:
+
+Regular rebalancing (quarterly or annually) helps maintain target allocations and forces you to buy low and sell high.`,
+
+      `# Chapter 5: The Defensive Investor and Common Stocks
+
+For the defensive investor, common stocks should form the foundation of a balanced portfolio, but selection criteria must be strict and conservative.
+
+## Selection Criteria for Defensive Investors:
+
+### Financial Requirements:
+1. **Large Size**: Minimum market cap of $2 billion
+2. **Strong Financial Condition**: Current ratio of at least 2:1, debt-to-equity below 30%
+3. **Earnings Stability**: Positive earnings for at least 10 consecutive years
+4. **Dividend Record**: Uninterrupted dividends for at least 20 years
+5. **Earnings Growth**: At least 33% growth over the past 10 years
+6. **Reasonable Valuation**: P/E ratio below 15 for average of past 3 years
+
+### Quality Indicators:
+- **Blue-chip companies** with recognizable brands
+- **Market leaders** in their respective industries
+- **Conservative management** with shareholder-friendly policies
+- **Geographic diversification** in revenue sources
+
+## The 50-50 Portfolio:
+
+Graham recommended a simple 50-50 split between stocks and bonds for defensive investors, with rebalancing when either asset class moves more than 5% from target allocation.
+
+### Benefits of the 50-50 Approach:
+- **Simplicity**: Easy to understand and implement
+- **Discipline**: Forces systematic buying and selling
+- **Risk Management**: Limits exposure to any single asset class
+- **Emotional Control**: Reduces the temptation to time the market`,
+
+      `# Chapter 6: Portfolio Policy for the Enterprising Investor
+
+The enterprising investor can achieve superior returns by devoting time and effort to security analysis and portfolio management, but only if done systematically and with proper risk management.
+
+## Advanced Strategies for Enterprising Investors:
+
+### Value Investing Opportunities:
+1. **Net-Net Stocks**: Companies trading below their net current asset value
+2. **Special Situations**: Mergers, spin-offs, liquidations, reorganizations
+3. **Distressed Securities**: Bonds and stocks of companies in financial distress
+4. **Small-Cap Value**: Undervalued smaller companies overlooked by institutions
+
+### Growth Stock Investing:
+- **Reasonable Growth**: Companies growing 15-25% annually, not 50%+ growth stories
+- **Quality Metrics**: Strong balance sheets, consistent profitability, competitive moats
+- **Valuation Discipline**: Never pay more than 25x earnings for growth stocks
+- **Diversification**: Limit individual positions to 5-10% of portfolio
+
+### Sector Rotation:
+- **Economic Cycles**: Overweight sectors that benefit from current economic conditions
+- **Valuation Cycles**: Move between growth and value based on relative valuations
+- **Interest Rate Sensitivity**: Adjust allocation based on interest rate environment
+
+## Risk Management for Enterprising Investors:
+
+1. **Position Sizing**: No single position should exceed 10% of portfolio
+2. **Stop Losses**: Establish clear exit strategies before entering positions
+3. **Portfolio Limits**: Even enterprising investors should maintain 25% in bonds
+4. **Regular Review**: Monthly portfolio review and quarterly strategy assessment`,
+
+      `# Chapter 7: Security Analysis for the Lay Investor
+
+While detailed security analysis is complex, individual investors can apply simplified analytical frameworks to make better investment decisions.
+
+## Simplified Financial Analysis:
+
+### Key Financial Ratios:
+1. **P/E Ratio**: Price-to-earnings should be reasonable (under 20 for most stocks)
+2. **PEG Ratio**: Price-to-earnings growth should be under 1.5
+3. **Debt-to-Equity**: Should be under 50% for most companies
+4. **Current Ratio**: Should be above 1.5 for liquidity
+5. **ROE**: Return on equity should be above 15%
+6. **Dividend Yield**: Should be reasonable (2-4% for most stocks)
+
+### Quality Checks:
+- **Revenue Growth**: Consistent top-line growth over 3-5 years
+- **Profit Margins**: Stable or improving margins
+- **Cash Flow**: Strong operating cash flow relative to earnings
+- **Management**: Experienced leadership with track record of value creation
+
+## Red Flags to Avoid:
+
+1. **Excessive Debt**: Debt-to-equity ratios above 70%
+2. **Declining Margins**: Consistent margin compression
+3. **Accounting Issues**: Restatements, auditor changes, or SEC investigations
+4. **Management Turnover**: Frequent changes in key personnel
+5. **Industry Headwinds**: Structural challenges in the company's sector
+
+## The 15-Point Checklist:
+
+Graham developed a 15-point checklist for stock selection that individual investors can adapt for their own use, focusing on financial strength, earnings stability, and dividend consistency.`
     ],
     highlights: [
-      'The defensive investor should be satisfied with normal annual returns of 8-10%',
-      'Margin of safety is central to Graham\'s investment philosophy',
-      'Markets are voting machines in the short term, weighing machines in the long term'
+      'The margin of safety is the central concept of investment',
+      'Defensive investors should focus on large, stable, dividend-paying companies',
+      'The 50-50 stock-bond allocation provides excellent risk management',
+      'Value investing requires patience and discipline over speculation',
+      'Market history shows that cycles repeat, but long-term trends favor stocks'
     ],
-    bookmarks: [1, 15, 32],
+    bookmarks: [1, 3, 5],
     progress: 45
   },
   {
     id: '2',
-    title: 'A Random Walk Down Wall Street',
-    author: 'Burton Malkiel',
-    category: 'Investment Strategies',
-    description: 'A comprehensive guide to investing that argues for index fund investing and efficient market hypothesis.',
-    coverImage: '/images/books/random-walk.jpg',
-    pages: 464,
-    content: [
-      `# Chapter 1: Firm Foundations and Castles in the Air
-
-## The Firm Foundation Theory
-
-The firm foundation theory holds that each investment instrument has an intrinsic value that can be determined by careful analysis of present conditions and future prospects. When market prices fall below this intrinsic value, buying opportunities emerge.
-
-### Determinants of Stock Value
-
-1. **Expected Growth Rate** - How fast earnings and dividends are expected to grow
-2. **Expected Dividend Payout** - The portion of earnings paid out as dividends
-3. **Risk Level** - The degree of uncertainty surrounding expected returns
-4. **Interest Rates** - The level of interest rates in the economy
-
-## The Castle in the Air Theory
-
-The castle in the air theory focuses on the psychology of investors rather than intrinsic value. Investors try to anticipate what the average investor will think and buy accordingly.
-
-### Technical Analysis
-
-Technical analysts believe that stock prices move in trends and that these trends can be identified and exploited for profit. They study:
-- Chart patterns
-- Volume analysis
-- Moving averages
-- Support and resistance levels
-
-## The Efficient Market Hypothesis
-
-Malkiel argues that markets are largely efficient, meaning that stock prices quickly incorporate all available information. This makes it extremely difficult to consistently beat the market through either fundamental or technical analysis.
-
-### Three Forms of Market Efficiency
-
-1. **Weak Form** - Past price and volume data cannot be used to predict future prices
-2. **Semi-Strong Form** - Publicly available information is already reflected in stock prices
-3. **Strong Form** - All information, including insider information, is reflected in stock prices
-
-## Implications for Investors
-
-If markets are efficient, then:
-- Stock picking is largely futile
-- Market timing is extremely difficult
-- Index funds should outperform actively managed funds over time
-- The best strategy is to buy and hold a diversified portfolio`,
-
-      `# Chapter 2: The Madness of Crowds
-
-## Historical Bubbles
-
-Malkiel examines several historical investment bubbles to illustrate the dangers of speculative investing:
-
-### The Tulip Bulb Craze (1634-1637)
-Dutch tulip bulbs became objects of frenzied speculation, with prices reaching extraordinary levels before collapsing dramatically.
-
-### The South Sea Bubble (1720)
-The South Sea Company's stock rose from £128 to £1,050 in a matter of months before collapsing to £175.
-
-### The Roaring Twenties and Crash
-The stock market boom of the 1920s was followed by the devastating crash of 1929 and the Great Depression.
-
-## Common Characteristics of Bubbles
-
-1. **Displacement** - A new technology or development captures investors' imaginations
-2. **Boom** - Prices rise, attracting more investors and media attention
-3. **Euphoria** - Everyone wants to participate, leading to excessive speculation
-4. **Profit Taking** - Smart investors begin to sell
-5. **Panic** - Prices collapse as everyone tries to sell at once
-
-## The Internet Bubble
-
-The late 1990s saw an enormous bubble in internet and technology stocks. Companies with no profits and questionable business models reached astronomical valuations before collapsing in 2000-2002.
-
-## Lessons for Investors
-
-1. **Avoid the herd mentality** - When everyone is buying, it's often time to be cautious
-2. **Focus on fundamentals** - Don't get caught up in speculative frenzies
-3. **Maintain diversification** - Don't put all your eggs in one basket
-4. **Think long-term** - Short-term market movements are largely unpredictable`
-    ],
-    highlights: [
-      'Markets are largely efficient, making it difficult to consistently beat them',
-      'Historical bubbles show the dangers of speculative investing',
-      'Index funds should outperform actively managed funds over time'
-    ],
-    bookmarks: [8, 22, 45],
-    progress: 30
-  },
-  {
-    id: '3',
-    title: 'Common Stocks and Uncommon Profits',
-    author: 'Philip Fisher',
-    category: 'Investment Strategies',
-    description: 'A guide to growth investing and finding outstanding companies for long-term investment.',
-    coverImage: '/images/books/common-stocks.jpg',
-    pages: 320,
-    content: [
-      `# Chapter 1: Clues from the Past
-
-## The Growth Stock Philosophy
-
-Philip Fisher pioneered the concept of growth investing, focusing on companies with superior growth prospects rather than just cheap valuations. His approach emphasizes finding companies that can grow earnings significantly over long periods.
-
-## The Fifteen Points
-
-Fisher developed a comprehensive checklist of fifteen points to evaluate growth companies:
-
-### Management and Business Quality
-1. Does the company have products or services with sufficient market potential to make possible a sizable increase in sales for at least several years?
-2. Does the management have a determination to continue to develop products or processes that will still further increase total sales potentials when the growth potentials of currently attractive product lines have largely been exploited?
-3. How effective are the company's research and development efforts in relation to its size?
-4. Does the company have an above-average sales organization?
-5. Does the company have a worthwhile profit margin?
-6. What is the company doing to maintain or improve profit margins?
-7. Does the company have outstanding labor and personnel relations?
-8. Does the company have outstanding executive relations?
-9. Does the company have depth to its management?
-10. How good are the company's cost analysis and accounting controls?
-11. Are there other aspects of the business, somewhat peculiar to the industry involved, that will give the investor important clues as to how outstanding the company may be in relation to its competition?
-12. Does the company have a short-range or long-range outlook in regard to profits?
-13. In the foreseeable future will the growth of the company require sufficient equity financing so that the larger number of shares then outstanding will largely cancel the existing stockholders' benefit from this anticipated growth?
-14. Does the management talk freely to investors about its affairs when things are going well but "clam up" when troubles and disappointments occur?
-15. Does the company have a management of unquestionable integrity?`,
-
-      `# Chapter 2: What to Buy
-
-## The Scuttlebutt Method
-
-Fisher emphasizes the importance of gathering information from multiple sources, including:
-- Customers
-- Suppliers
-- Competitors
-- Former employees
-- Industry experts
-
-## Characteristics of Outstanding Companies
-
-### Superior Products or Services
-The company must have products or services that are significantly better than competitors' offerings.
-
-### Strong Market Position
-A dominant or growing market share indicates competitive advantages.
-
-### Excellent Management
-Management must be capable, honest, and focused on long-term value creation.
-
-### Research and Development
-Continuous innovation is essential for maintaining competitive advantages.
-
-## When to Buy
-
-Fisher recommends buying when:
-- The company meets most or all of the fifteen points
-- The stock is reasonably priced relative to growth prospects
-- The investor has thoroughly researched the company
-- The investor is prepared to hold for the long term
-
-## When to Sell
-
-Fisher's selling criteria are much more restrictive than his buying criteria:
-- The company no longer meets the fifteen points
-- A much better opportunity is found
-- The original analysis was wrong
-
-He specifically warns against selling because of:
-- Market fluctuations
-- Short-term earnings disappointments
-- Temporary problems`
-    ],
-    highlights: [
-      'Focus on companies with superior growth prospects for long-term investment',
-      'The scuttlebutt method involves gathering information from multiple sources',
-      'Selling criteria should be much more restrictive than buying criteria'
-    ],
-    bookmarks: [5, 18, 28],
-    progress: 60
-  },
-  {
-    id: '4',
-    title: 'Artificial Intelligence & Wealth Creation',
-    author: 'Prism Education Team',
-    category: 'AI & Future of Work',
-    description: 'How artificial intelligence is revolutionizing portfolio management and creating new investment opportunities.',
-    coverImage: '/images/books/ai-wealth.jpg',
-    pages: 280,
-    content: [
-      `# Chapter 1: The AI Revolution in Finance
-
-## Introduction to AI in Investing
-
-Artificial Intelligence is transforming the financial industry at an unprecedented pace. From algorithmic trading to robo-advisors, AI is reshaping how we invest, manage portfolios, and make financial decisions.
-
-## Key AI Technologies in Finance
-
-### Machine Learning
-Machine learning algorithms can analyze vast amounts of data to identify patterns and make predictions about market movements, company performance, and economic trends.
-
-### Natural Language Processing
-NLP enables AI systems to analyze news articles, earnings calls, social media sentiment, and other text data to gauge market sentiment and identify investment opportunities.
-
-### Computer Vision
-AI can analyze satellite imagery, store traffic, and other visual data to assess company performance and economic activity.
-
-### Robo-Advisors
-Automated investment platforms use AI to create and manage diversified portfolios based on individual risk tolerance and investment goals.
-
-## Benefits of AI in Investing
-
-1. **Data Processing** - AI can analyze more data than human analysts ever could
-2. **Speed** - AI can react to market changes in milliseconds
-3. **Objectivity** - AI removes emotional bias from investment decisions
-4. **Cost Efficiency** - AI-powered solutions are often more affordable than human advisors
-5. **24/7 Monitoring** - AI can monitor markets and portfolios continuously
-
-## Challenges and Risks
-
-### Overfitting
-AI models may perform well on historical data but fail in real-world conditions.
-
-### Market Efficiency
-As AI becomes more widespread, it may reduce the opportunities for outperformance.
-
-### Regulatory Concerns
-AI in finance raises questions about transparency, accountability, and regulation.
-
-### Job Displacement
-AI may replace some traditional financial services jobs, though it may also create new opportunities.`,
-
-      `# Chapter 2: AI-Powered Portfolio Management
-
-## Modern Portfolio Theory Enhanced
-
-AI can improve upon traditional portfolio theory by:
-- Analyzing more complex relationships between assets
-- Incorporating alternative data sources
-- Adapting to changing market conditions more quickly
-- Considering individual investor preferences more precisely
-
-## Risk Management with AI
-
-### Dynamic Risk Assessment
-AI can continuously assess portfolio risk and adjust allocations based on changing market conditions.
-
-### Stress Testing
-AI can simulate various market scenarios to test portfolio resilience.
-
-### Fraud Detection
-AI can identify unusual patterns that may indicate fraudulent activity.
-
-## Personalization
-
-AI enables highly personalized investment strategies that consider:
-- Individual risk tolerance
-- Investment timeline
-- Financial goals
-- Tax situation
-- Market preferences
-
-## Real-World Applications
-
-### Wealthfront
-Uses AI to create tax-efficient, diversified portfolios and provide financial planning advice.
-
-### Betterment
-Employs AI for portfolio optimization, tax-loss harvesting, and goal-based investing.
-
-### BlackRock's Aladdin
-Uses AI for risk management, portfolio construction, and investment research.
-
-## The Future of AI in Portfolio Management
-
-As AI technology continues to advance, we can expect:
-- More sophisticated risk models
-- Better integration of alternative data
-- Improved personalization
-- Enhanced regulatory compliance
-- Greater transparency and explainability`
-    ],
-    highlights: [
-      'AI can analyze vast amounts of data to identify investment opportunities',
-      'Robo-advisors use AI to create personalized investment strategies',
-      'AI enables 24/7 portfolio monitoring and risk management'
-    ],
-    bookmarks: [3, 12, 25],
-    progress: 20
-  },
-  {
-    id: '5',
-    title: 'AI for Beginners: How Artificial Intelligence Works',
-    author: 'Prism Education Team',
-    category: 'AI & Future of Work',
-    description: 'A comprehensive introduction to artificial intelligence concepts and applications in business and finance.',
-    coverImage: '/images/books/ai-beginners.jpg',
-    pages: 240,
-    content: [
-      `# Chapter 1: What is Artificial Intelligence?
-
-## Definition and Scope
-
-Artificial Intelligence (AI) refers to the simulation of human intelligence in machines that are programmed to think and learn like humans. The term may also be applied to any machine that exhibits traits associated with a human mind such as learning and problem-solving.
-
-## Types of AI
-
-### Narrow AI (Weak AI)
-Narrow AI is designed to perform a narrow task (e.g., facial recognition or internet searches). Most AI in use today is narrow AI.
-
-### General AI (Strong AI)
-General AI would have the ability to understand, learn, and apply knowledge in different contexts, similar to human intelligence.
-
-### Super AI
-Super AI would surpass human intelligence in all areas and would be capable of improving itself.
-
-## Machine Learning
-
-Machine learning is a subset of AI that enables computers to learn and improve from experience without being explicitly programmed.
-
-### Supervised Learning
-Learning with labeled training data to make predictions about new, unseen data.
-
-### Unsupervised Learning
-Finding hidden patterns in data without labeled examples.
-
-### Reinforcement Learning
-Learning through interaction with an environment, receiving rewards or penalties for actions.
-
-## Deep Learning
-
-Deep learning is a subset of machine learning that uses neural networks with multiple layers to model and understand complex patterns in data.
-
-### Neural Networks
-Inspired by the human brain, neural networks consist of interconnected nodes (neurons) that process information.
-
-### Applications in Finance
-- Algorithmic trading
-- Credit scoring
-- Fraud detection
-- Portfolio optimization
-- Risk assessment`,
-
-      `# Chapter 2: AI Applications in Business
-
-## Customer Service
-
-AI-powered chatbots and virtual assistants can handle customer inquiries 24/7, providing instant responses and improving customer satisfaction.
-
-## Marketing and Sales
-
-### Personalization
-AI can analyze customer data to provide personalized product recommendations and marketing messages.
-
-### Predictive Analytics
-AI can predict customer behavior, helping businesses target their marketing efforts more effectively.
-
-## Operations
-
-### Supply Chain Optimization
-AI can optimize supply chains by predicting demand, managing inventory, and identifying bottlenecks.
-
-### Quality Control
-Computer vision AI can inspect products for defects more accurately and consistently than human inspectors.
-
-## Human Resources
-
-### Recruitment
-AI can screen resumes, conduct initial interviews, and match candidates to job requirements.
-
-### Performance Analysis
-AI can analyze employee performance data to identify patterns and provide insights for improvement.
-
-## Financial Services
-
-### Trading
-AI algorithms can execute trades at optimal times based on market analysis.
-
-### Risk Management
-AI can assess credit risk, market risk, and operational risk more accurately than traditional methods.
-
-### Compliance
-AI can monitor transactions for suspicious activity and ensure regulatory compliance.`
-    ],
-    highlights: [
-      'AI refers to machines that can think and learn like humans',
-      'Machine learning enables computers to learn from experience',
-      'AI is transforming business operations across all industries'
-    ],
-    bookmarks: [7, 15, 32],
-    progress: 35
-  },
-  {
-    id: '6',
-    title: 'Learn to Code: A Beginner\'s Guide to Python & JavaScript',
-    author: 'Prism Education Team',
-    category: 'AI & Future of Work',
-    description: 'Master the fundamentals of programming with Python and JavaScript to unlock career opportunities in tech and finance.',
-    coverImage: '/images/books/learn-to-code.jpg',
-    pages: 320,
-    content: [
-      `# Chapter 1: Introduction to Programming
-
-## What is Programming?
-
-Programming is the process of creating instructions for computers to follow. These instructions, called code, tell the computer how to perform specific tasks.
-
-## Why Learn to Code?
-
-### Career Opportunities
-- Software development
-- Data science
-- Web development
-- Mobile app development
-- AI and machine learning
-- Financial technology
-
-### Problem-Solving Skills
-Programming teaches logical thinking and problem-solving skills that are valuable in any career.
-
-### Automation
-Programming allows you to automate repetitive tasks, saving time and reducing errors.
-
-## Getting Started
-
-### Choose a Programming Language
-For beginners, we recommend starting with Python because:
-- Simple and readable syntax
-- Versatile applications
-- Strong community support
-- Extensive libraries
-
-### Set Up Your Development Environment
-1. Install Python from python.org
-2. Choose a code editor (VS Code, PyCharm, or Sublime Text)
-3. Learn to use the command line/terminal
-
-## Your First Program
-
-\`\`\`python
-# Hello, World!
-print("Hello, World!")
-\`\`\`
-
-This simple program demonstrates the basic structure of Python code.`,
-
-      `# Chapter 2: Python Fundamentals
-
-## Variables and Data Types
-
-### Variables
-Variables store data that can be used and modified in your program.
-
-\`\`\`python
-# String
-name = "Alice"
-age = 25
-height = 5.6
-is_student = True
-
-print(name, age, height, is_student)
-\`\`\`
-
-### Data Types
-- **String**: Text data (e.g., "Hello")
-- **Integer**: Whole numbers (e.g., 42)
-- **Float**: Decimal numbers (e.g., 3.14)
-- **Boolean**: True or False values
-
-## Control Structures
-
-### Conditional Statements
-\`\`\`python
-age = 18
-
-if age >= 18:
-    print("You are an adult")
-elif age >= 13:
-    print("You are a teenager")
-else:
-    print("You are a child")
-\`\`\`
-
-### Loops
-\`\`\`python
-# For loop
-for i in range(5):
-    print(f"Number: {i}")
-
-# While loop
-count = 0
-while count < 3:
-    print(f"Count: {count}")
-    count += 1
-\`\`\`
-
-## Functions
-Functions are reusable blocks of code that perform specific tasks.
-
-\`\`\`python
-def greet(name):
-    return f"Hello, {name}!"
-
-message = greet("Alice")
-print(message)
-\`\`\``,
-
-      `# Chapter 3: JavaScript for Web Development
-
-## What is JavaScript?
-
-JavaScript is a programming language that enables interactive web pages. It's essential for modern web development.
-
-## JavaScript Basics
-
-### Variables
-\`\`\`javascript
-// Using let (modern way)
-let name = "Alice";
-let age = 25;
-
-// Using const for constants
-const PI = 3.14159;
-
-// Using var (older way, not recommended)
-var oldVariable = "deprecated";
-\`\`\`
-
-### Functions
-\`\`\`javascript
-function greet(name) {
-    return \`Hello, \${name}!\`;
-}
-
-// Arrow function (modern syntax)
-const greetArrow = (name) => \`Hello, \${name}!\`;
-
-console.log(greet("Alice"));
-\`\`\`
-
-### DOM Manipulation
-\`\`\`javascript
-// Get element by ID
-const button = document.getElementById('myButton');
-
-// Add event listener
-button.addEventListener('click', function() {
-    alert('Button clicked!');
-});
-
-// Change element content
-const heading = document.getElementById('title');
-heading.textContent = 'New Title';
-\`\`\``
-    ],
-    highlights: [
-      'Programming teaches logical thinking and problem-solving skills',
-      'Python is recommended for beginners due to its simple syntax',
-      'JavaScript is essential for modern web development'
-    ],
-    bookmarks: [4, 18, 28],
-    progress: 25
-  },
-  {
-    id: '7',
-    title: 'Entrepreneurship 101: From Idea to Business',
-    author: 'Prism Education Team',
-    category: 'Modern Finance',
-    description: 'Learn the fundamentals of starting and growing a successful business in the modern economy.',
-    coverImage: '/images/books/entrepreneurship.jpg',
-    pages: 280,
-    content: [
-      `# Chapter 1: The Entrepreneurial Mindset
-
-## What is Entrepreneurship?
-
-Entrepreneurship is the process of creating, launching, and running a new business venture. It involves identifying opportunities, taking risks, and creating value in the marketplace.
-
-## Characteristics of Successful Entrepreneurs
-
-### Vision and Passion
-Successful entrepreneurs have a clear vision of what they want to achieve and are passionate about their mission.
-
-### Risk Tolerance
-Entrepreneurs must be comfortable with uncertainty and willing to take calculated risks.
-
-### Resilience
-Building a business involves setbacks and failures. Entrepreneurs must be able to bounce back and learn from mistakes.
-
-### Adaptability
-The business environment is constantly changing. Entrepreneurs must be able to adapt their strategies and approaches.
-
-### Leadership Skills
-Entrepreneurs must be able to inspire and lead teams to achieve common goals.
-
-## The Entrepreneurial Process
-
-### 1. Opportunity Recognition
-Identifying gaps in the market or problems that need solving.
-
-### 2. Market Research
-Understanding customer needs, competition, and market dynamics.
-
-### 3. Business Planning
-Creating a comprehensive plan for how the business will operate and grow.
-
-### 4. Resource Acquisition
-Securing funding, talent, and other resources needed to launch the business.
-
-### 5. Launch and Growth
-Executing the business plan and scaling the operation.
-
-## Types of Entrepreneurship
-
-### Small Business Entrepreneurship
-Starting and running small, local businesses like restaurants, retail stores, or service providers.
-
-### Scalable Startup Entrepreneurship
-Building businesses with high growth potential that can scale nationally or globally.
-
-### Social Entrepreneurship
-Creating businesses that address social or environmental problems while generating profit.
-
-### Corporate Entrepreneurship
-Innovating within existing companies to create new products, services, or business models.`,
-
-      `# Chapter 2: From Idea to Business Plan
-
-## Validating Your Business Idea
-
-### Problem-Solution Fit
-Your business idea should solve a real problem that people are willing to pay to have solved.
-
-### Market Validation
-Test your idea with potential customers before investing significant resources.
-
-### Competitive Analysis
-Understand your competition and how your solution differs or improves upon existing options.
-
-## Components of a Business Plan
-
-### Executive Summary
-A brief overview of your business, including your mission, key products/services, and financial projections.
-
-### Company Description
-Detailed information about your company, including its legal structure, location, and history.
-
-### Market Analysis
-Research on your target market, including customer demographics, market size, and growth potential.
-
-### Organization and Management
-Information about your team, organizational structure, and management approach.
-
-### Service or Product Line
-Description of your products or services, including their benefits and competitive advantages.
-
-### Marketing and Sales
-Your strategy for reaching customers and generating sales.
-
-### Funding Request
-If you're seeking investment, include information about how much funding you need and how you'll use it.
-
-### Financial Projections
-Projections for revenue, expenses, and profitability over the next 3-5 years.
-
-## Funding Options
-
-### Bootstrapping
-Using personal savings and revenue to fund the business.
-
-### Friends and Family
-Raising money from personal networks.
-
-### Angel Investors
-Individual investors who provide capital in exchange for equity.
-
-### Venture Capital
-Professional investment firms that provide larger amounts of capital for high-growth businesses.
-
-### Bank Loans
-Traditional debt financing from banks and other financial institutions.
-
-### Crowdfunding
-Raising money from a large number of people through online platforms.`
-    ],
-    highlights: [
-      'Entrepreneurship involves identifying opportunities and creating value',
-      'Successful entrepreneurs have vision, passion, and resilience',
-      'Market validation is crucial before investing significant resources'
-    ],
-    bookmarks: [6, 22, 35],
-    progress: 40
-  },
-  {
-    id: '8',
-    title: 'Real Estate Investing: Building Wealth Through Property',
-    author: 'Prism Education Team',
-    category: 'Modern Finance',
-    description: 'A comprehensive guide to real estate investing strategies and wealth building through property ownership.',
-    coverImage: '/images/books/real-estate.jpg',
-    pages: 300,
-    content: [
-      `# Chapter 1: Introduction to Real Estate Investing
-
-## Why Invest in Real Estate?
-
-Real estate has long been considered one of the most reliable ways to build wealth. Here are the key benefits:
-
-### Appreciation
-Property values tend to increase over time, providing capital gains.
-
-### Cash Flow
-Rental properties can generate monthly income through rent payments.
-
-### Tax Benefits
-Real estate investors enjoy various tax deductions and benefits.
-
-### Inflation Hedge
-Real estate often keeps pace with or exceeds inflation.
-
-### Leverage
-You can control a valuable asset with a relatively small down payment.
-
-## Types of Real Estate Investments
-
-### Residential Properties
-- Single-family homes
-- Multi-family properties (duplexes, triplexes, fourplexes)
-- Condominiums and townhouses
-
-### Commercial Properties
-- Office buildings
-- Retail spaces
-- Industrial properties
-- Warehouses
-
-### Specialized Properties
-- Hotels and hospitality
-- Self-storage facilities
-- Mobile home parks
-- Senior living facilities
-
-## Investment Strategies
-
-### Buy and Hold
-Purchase properties to rent out for long-term appreciation and cash flow.
-
-### Fix and Flip
-Buy distressed properties, renovate them, and sell for a profit.
-
-### Wholesaling
-Find discounted properties and assign the contract to other investors for a fee.
-
-### Real Estate Investment Trusts (REITs)
-Invest in publicly traded companies that own and manage real estate.
-
-### Real Estate Crowdfunding
-Pool money with other investors to buy larger properties.`,
-
-      `# Chapter 2: Analyzing Investment Properties
-
-## Key Metrics for Real Estate Investing
-
-### Cash Flow
-Monthly rental income minus all expenses (mortgage, taxes, insurance, maintenance, vacancy allowance).
-
-### Cash-on-Cash Return
-Annual cash flow divided by the initial cash investment.
-
-### Cap Rate (Capitalization Rate)
-Net operating income divided by the property's purchase price.
-
-### Gross Rent Multiplier
-Purchase price divided by annual gross rental income.
-
-### Return on Investment (ROI)
-Total return (cash flow + appreciation) divided by total investment.
-
-## Property Analysis Process
-
-### 1. Location Analysis
-- Neighborhood quality and trends
-- Proximity to amenities
-- School district quality
-- Crime rates
-- Future development plans
-
-### 2. Financial Analysis
-- Purchase price and financing terms
-- Rental income potential
-- Operating expenses
-- Maintenance and repair costs
-- Tax implications
-
-### 3. Market Analysis
-- Local market trends
-- Comparable property sales
-- Rental market conditions
-- Economic indicators
-
-### 4. Physical Inspection
-- Property condition
-- Required repairs or improvements
-- Maintenance history
-- Systems and appliances
-
-## Due Diligence Checklist
-
-- Verify property ownership and title
-- Review property tax records
-- Check for liens or encumbrances
-- Inspect all major systems
-- Review rental history and current leases
-- Analyze comparable properties
-- Calculate all financial metrics
-- Consider exit strategies`,
-
-      `# Chapter 3: Financing Real Estate Investments
-
-## Traditional Financing Options
-
-### Conventional Loans
-- 20-25% down payment typically required
-- Good credit score needed (680+)
-- Lower interest rates than other options
-
-### FHA Loans
-- Lower down payment requirements (3.5%)
-- More lenient credit requirements
-- Limited to owner-occupied properties
-
-### VA Loans
-- Available to veterans and active military
-- No down payment required
-- No private mortgage insurance
-
-## Alternative Financing Methods
-
-### Private Money Lenders
-- Individuals who lend money for real estate investments
-- Higher interest rates but faster approval
-- More flexible terms
-
-### Hard Money Lenders
-- Short-term loans for fix-and-flip projects
-- Higher interest rates and fees
-- Based on property value, not borrower credit
-
-### Seller Financing
-- Property owner provides financing
-- Negotiable terms
-- Can be beneficial for both parties
-
-### Partnerships
-- Joint ventures with other investors
-- Shared risk and reward
-- Access to larger deals
-
-## Creative Financing Strategies
-
-### Subject-To Deals
-Taking over existing mortgage payments without assuming the loan.
-
-### Lease Options
-Renting with the option to purchase at a later date.
-
-### Wraparound Mortgages
-Creating a new mortgage that "wraps around" an existing mortgage.
-
-### Wholesaling
-Finding deals and assigning contracts to other investors.
-
-## Building a Real Estate Portfolio
-
-### Start Small
-Begin with single-family homes or small multi-family properties.
-
-### Diversify
-Invest in different types of properties and markets.
-
-### Reinvest Profits
-Use cash flow and appreciation to acquire additional properties.
-
-### Build Systems
-Create processes for finding, analyzing, and managing properties.
-
-### Network
-Build relationships with other investors, agents, and service providers.`
-    ],
-    highlights: [
-      'Real estate provides appreciation, cash flow, and tax benefits',
-      'Key metrics include cash flow, cap rate, and ROI',
-      'Due diligence is crucial before purchasing any investment property'
-    ],
-    bookmarks: [8, 24, 42],
-    progress: 55
-  },
-  {
-    id: '9',
-    title: 'Advanced Investing: Hedge Funds, Options, and Beyond',
-    author: 'Prism Education Team',
-    category: 'Investment Strategies',
-    description: 'Explore advanced investment strategies including hedge funds, options trading, and alternative investments.',
-    coverImage: '/images/books/advanced-investing.jpg',
-    pages: 350,
-    content: [
-      `# Chapter 1: Hedge Funds and Alternative Investments
-
-## What are Hedge Funds?
-
-Hedge funds are private investment partnerships that use sophisticated strategies to generate returns. They are typically available only to accredited investors and have fewer regulatory restrictions than mutual funds.
-
-## Common Hedge Fund Strategies
-
-### Long/Short Equity
-Taking long positions in undervalued stocks and short positions in overvalued stocks.
-
-### Market Neutral
-Balancing long and short positions to minimize market exposure while capturing relative value.
-
-### Event-Driven
-Investing based on corporate events like mergers, acquisitions, bankruptcies, or restructurings.
-
-### Global Macro
-Making investment decisions based on economic and political trends across countries.
-
-### Distressed Debt
-Investing in the debt of companies in financial distress, often with the goal of converting to equity.
-
-### Quantitative Strategies
-Using mathematical models and algorithms to identify trading opportunities.
-
-## Alternative Investments
-
-### Private Equity
-Investing in private companies, often with the goal of improving operations and selling for a profit.
-
-### Venture Capital
-Providing funding to early-stage companies with high growth potential.
-
-### Real Estate Investment Trusts (REITs)
-Publicly traded companies that own and manage real estate properties.
-
-### Commodities
-Investing in physical commodities like gold, oil, or agricultural products.
-
-### Cryptocurrencies
-Digital currencies that use blockchain technology for secure transactions.
-
-### Art and Collectibles
-Investing in valuable art, antiques, or other collectible items.`,
-
-      `# Chapter 2: Options Trading Fundamentals
-
-## What are Options?
-
-Options are financial derivatives that give the holder the right, but not the obligation, to buy or sell an underlying asset at a specified price within a certain time period.
-
-## Basic Option Concepts
-
-### Call Options
-Give the holder the right to buy an asset at a specified price.
-
-### Put Options
-Give the holder the right to sell an asset at a specified price.
-
-### Strike Price
-The price at which the option can be exercised.
-
-### Expiration Date
-The last date on which the option can be exercised.
-
-### Premium
-The price paid for the option.
-
-## Option Strategies
-
-### Covered Calls
-Selling call options on stocks you already own to generate additional income.
-
-### Protective Puts
-Buying put options to protect against downside risk in your portfolio.
-
-### Straddles
-Buying both a call and put option with the same strike price and expiration.
-
-### Spreads
-Combining multiple options to limit risk and cost.
-
-### Iron Condors
-Complex strategies involving four different options to profit from low volatility.
-
-## Risk Management in Options
-
-### Position Sizing
-Only risk a small percentage of your portfolio on any single options trade.
-
-### Stop Losses
-Set predetermined exit points to limit losses.
-
-### Diversification
-Don't put all your options trades in the same underlying asset or strategy.
-
-### Education
-Continuously learn about options and practice with paper trading before risking real money.`,
-
-      `# Chapter 3: Advanced Portfolio Management
-
-## Modern Portfolio Theory (MPT)
-
-MPT is a framework for constructing portfolios that maximize expected return for a given level of risk.
-
-### Key Concepts
-- Diversification reduces risk
-- Risk and return are related
-- Efficient frontier represents optimal risk-return combinations
-
-### Limitations
-- Assumes normal distribution of returns
-- Requires accurate estimates of expected returns and correlations
-- Doesn't account for changing market conditions
-
-## Alternative Risk Models
-
-### Value at Risk (VaR)
-A statistical measure of potential losses over a specific time period.
-
-### Conditional Value at Risk (CVaR)
-The expected loss beyond the VaR threshold.
-
-### Monte Carlo Simulation
-Using random sampling to model portfolio performance under various scenarios.
-
-## Dynamic Asset Allocation
-
-### Tactical Asset Allocation
-Adjusting portfolio weights based on short-term market conditions.
-
-### Strategic Asset Allocation
-Setting long-term target weights based on risk tolerance and investment objectives.
-
-### Risk Parity
-Allocating risk equally across different asset classes rather than equally across dollar amounts.
-
-## Alternative Beta Strategies
-
-### Low Volatility
-Investing in stocks with below-average volatility.
-
-### Momentum
-Investing in stocks that have performed well recently.
-
-### Quality
-Focusing on companies with strong fundamentals and profitability.
-
-### Value
-Investing in undervalued stocks based on fundamental metrics.
-
-## ESG Investing
-
-### Environmental, Social, and Governance
-Considering environmental, social, and governance factors in investment decisions.
-
-### Impact Investing
-Investing with the intention of generating positive social or environmental impact alongside financial returns.
-
-### Sustainable Investing
-Integrating ESG factors into traditional investment approaches.`
-    ],
-    highlights: [
-      'Hedge funds use sophisticated strategies with fewer regulatory restrictions',
-      'Options provide flexibility but require careful risk management',
-      'Modern Portfolio Theory helps optimize risk-return tradeoffs'
-    ],
-    bookmarks: [12, 28, 45],
-    progress: 30
-  },
-  {
-    id: '10',
-    title: 'Strategic Investing in the AI Era',
-    author: 'Prism Education Team',
-    category: 'AI & Future of Work',
-    description: 'How to adapt your investment strategy for the artificial intelligence revolution and emerging technologies.',
-    coverImage: '/images/books/strategic-ai-investing.jpg',
-    pages: 260,
-    content: [
-      `# Chapter 1: The AI Investment Landscape
-
-## Understanding AI Investment Opportunities
-
-The artificial intelligence revolution is creating unprecedented investment opportunities across multiple sectors. Understanding these trends is crucial for modern investors.
-
-## Key AI Investment Themes
-
-### Infrastructure and Hardware
-- Semiconductor companies (NVIDIA, AMD, Intel)
-- Cloud computing providers (Amazon, Microsoft, Google)
-- Data center operators
-- AI chip manufacturers
-
-### Software and Platforms
-- AI platform providers
-- Machine learning tools and frameworks
-- Data analytics companies
-- AI-as-a-Service providers
-
-### Applications and Use Cases
-- Autonomous vehicles
-- Healthcare AI
-- Financial services AI
-- Consumer AI products
-
-## Sector Analysis
-
-### Technology Sector
-The most direct exposure to AI growth, but also the most volatile.
-
-### Healthcare
-AI applications in drug discovery, medical imaging, and personalized medicine.
-
-### Financial Services
-AI for trading, risk management, fraud detection, and customer service.
-
-### Manufacturing
-Industrial AI for automation, predictive maintenance, and quality control.
-
-### Consumer Goods
-AI-powered personalization, recommendation systems, and smart products.`,
-
-      `# Chapter 2: Building an AI-Focused Portfolio
-
-## Direct AI Investments
-
-### Large-Cap Technology Stocks
-- Microsoft (Azure AI, OpenAI partnership)
-- Google (DeepMind, AI research)
-- Amazon (AWS AI services)
-- Meta (AI research, metaverse)
-- Apple (AI in devices and services)
-
-### AI-Focused Companies
-- NVIDIA (AI chips and software)
-- Palantir (data analytics)
-- Snowflake (data cloud)
-- C3.ai (enterprise AI)
-- UiPath (robotic process automation)
-
-### Emerging AI Companies
-- Smaller companies with specialized AI capabilities
-- AI startups with innovative technologies
-- Companies in AI-adjacent sectors
-
-## Indirect AI Exposure
-
-### Companies Benefiting from AI
-- Traditional companies using AI to improve operations
-- Service providers to AI companies
-- Companies with valuable data assets
-
-### Supply Chain Investments
-- Companies providing components for AI infrastructure
-- Materials and equipment suppliers
-- Real estate for data centers
-
-## Portfolio Construction Strategies
-
-### Thematic Investing
-Building portfolios around AI themes and trends.
-
-### Factor Investing
-Using AI and machine learning to identify investment factors.
-
-### ESG Considerations
-Evaluating AI companies based on ethical AI practices and societal impact.
-
-### Risk Management
-Balancing high-growth AI investments with more stable assets.`,
-
-      `# Chapter 3: Risks and Considerations
-
-## Technology Risks
-
-### Rapid Obsolescence
-AI technology evolves quickly, making some investments obsolete.
-
-### Competition
-Intense competition in AI space can impact profitability.
-
-### Regulatory Risk
-Increasing regulation of AI could affect business models.
-
-## Market Risks
-
-### Valuation Concerns
-AI stocks may be overvalued due to hype.
-
-### Market Volatility
-Technology stocks tend to be more volatile than the overall market.
-
-### Concentration Risk
-Over-concentration in AI stocks increases portfolio risk.
-
-## Ethical Considerations
-
-### Bias and Fairness
-AI systems can perpetuate or amplify societal biases.
-
-### Privacy Concerns
-AI applications often require large amounts of personal data.
-
-### Job Displacement
-AI automation may disrupt traditional employment.
-
-### Military Applications
-Some AI technologies have dual-use military applications.
-
-## Investment Strategies
-
-### Diversification
-Don't put all your money in AI stocks.
-
-### Dollar-Cost Averaging
-Invest regularly to average out market volatility.
-
-### Long-Term Perspective
-AI is a long-term trend, not a short-term fad.
-
-### Active vs. Passive
-Consider both active and passive approaches to AI investing.
-
-### Due Diligence
-Thoroughly research AI companies before investing.
-
-## Future Outlook
-
-### Emerging Trends
-- Edge AI and IoT
-- Quantum computing
-- Brain-computer interfaces
-- AI safety and alignment
-
-### Investment Opportunities
-- New AI applications and use cases
-- AI infrastructure and tools
-- Companies transforming with AI
-- Global AI adoption`
-
-    ],
-    highlights: [
-      'AI creates investment opportunities across multiple sectors',
-      'Direct and indirect AI exposure strategies for portfolios',
-      'Consider technology, market, and ethical risks in AI investing'
-    ],
-    bookmarks: [5, 18, 32],
-    progress: 45
-  },
-  {
-    id: '11',
     title: 'AI & Coding Foundations',
     author: 'Prism Education Team',
     category: 'AI & Future of Work',
     description: 'Master the fundamentals of artificial intelligence and programming to unlock career opportunities in tech and finance.',
     coverImage: '/images/books/ai-coding-foundations.jpg',
     pages: 320,
+    readTime: '8 hours',
+    isBookmarked: true,
+    coverColor: 'bg-purple-600',
     content: [
       `# Chapter 1: Introduction to AI and Machine Learning
 
+Artificial Intelligence (AI) is transforming industries from healthcare to finance, creating unprecedented opportunities for those who understand its capabilities and limitations.
+
 ## What is Artificial Intelligence?
 
-Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think and learn like humans. AI has become one of the most transformative technologies of our time, revolutionizing industries from healthcare to finance.
+AI refers to computer systems that can perform tasks typically requiring human intelligence, such as:
+- **Pattern Recognition**: Identifying trends in data
+- **Decision Making**: Choosing optimal strategies
+- **Natural Language Processing**: Understanding and generating human language
+- **Computer Vision**: Interpreting visual information
+- **Predictive Analytics**: Forecasting future outcomes
 
-## Types of AI
+## Types of AI:
 
-### Narrow AI (Weak AI)
-Narrow AI is designed to perform a narrow task (e.g., facial recognition, internet searches, driving a car). Most AI in use today is narrow AI.
+### Narrow AI (ANI):
+- Designed for specific tasks
+- Examples: Chess engines, spam filters, recommendation systems
+- Most current AI applications fall into this category
 
-### General AI (Strong AI)
-General AI would have the ability to understand, learn, and apply knowledge in different contexts, similar to human intelligence. This is still largely theoretical.
+### General AI (AGI):
+- Human-level intelligence across all domains
+- Currently theoretical but actively researched
+- Would represent a fundamental shift in human-AI interaction
 
-### Super AI
-Super AI would surpass human intelligence in all areas and would be capable of improving itself.
+### Superintelligence:
+- AI that surpasses human intelligence in all areas
+- Raises important questions about control and alignment
+- Subject of ongoing philosophical and technical debate
 
-## Machine Learning Fundamentals
+## Machine Learning Fundamentals:
 
 Machine learning is a subset of AI that enables computers to learn and improve from experience without being explicitly programmed.
 
-### Supervised Learning
-Learning with labeled training data to make predictions about new, unseen data.
+### Types of Machine Learning:
 
-### Unsupervised Learning
-Finding hidden patterns in data without labeled examples.
+**Supervised Learning**: Learning with labeled examples
+- Classification: Predicting categories (e.g., spam vs. not spam)
+- Regression: Predicting numerical values (e.g., stock prices)
 
-### Reinforcement Learning
-Learning through interaction with an environment, receiving rewards or penalties for actions.
+**Unsupervised Learning**: Finding patterns in unlabeled data
+- Clustering: Grouping similar data points
+- Dimensionality Reduction: Simplifying complex data
 
-## Applications in Finance
-
-### Algorithmic Trading
-AI algorithms can analyze market data and execute trades at optimal times.
-
-### Risk Assessment
-AI can assess credit risk, market risk, and operational risk more accurately than traditional methods.
-
-### Fraud Detection
-AI can identify unusual patterns that may indicate fraudulent activity.
-
-### Portfolio Optimization
-AI can optimize portfolio allocation based on risk tolerance and investment objectives.`,
+**Reinforcement Learning**: Learning through trial and error
+- Agent learns by interacting with environment
+- Used in game playing, robotics, and trading algorithms`,
 
       `# Chapter 2: Programming Fundamentals
 
-## Why Learn to Code?
+Programming is the foundation of all AI and technology work. Understanding code enables you to build, modify, and understand AI systems.
 
-### Career Opportunities
-- Software development
-- Data science
-- Web development
-- Mobile app development
-- AI and machine learning
-- Financial technology
+## Essential Programming Concepts:
 
-### Problem-Solving Skills
-Programming teaches logical thinking and problem-solving skills that are valuable in any career.
+### Variables and Data Types:
+- **Integers**: Whole numbers (1, 2, 3)
+- **Floats**: Decimal numbers (3.14, 2.71)
+- **Strings**: Text data ("Hello, World!")
+- **Booleans**: True or false values
+- **Lists/Arrays**: Collections of data
+- **Dictionaries**: Key-value pairs for storing structured data
 
-### Automation
-Programming allows you to automate repetitive tasks, saving time and reducing errors.
+### Control Structures:
+- **Conditionals**: if/else statements for decision making
+- **Loops**: for/while loops for repetition
+- **Functions**: Reusable blocks of code
+- **Classes**: Object-oriented programming concepts
 
-## Getting Started with Python
+### Python Basics:
 
-### Why Python?
-- Simple and readable syntax
-- Versatile applications
-- Strong community support
-- Extensive libraries for AI and data science
+Python has become the de facto language for AI and data science due to its simplicity and powerful libraries.
 
-### Basic Python Concepts
-
-#### Variables and Data Types
 \`\`\`python
-# String
-name = "Alice"
-age = 25
-height = 5.6
-is_student = True
+# Basic Python example
+def calculate_portfolio_return(investment, return_rate, years):
+    """Calculate compound portfolio return"""
+    return investment * (1 + return_rate) ** years
 
-print(name, age, height, is_student)
+# Example usage
+initial_investment = 10000
+annual_return = 0.08  # 8% annual return
+investment_years = 20
+
+final_value = calculate_portfolio_return(initial_investment, annual_return, investment_years)
+print(f"Investment grows from {initial_investment} to {final_value:.2f}")
 \`\`\`
 
-#### Control Structures
-\`\`\`python
-# Conditional statements
-age = 18
+## Data Structures for Finance:
 
-if age >= 18:
-    print("You are an adult")
-elif age >= 13:
-    print("You are a teenager")
-else:
-    print("You are a child")
-\`\`\`
-
-#### Functions
-\`\`\`python
-def greet(name):
-    return f"Hello, {name}!"
-
-message = greet("Alice")
-print(message)
-\`\`\``,
-
-      `# Chapter 3: AI Tools and Libraries
-
-## Essential Python Libraries
-
-### NumPy
-NumPy is the fundamental package for scientific computing with Python.
-
-\`\`\`python
-import numpy as np
-
-# Create arrays
-arr = np.array([1, 2, 3, 4, 5])
-print(arr)
-\`\`\`
-
-### Pandas
-Pandas is used for data manipulation and analysis.
+### Pandas DataFrames:
+Essential for financial data analysis, similar to Excel spreadsheets but much more powerful.
 
 \`\`\`python
 import pandas as pd
 
-# Create DataFrame
-data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
-df = pd.DataFrame(data)
-print(df)
-\`\`\`
+# Create a simple portfolio DataFrame
+portfolio_data = {
+    'Stock': ['AAPL', 'GOOGL', 'MSFT', 'TSLA'],
+    'Shares': [100, 50, 75, 25],
+    'Price': [150.00, 2800.00, 300.00, 800.00]
+}
 
-### Scikit-learn
-Scikit-learn is a machine learning library for Python.
+df = pd.DataFrame(portfolio_data)
+df['Value'] = df['Shares'] * df['Price']
+print(df)
+\`\`\``,
+
+      `# Chapter 3: AI Tools and Libraries
+
+The AI ecosystem is built on powerful libraries and frameworks that make complex algorithms accessible to developers.
+
+## Essential Python Libraries:
+
+### NumPy:
+- **Purpose**: Numerical computing with arrays
+- **Finance Use**: Mathematical operations, statistical calculations
+- **Example**: Portfolio optimization, risk calculations
+
+### Pandas:
+- **Purpose**: Data manipulation and analysis
+- **Finance Use**: Time series analysis, portfolio management
+- **Example**: Historical price analysis, performance metrics
+
+### Scikit-learn:
+- **Purpose**: Machine learning algorithms
+- **Finance Use**: Predictive modeling, classification
+- **Example**: Credit risk assessment, market prediction
+
+### TensorFlow/PyTorch:
+- **Purpose**: Deep learning frameworks
+- **Finance Use**: Neural networks, complex pattern recognition
+- **Example**: Algorithmic trading, fraud detection
+
+## AI Applications in Finance:
+
+### Algorithmic Trading:
+- **Pattern Recognition**: Identifying trading opportunities
+- **Risk Management**: Automated position sizing
+- **Market Making**: Providing liquidity with AI
+
+### Credit Assessment:
+- **Alternative Data**: Using non-traditional data sources
+- **Behavioral Analysis**: Predicting payment behavior
+- **Fraud Detection**: Identifying suspicious transactions
+
+### Portfolio Management:
+- **Asset Allocation**: Optimizing portfolio weights
+- **Risk Modeling**: Predicting portfolio volatility
+- **Performance Attribution**: Understanding return sources`,
+
+      `# Chapter 4: Data Analysis and Visualization
+
+Effective data analysis is crucial for making informed investment decisions and understanding market trends.
+
+## Data Analysis Process:
+
+### 1. Data Collection:
+- **Market Data**: Stock prices, economic indicators
+- **Alternative Data**: Social media sentiment, satellite imagery
+- **Fundamental Data**: Company financials, industry reports
+
+### 2. Data Cleaning:
+- **Missing Values**: Handling incomplete data
+- **Outliers**: Identifying and treating extreme values
+- **Data Validation**: Ensuring data quality and consistency
+
+### 3. Exploratory Data Analysis (EDA):
+- **Descriptive Statistics**: Mean, median, standard deviation
+- **Correlation Analysis**: Relationships between variables
+- **Distribution Analysis**: Understanding data patterns
+
+### 4. Visualization:
+- **Time Series Plots**: Showing trends over time
+- **Scatter Plots**: Revealing relationships
+- **Heatmaps**: Displaying correlation matrices
+
+## Financial Data Analysis Example:
 
 \`\`\`python
-from sklearn.linear_model import LinearRegression
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
-# Create and train model
-model = LinearRegression()
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
+# Load stock price data
+stock_data = pd.read_csv('stock_prices.csv')
+stock_data['Date'] = pd.to_datetime(stock_data['Date'])
+
+# Calculate returns
+stock_data['Returns'] = stock_data['Price'].pct_change()
+
+# Basic statistics
+print("Average Return:", stock_data['Returns'].mean())
+print("Volatility:", stock_data['Returns'].std())
+print("Sharpe Ratio:", stock_data['Returns'].mean() / stock_data['Returns'].std())
+
+# Visualization
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.plot(stock_data['Date'], stock_data['Price'])
+plt.title('Stock Price Over Time')
+plt.xlabel('Date')
+plt.ylabel('Price')
+
+plt.subplot(1, 2, 2)
+plt.hist(stock_data['Returns'].dropna(), bins=50)
+plt.title('Return Distribution')
+plt.xlabel('Returns')
+plt.ylabel('Frequency')
+plt.show()
+\`\`\``,
+
+      `# Chapter 5: Machine Learning for Investment Decisions
+
+Machine learning can enhance investment decision-making by identifying patterns and relationships that humans might miss.
+
+## Supervised Learning Applications:
+
+### Stock Price Prediction:
+- **Features**: Technical indicators, fundamental ratios, market sentiment
+- **Target**: Future stock price or return
+- **Challenges**: Market efficiency, noise in financial data
+- **Best Practices**: Focus on relative rather than absolute predictions
+
+### Credit Risk Assessment:
+- **Features**: Financial ratios, payment history, economic indicators
+- **Target**: Probability of default
+- **Methods**: Logistic regression, random forests, neural networks
+- **Validation**: Cross-validation with time series splits
+
+### Portfolio Optimization:
+- **Modern Portfolio Theory**: Traditional mean-variance optimization
+- **Machine Learning Enhancement**: Using ML to predict returns and volatility
+- **Risk Parity**: Equal risk contribution from each asset
+- **Factor Models**: Identifying and exploiting risk factors
+
+## Unsupervised Learning Applications:
+
+### Market Regime Detection:
+- **Clustering**: Identifying different market conditions
+- **Hidden Markov Models**: Modeling regime transitions
+- **Applications**: Adjusting strategy based on market regime
+
+### Anomaly Detection:
+- **Purpose**: Identifying unusual market behavior
+- **Methods**: Isolation forests, one-class SVM
+- **Applications**: Fraud detection, market manipulation
+
+## Model Validation and Backtesting:
+
+### Time Series Validation:
+- **Walk-Forward Analysis**: Testing on future data
+- **Purged Cross-Validation**: Avoiding data leakage
+- **Out-of-Sample Testing**: Validating on unseen data
+
+### Performance Metrics:
+- **Sharpe Ratio**: Risk-adjusted returns
+- **Maximum Drawdown**: Worst peak-to-trough decline
+- **Information Ratio**: Active return per unit of active risk
+- **Calmar Ratio**: Annual return divided by maximum drawdown`,
+
+      `# Chapter 6: Building Your First AI Investment Tool
+
+This chapter provides a step-by-step guide to building a simple but effective AI-powered investment analysis tool.
+
+## Project Overview:
+
+We'll build a stock screening tool that:
+1. Fetches financial data for a list of stocks
+2. Calculates key financial ratios
+3. Uses machine learning to score stocks
+4. Provides investment recommendations
+
+## Step 1: Data Collection
+
+\`\`\`python
+import yfinance as yf
+import pandas as pd
+from datetime import datetime, timedelta
+
+def fetch_stock_data(symbols, period='1y'):
+    """Fetch stock data for multiple symbols"""
+    data = {}
+    for symbol in symbols:
+        try:
+            ticker = yf.Ticker(symbol)
+            data[symbol] = ticker.history(period=period)
+        except Exception as e:
+            print(f"Error fetching data for {symbol}: {e}")
+    return data
+
+# Example usage
+symbols = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA']
+stock_data = fetch_stock_data(symbols)
 \`\`\`
 
-## Building Your First AI Project
+## Step 2: Feature Engineering
 
-### Stock Price Prediction
-1. Collect historical stock data
-2. Clean and preprocess the data
-3. Split data into training and testing sets
-4. Train a machine learning model
-5. Make predictions and evaluate performance
+\`\`\`python
+def calculate_financial_ratios(stock_data):
+    """Calculate key financial ratios"""
+    ratios = {}
+    
+    for symbol, data in stock_data.items():
+        if len(data) > 0:
+            # Calculate returns
+            data['Returns'] = data['Close'].pct_change()
+            
+            # Calculate volatility (annualized)
+            volatility = data['Returns'].std() * np.sqrt(252)
+            
+            # Calculate Sharpe ratio (assuming 2% risk-free rate)
+            mean_return = data['Returns'].mean() * 252
+            sharpe_ratio = (mean_return - 0.02) / volatility
+            
+            ratios[symbol] = {
+                'Volatility': volatility,
+                'Sharpe_Ratio': sharpe_ratio,
+                'Total_Return': (data['Close'][-1] / data['Close'][0]) - 1
+            }
+    
+    return pd.DataFrame(ratios).T
 
-### Portfolio Optimization
-1. Define investment constraints
-2. Calculate expected returns and risk
-3. Use optimization algorithms
-4. Generate optimal portfolio weights
-5. Backtest the strategy`
+# Calculate ratios
+ratios_df = calculate_financial_ratios(stock_data)
+print(ratios_df)
+\`\`\`
+
+## Step 3: Machine Learning Model
+
+\`\`\`python
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+def build_ml_model(ratios_df):
+    """Build a machine learning model for stock scoring"""
+    
+    # Prepare features (using all available ratios)
+    X = ratios_df.dropna()
+    
+    # Create target variable (future returns - simplified example)
+    y = X['Total_Return']  # In practice, you'd use future returns
+    
+    # Remove target from features
+    X = X.drop('Total_Return', axis=1)
+    
+    # Split data
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.3, random_state=42
+    )
+    
+    # Scale features
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+    
+    # Train model
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model.fit(X_train_scaled, y_train)
+    
+    # Make predictions
+    predictions = model.predict(X_test_scaled)
+    
+    return model, scaler, predictions
+
+# Build the model
+model, scaler, predictions = build_ml_model(ratios_df)
+\`\`\`
+
+## Step 4: Investment Recommendations
+
+\`\`\`python
+def generate_recommendations(model, scaler, ratios_df, top_n=3):
+    """Generate investment recommendations"""
+    
+    # Prepare features for prediction
+    X = ratios_df.dropna()
+    X_features = X.drop('Total_Return', axis=1, errors='ignore')
+    
+    # Scale features
+    X_scaled = scaler.transform(X_features)
+    
+    # Make predictions
+    scores = model.predict(X_scaled)
+    
+    # Create recommendations
+    recommendations = pd.DataFrame({
+        'Symbol': X.index,
+        'Score': scores,
+        'Volatility': X_features['Volatility'],
+        'Sharpe_Ratio': X_features['Sharpe_Ratio']
+    })
+    
+    # Sort by score and return top recommendations
+    recommendations = recommendations.sort_values('Score', ascending=False)
+    
+    return recommendations.head(top_n)
+
+# Generate recommendations
+recommendations = generate_recommendations(model, scaler, ratios_df)
+print("Top Investment Recommendations:")
+print(recommendations)
+\`\`\`
+
+## Step 5: Deployment and Monitoring
+
+### Model Deployment:
+- **API Development**: Create REST API for the model
+- **Database Integration**: Store predictions and historical performance
+- **User Interface**: Build web interface for recommendations
+
+### Model Monitoring:
+- **Performance Tracking**: Monitor prediction accuracy over time
+- **Data Drift Detection**: Identify when market conditions change
+- **Model Retraining**: Update model with new data periodically
+
+### Risk Management:
+- **Position Sizing**: Never risk more than 2-5% on any single recommendation
+- **Diversification**: Spread investments across multiple recommendations
+- **Stop Losses**: Set clear exit strategies before entering positions
+
+## Next Steps:
+
+1. **Expand Data Sources**: Include fundamental data, sentiment analysis
+2. **Improve Features**: Add technical indicators, macroeconomic factors
+3. **Advanced Models**: Experiment with deep learning, ensemble methods
+4. **Backtesting**: Test strategies on historical data
+5. **Risk Management**: Implement portfolio-level risk controls`
     ],
     highlights: [
-      'AI is transforming industries from healthcare to finance',
-      'Python is the preferred language for AI and data science',
-      'Essential libraries include NumPy, Pandas, and Scikit-learn'
+      'AI is transforming finance through pattern recognition and predictive analytics',
+      'Python is the preferred language for AI and data science applications',
+      'Machine learning can enhance investment decisions but requires careful validation',
+      'Data quality and feature engineering are crucial for successful AI models',
+      'Building AI tools requires both technical skills and financial domain knowledge'
     ],
-    bookmarks: [3, 12, 25],
-    progress: 30
+    bookmarks: [2, 4, 6],
+    progress: 60
   },
   {
-    id: '12',
+    id: '3',
     title: 'Entrepreneurship & Startups',
     author: 'Prism Education Team',
-    category: 'Modern Finance',
-    description: 'Learn how to build and scale successful startups in the modern economy.',
+    category: 'Entrepreneurship & Startups',
+    description: 'Learn how to build, scale, and exit successful businesses in the modern economy.',
     coverImage: '/images/books/entrepreneurship-startups.jpg',
     pages: 280,
+    readTime: '7 hours',
+    isBookmarked: false,
+    coverColor: 'bg-green-600',
     content: [
       `# Chapter 1: The Entrepreneurial Mindset
 
-## What is Entrepreneurship?
+Entrepreneurship is more than starting a business—it's a way of thinking that combines creativity, risk-taking, and systematic problem-solving to create value in the marketplace.
 
-Entrepreneurship is the process of creating, launching, and running a new business venture. It involves identifying opportunities, taking risks, and creating value in the marketplace.
+## Key Characteristics of Entrepreneurs:
 
-## Characteristics of Successful Entrepreneurs
+### Vision and Opportunity Recognition:
+- **Market Gaps**: Identifying unmet needs in the marketplace
+- **Trend Analysis**: Understanding where industries are heading
+- **Customer Pain Points**: Solving real problems people face
+- **Innovation**: Creating new solutions or improving existing ones
 
-### Vision and Passion
-Successful entrepreneurs have a clear vision of what they want to achieve and are passionate about their mission.
+### Risk Management:
+- **Calculated Risks**: Taking smart risks with clear potential returns
+- **Risk Mitigation**: Diversifying efforts and maintaining safety nets
+- **Failure Learning**: Treating failures as learning opportunities
+- **Adaptability**: Pivoting when initial approaches don't work
 
-### Risk Tolerance
-Entrepreneurs must be comfortable with uncertainty and willing to take calculated risks.
+### Execution Excellence:
+- **Action Orientation**: Moving quickly from idea to implementation
+- **Resource Optimization**: Making the most of limited resources
+- **Team Building**: Assembling and motivating talented teams
+- **Customer Focus**: Prioritizing customer needs above all else
 
-### Resilience
-Building a business involves setbacks and failures. Entrepreneurs must be able to bounce back and learn from mistakes.
+## The Lean Startup Methodology:
 
-### Adaptability
-The business environment is constantly changing. Entrepreneurs must be able to adapt their strategies and approaches.
+Developed by Eric Ries, the Lean Startup approach emphasizes:
+1. **Build**: Create a minimum viable product (MVP)
+2. **Measure**: Collect data on customer behavior
+3. **Learn**: Use insights to improve the product
+4. **Iterate**: Repeat the cycle rapidly
 
-### Leadership Skills
-Entrepreneurs must be able to inspire and lead teams to achieve common goals.
+### Benefits of Lean Startup:
+- **Reduced Waste**: Avoid building products nobody wants
+- **Faster Learning**: Get feedback early and often
+- **Lower Risk**: Test assumptions before major investments
+- **Customer Validation**: Ensure market demand exists`,
 
-## The Entrepreneurial Process
+      `# Chapter 2: Business Model Design
 
-### 1. Opportunity Recognition
-Identifying gaps in the market or problems that need solving.
+A strong business model is the foundation of any successful startup. It defines how you create, deliver, and capture value.
 
-### 2. Market Research
-Understanding customer needs, competition, and market dynamics.
+## Business Model Canvas Components:
 
-### 3. Business Planning
-Creating a comprehensive plan for how the business will operate and grow.
+### Value Proposition:
+- **Customer Segments**: Who are your target customers?
+- **Value Propositions**: What unique value do you provide?
+- **Channels**: How do you reach customers?
+- **Customer Relationships**: How do you interact with customers?
 
-### 4. Resource Acquisition
-Securing funding, talent, and other resources needed to launch the business.
+### Infrastructure:
+- **Key Activities**: What activities are essential to your business?
+- **Key Resources**: What resources do you need?
+- **Key Partnerships**: Who are your important partners?
+- **Cost Structure**: What are your major cost drivers?
 
-### 5. Launch and Growth
-Executing the business plan and scaling the operation.
+### Financial Model:
+- **Revenue Streams**: How do you make money?
+- **Pricing Strategy**: How do you price your products/services?
+- **Unit Economics**: What's the profit per customer?
+- **Scalability**: How do costs and revenues scale?
 
-## Types of Entrepreneurship
+## Common Business Models:
 
-### Small Business Entrepreneurship
-Starting and running small, local businesses like restaurants, retail stores, or service providers.
+### Subscription Model:
+- **Recurring Revenue**: Predictable monthly/annual income
+- **Customer Lifetime Value**: Focus on long-term relationships
+- **Examples**: Netflix, Spotify, SaaS companies
+- **Challenges**: Customer acquisition costs, churn management
 
-### Scalable Startup Entrepreneurship
-Building businesses with high growth potential that can scale nationally or globally.
+### Marketplace Model:
+- **Network Effects**: Value increases with more users
+- **Commission Revenue**: Take percentage of transactions
+- **Examples**: Uber, Airbnb, eBay
+- **Challenges**: Chicken-and-egg problem, trust building
 
-### Social Entrepreneurship
-Creating businesses that address social or environmental problems while generating profit.
+### Freemium Model:
+- **Free Tier**: Attract users with basic features
+- **Premium Upsell**: Convert to paid for advanced features
+- **Examples**: Slack, Dropbox, LinkedIn
+- **Challenges**: Conversion optimization, feature differentiation`,
 
-### Corporate Entrepreneurship
-Innovating within existing companies to create new products, services, or business models.`,
+      `# Chapter 3: Funding and Investment
 
-      `# Chapter 2: From Idea to Business Plan
+Understanding funding options and investor expectations is crucial for scaling your startup effectively.
 
-## Validating Your Business Idea
+## Funding Stages:
 
-### Problem-Solution Fit
-Your business idea should solve a real problem that people are willing to pay to have solved.
+### Pre-Seed/Seed Stage:
+- **Amount**: $10K - $2M typically
+- **Purpose**: Product development, market validation
+- **Investors**: Friends, family, angel investors, accelerators
+- **Focus**: Building MVP, finding product-market fit
 
-### Market Validation
-Test your idea with potential customers before investing significant resources.
+### Series A:
+- **Amount**: $2M - $15M typically
+- **Purpose**: Scaling operations, expanding team
+- **Investors**: Venture capital firms
+- **Focus**: Growth metrics, market expansion
 
-### Competitive Analysis
-Understand your competition and how your solution differs or improves upon existing options.
+### Series B and Beyond:
+- **Amount**: $15M+ typically
+- **Purpose**: Market dominance, international expansion
+- **Investors**: Larger VC firms, private equity
+- **Focus**: Market leadership, exit preparation
 
-## Components of a Business Plan
+## Types of Investors:
 
-### Executive Summary
-A brief overview of your business, including your mission, key products/services, and financial projections.
+### Angel Investors:
+- **Individual Investors**: High-net-worth individuals
+- **Industry Expertise**: Often former entrepreneurs
+- **Investment Size**: $25K - $500K typically
+- **Value Add**: Mentorship, network access
 
-### Company Description
-Detailed information about your company, including its legal structure, location, and history.
+### Venture Capital:
+- **Institutional Money**: Professional investment firms
+- **Portfolio Approach**: Invest in multiple companies
+- **Investment Size**: $500K - $50M+ typically
+- **Value Add**: Strategic guidance, follow-on funding
 
-### Market Analysis
-Research on your target market, including customer demographics, market size, and growth potential.
+### Strategic Investors:
+- **Corporate Investors**: Established companies
+- **Strategic Value**: Synergies with their business
+- **Investment Size**: Varies widely
+- **Value Add**: Customer access, distribution channels`,
 
-### Organization and Management
-Information about your team, organizational structure, and management approach.
+      `# Chapter 4: Market Analysis and Competition
 
-### Service or Product Line
-Description of your products or services, including their benefits and competitive advantages.
+Thorough market analysis helps entrepreneurs understand their competitive landscape and identify opportunities for differentiation.
 
-### Marketing and Sales
-Your strategy for reaching customers and generating sales.
+## Market Size Analysis:
 
-### Funding Request
-If you're seeking investment, include information about how much funding you need and how you'll use it.
+### Total Addressable Market (TAM):
+- **Definition**: Total revenue opportunity if you captured 100% market share
+- **Calculation**: Number of potential customers × average revenue per customer
+- **Purpose**: Understanding the ultimate opportunity size
+- **Example**: Global smartphone market = $500B annually
 
-### Financial Projections
-Projections for revenue, expenses, and profitability over the next 3-5 years.
+### Serviceable Addressable Market (SAM):
+- **Definition**: Portion of TAM you can realistically serve
+- **Factors**: Geographic focus, customer segments, product limitations
+- **Calculation**: TAM × realistic market share percentage
+- **Example**: Premium smartphones in North America = $50B annually
 
-## Funding Options
+### Serviceable Obtainable Market (SOM):
+- **Definition**: Market share you can realistically capture
+- **Factors**: Competition, resources, execution capability
+- **Timeline**: Typically 3-5 years for planning
+- **Example**: 1% of SAM = $500M opportunity
 
-### Bootstrapping
-Using personal savings and revenue to fund the business.
+## Competitive Analysis Framework:
 
-### Friends and Family
-Raising money from personal networks.
+### Direct Competitors:
+- **Same Product**: Offering identical or very similar solutions
+- **Same Market**: Targeting the same customer segments
+- **Analysis**: Feature comparison, pricing, market share
+- **Strategy**: Differentiation through unique value propositions
 
-### Angel Investors
-Individual investors who provide capital in exchange for equity.
+### Indirect Competitors:
+- **Different Solutions**: Solving the same problem differently
+- **Different Markets**: Similar products for different segments
+- **Analysis**: Understanding alternative approaches
+- **Strategy**: Highlighting advantages of your approach
 
-### Venture Capital
-Professional investment firms that provide larger amounts of capital for high-growth businesses.
+### Competitive Positioning:
+- **Unique Value Proposition**: What makes you different?
+- **Competitive Advantages**: Sustainable differentiators
+- **Market Positioning**: How customers perceive you vs. competitors
+- **Barriers to Entry**: What protects your market position?`,
 
-### Bank Loans
-Traditional debt financing from banks and other financial institutions.
+      `# Chapter 5: Product Development and Innovation
 
-### Crowdfunding
-Raising money from a large number of people through online platforms.`,
+Successful startups excel at developing products that customers love and are willing to pay for.
 
-      `# Chapter 3: Scaling and Growth
+## Product Development Process:
 
-## Growth Strategies
+### Discovery Phase:
+- **Customer Research**: Understanding user needs and pain points
+- **Market Research**: Analyzing competitive landscape
+- **Technical Feasibility**: Assessing development requirements
+- **Business Viability**: Ensuring sustainable unit economics
 
-### Market Penetration
-Increasing market share in existing markets with current products.
+### Design Phase:
+- **User Experience (UX)**: Designing intuitive user interfaces
+- **User Interface (UI)**: Creating visually appealing designs
+- **Information Architecture**: Organizing content and features
+- **Prototyping**: Building interactive mockups for testing
 
-### Market Development
-Expanding into new markets with existing products.
+### Development Phase:
+- **Agile Methodology**: Iterative development with frequent testing
+- **Minimum Viable Product (MVP)**: Building core features first
+- **Quality Assurance**: Ensuring reliability and performance
+- **User Testing**: Getting feedback throughout development
 
-### Product Development
-Creating new products for existing markets.
+### Launch Phase:
+- **Beta Testing**: Limited release to select users
+- **Feedback Integration**: Incorporating user suggestions
+- **Marketing Preparation**: Building anticipation and awareness
+- **Launch Strategy**: Coordinated go-to-market approach
 
-### Diversification
-Developing new products for new markets.
+## Innovation Strategies:
 
-## Key Performance Indicators (KPIs)
+### Incremental Innovation:
+- **Improvement Focus**: Making existing products better
+- **Lower Risk**: Building on proven concepts
+- **Faster Time to Market**: Less development required
+- **Examples**: iPhone improvements, software updates
 
-### Financial KPIs
-- Revenue growth
-- Profit margins
-- Cash flow
-- Customer acquisition cost (CAC)
-- Customer lifetime value (CLV)
+### Disruptive Innovation:
+- **Market Creation**: Creating entirely new markets
+- **Technology Breakthrough**: Leveraging new technologies
+- **Higher Risk**: Unproven market demand
+- **Examples**: Uber (ride-sharing), Airbnb (home-sharing)
 
-### Operational KPIs
-- Employee productivity
-- Customer satisfaction
-- Inventory turnover
-- Quality metrics
+### Platform Innovation:
+- **Ecosystem Creation**: Building platforms for others to build on
+- **Network Effects**: Value increases with more participants
+- **Scalability**: Leveraging external development
+- **Examples**: iOS App Store, Amazon Marketplace`,
 
-### Marketing KPIs
-- Website traffic
-- Conversion rates
-- Social media engagement
-- Brand awareness
+      `# Chapter 6: Scaling and Growth Strategies
 
-## Common Challenges and Solutions
+Scaling a startup requires systematic approaches to growth while maintaining operational excellence and company culture.
 
-### Cash Flow Management
-- Monitor cash flow regularly
-- Maintain adequate cash reserves
-- Negotiate favorable payment terms
-- Consider factoring or invoice financing
+## Growth Strategies:
 
-### Talent Acquisition
-- Develop a strong company culture
-- Offer competitive compensation
-- Provide growth opportunities
-- Use multiple recruitment channels
+### Organic Growth:
+- **Product-Led Growth**: Using the product itself as the growth engine
+- **Content Marketing**: Creating valuable content to attract customers
+- **SEO Optimization**: Improving search engine visibility
+- **Referral Programs**: Encouraging existing customers to refer others
 
-### Market Competition
-- Differentiate your offering
-- Focus on customer service
-- Innovate continuously
-- Build strong relationships
+### Paid Acquisition:
+- **Digital Advertising**: Google Ads, Facebook, LinkedIn advertising
+- **Influencer Marketing**: Partnering with industry influencers
+- **Affiliate Marketing**: Commission-based partnerships
+- **Trade Shows**: Industry events and conferences
 
-### Scaling Operations
-- Invest in systems and processes
-- Hire the right people
-- Maintain quality standards
-- Plan for growth challenges`
+### Partnership Growth:
+- **Channel Partnerships**: Working with resellers and distributors
+- **Strategic Alliances**: Partnerships with complementary companies
+- **Integration Partnerships**: Technical integrations with other platforms
+- **Joint Ventures**: Collaborative business arrangements
+
+## Scaling Challenges:
+
+### Operational Scaling:
+- **Process Standardization**: Creating repeatable processes
+- **Quality Control**: Maintaining standards as you grow
+- **Supply Chain Management**: Ensuring reliable suppliers
+- **Customer Support**: Scaling support without losing quality
+
+### Team Scaling:
+- **Hiring Strategy**: Finding and attracting top talent
+- **Culture Preservation**: Maintaining company values during growth
+- **Management Structure**: Organizing teams and reporting structures
+- **Training and Development**: Onboarding and upskilling employees
+
+### Financial Scaling:
+- **Cash Flow Management**: Ensuring adequate working capital
+- **Investment in Infrastructure**: Systems, technology, facilities
+- **International Expansion**: Entering new geographic markets
+- **Exit Planning**: Preparing for acquisition or IPO`,
+
+      `# Chapter 7: Exit Strategies and Wealth Creation
+
+Understanding exit strategies helps entrepreneurs plan for long-term wealth creation and business transitions.
+
+## Exit Options:
+
+### Acquisition:
+- **Strategic Acquisitions**: Larger companies buying for strategic value
+- **Financial Acquisitions**: Private equity buying for financial returns
+- **Valuation Factors**: Revenue multiples, growth rates, market position
+- **Due Diligence**: Comprehensive review of business operations
+- **Integration Planning**: Merging with acquiring company
+
+### Initial Public Offering (IPO):
+- **Public Markets**: Selling shares on stock exchanges
+- **Regulatory Requirements**: SEC filings, financial reporting
+- **Investment Banks**: Working with underwriters for the offering
+- **Ongoing Obligations**: Quarterly reporting, investor relations
+- **Liquidity**: Ability to sell shares publicly
+
+### Management Buyout (MBO):
+- **Internal Purchase**: Management team buying the company
+- **Financing**: Typically requires external debt and equity
+- **Advantages**: Maintains company culture and direction
+- **Challenges**: Requires significant capital and expertise
+
+## Wealth Creation Strategies:
+
+### Equity Participation:
+- **Stock Options**: Rights to purchase company shares
+- **Restricted Stock**: Shares with vesting requirements
+- **Performance Shares**: Equity tied to company performance
+- **Tax Planning**: Optimizing timing and structure of equity transactions
+
+### Diversification:
+- **Investment Portfolio**: Diversifying beyond company stock
+- **Real Estate**: Building wealth through property investments
+- **Alternative Investments**: Private equity, hedge funds, commodities
+- **Risk Management**: Balancing concentrated and diversified holdings
+
+### Legacy Planning:
+- **Estate Planning**: Transferring wealth to next generation
+- **Charitable Giving**: Philanthropic strategies and foundations
+- **Business Succession**: Planning for leadership transitions
+- **Tax Optimization**: Minimizing estate and gift taxes`
     ],
     highlights: [
-      'Entrepreneurship involves identifying opportunities and creating value',
-      'Successful entrepreneurs have vision, passion, and resilience',
-      'Market validation is crucial before investing significant resources'
+      'Entrepreneurship requires a unique mindset combining creativity and systematic execution',
+      'The Lean Startup methodology emphasizes rapid iteration and customer feedback',
+      'Strong business models define how value is created, delivered, and captured',
+      'Market analysis helps identify opportunities and competitive positioning',
+      'Successful scaling requires balancing growth with operational excellence'
     ],
-    bookmarks: [6, 22, 35],
-    progress: 40
+    bookmarks: [1, 3, 5],
+    progress: 30
   },
   {
-    id: '13',
+    id: '4',
     title: 'Real Estate Investing Strategies',
     author: 'Prism Education Team',
-    category: 'Modern Finance',
-    description: 'Comprehensive guide to building wealth through strategic real estate investments.',
-    coverImage: '/images/books/real-estate-strategies.jpg',
-    pages: 300,
+    category: 'Real Estate Investing',
+    description: 'Master the fundamentals of real estate investing and build wealth through property investments.',
+    coverImage: '/images/books/real-estate-investing.jpg',
+    pages: 350,
+    readTime: '9 hours',
+    isBookmarked: false,
+    coverColor: 'bg-orange-600',
     content: [
       `# Chapter 1: Introduction to Real Estate Investing
 
+Real estate investing offers unique opportunities for wealth building through appreciation, cash flow, tax benefits, and leverage. Understanding the fundamentals is crucial for success.
+
 ## Why Invest in Real Estate?
 
-Real estate has long been considered one of the most reliable ways to build wealth. Here are the key benefits:
+### Cash Flow Generation:
+- **Rental Income**: Monthly income from tenants
+- **Passive Income**: Money earned with minimal active involvement
+- **Inflation Hedge**: Rents typically increase with inflation
+- **Predictable Returns**: More stable than stock market volatility
 
-### Appreciation
-Property values tend to increase over time, providing capital gains.
+### Appreciation Benefits:
+- **Long-term Growth**: Real estate values tend to increase over time
+- **Supply and Demand**: Limited land supply drives value appreciation
+- **Location Value**: Prime locations appreciate faster
+- **Forced Appreciation**: Value increases through improvements
 
-### Cash Flow
-Rental properties can generate monthly income through rent payments.
+### Tax Advantages:
+- **Depreciation**: Non-cash expense that reduces taxable income
+- **1031 Exchanges**: Defer capital gains taxes by reinvesting
+- **Deductible Expenses**: Mortgage interest, property management, repairs
+- **Pass-through Entities**: Tax benefits flow through to investors
 
-### Tax Benefits
-Real estate investors enjoy various tax deductions and benefits.
+### Leverage Opportunities:
+- **Low Down Payments**: Purchase properties with 20-25% down
+- **Mortgage Financing**: Banks lend money secured by property
+- **Amplified Returns**: Small appreciation creates large percentage returns
+- **Cash Flow Leverage**: Using borrowed money to generate income
 
-### Inflation Hedge
-Real estate often keeps pace with or exceeds inflation.
+## Types of Real Estate Investments:
 
-### Leverage
-You can control a valuable asset with a relatively small down payment.
+### Residential Properties:
+- **Single-Family Homes**: One-unit properties, easier to manage
+- **Multi-Family Properties**: 2-4 units, more complex but higher returns
+- **Apartment Buildings**: 5+ units, requires professional management
+- **Student Housing**: Specialized residential for college students
 
-## Types of Real Estate Investments
+### Commercial Properties:
+- **Office Buildings**: Leased to businesses and professionals
+- **Retail Properties**: Shopping centers, strip malls, single stores
+- **Industrial Properties**: Warehouses, manufacturing facilities
+- **Mixed-Use Properties**: Combination of residential and commercial
 
-### Residential Properties
-- Single-family homes
-- Multi-family properties (duplexes, triplexes, fourplexes)
-- Condominiums and townhouses
+### Alternative Investments:
+- **REITs**: Real Estate Investment Trusts, publicly traded
+- **Crowdfunding**: Pooled investments in specific properties
+- **Private Equity**: Large-scale institutional investments
+- **Real Estate Notes**: Investing in mortgage loans`,
 
-### Commercial Properties
-- Office buildings
-- Retail spaces
-- Industrial properties
-- Warehouses
+      `# Chapter 2: Financial Analysis and Due Diligence
 
-### Specialized Properties
-- Hotels and hospitality
-- Self-storage facilities
-- Mobile home parks
-- Senior living facilities
+Thorough financial analysis is essential for making profitable real estate investment decisions and avoiding costly mistakes.
 
-## Investment Strategies
+## Key Financial Metrics:
 
-### Buy and Hold
-Purchase properties to rent out for long-term appreciation and cash flow.
+### Cash Flow Analysis:
+- **Gross Rental Income**: Total rent collected from all units
+- **Operating Expenses**: Property management, maintenance, insurance, taxes
+- **Net Operating Income (NOI)**: Gross income minus operating expenses
+- **Cash Flow**: NOI minus debt service (mortgage payments)
+- **Cash-on-Cash Return**: Annual cash flow divided by initial investment
 
-### Fix and Flip
-Buy distressed properties, renovate them, and sell for a profit.
+### Return Calculations:
+- **Cap Rate**: NOI divided by property purchase price
+- **Internal Rate of Return (IRR)**: Annualized return including all cash flows
+- **Total Return**: Appreciation plus cash flow over holding period
+- **Return on Investment (ROI)**: Total return divided by initial investment
 
-### Wholesaling
-Find discounted properties and assign the contract to other investors for a fee.
+### Leverage Analysis:
+- **Loan-to-Value (LTV)**: Loan amount divided by property value
+- **Debt Service Coverage Ratio**: NOI divided by annual debt service
+- **Equity Multiple**: Total return divided by equity invested
+- **Break-Even Occupancy**: Minimum occupancy needed to cover all expenses
 
-### Real Estate Investment Trusts (REITs)
-Invest in publicly traded companies that own and manage real estate.
+## Due Diligence Process:
 
-### Real Estate Crowdfunding
-Pool money with other investors to buy larger properties.`,
+### Physical Inspection:
+- **Property Condition**: Age, maintenance needs, structural issues
+- **System Assessment**: HVAC, plumbing, electrical, roofing
+- **Environmental Issues**: Lead paint, asbestos, soil contamination
+- **Zoning Compliance**: Current use matches zoning requirements
 
-      `# Chapter 2: Analyzing Investment Properties
+### Financial Verification:
+- **Rent Roll Analysis**: Current rents, lease terms, tenant quality
+- **Expense History**: Review 2-3 years of operating statements
+- **Tax Assessment**: Current property taxes and assessment history
+- **Insurance Requirements**: Coverage needs and cost estimates
 
-## Key Metrics for Real Estate Investing
+### Market Analysis:
+- **Comparable Sales**: Recent sales of similar properties
+- **Rental Comps**: Market rents for similar properties
+- **Neighborhood Trends**: Population growth, employment, development
+- **Economic Indicators**: Local job market, income levels, demographics`,
 
-### Cash Flow
-Monthly rental income minus all expenses (mortgage, taxes, insurance, maintenance, vacancy allowance).
+      `# Chapter 3: Property Acquisition Strategies
 
-### Cash-on-Cash Return
-Annual cash flow divided by the initial cash investment.
+Successful real estate investors use various acquisition strategies depending on market conditions, risk tolerance, and investment goals.
 
-### Cap Rate (Capitalization Rate)
-Net operating income divided by the property's purchase price.
+## Acquisition Methods:
 
-### Gross Rent Multiplier
-Purchase price divided by annual gross rental income.
+### Traditional Purchase:
+- **Market Rate**: Paying full market value for properties
+- **Competitive Process**: Multiple buyers competing for same property
+- **Financing Requirements**: Typically 20-25% down payment
+- **Time to Close**: 30-45 days with traditional financing
 
-### Return on Investment (ROI)
-Total return (cash flow + appreciation) divided by total investment.
+### Distressed Properties:
+- **Foreclosures**: Properties taken back by lenders
+- **Short Sales**: Sales below mortgage balance with lender approval
+- **REO Properties**: Real estate owned by banks after foreclosure
+- **Tax Liens**: Properties with unpaid property taxes
 
-## Property Analysis Process
+### Off-Market Deals:
+- **Direct Mail**: Contacting property owners directly
+- **Networking**: Building relationships with industry professionals
+- **Wholesaling**: Finding deals and assigning to other investors
+- **Probate Sales**: Properties inherited by family members
 
-### 1. Location Analysis
-- Neighborhood quality and trends
-- Proximity to amenities
-- School district quality
-- Crime rates
-- Future development plans
+## Financing Options:
 
-### 2. Financial Analysis
-- Purchase price and financing terms
-- Rental income potential
-- Operating expenses
-- Maintenance and repair costs
-- Tax implications
+### Conventional Loans:
+- **Bank Financing**: Traditional mortgage loans
+- **Down Payment**: 20-25% typically required
+- **Interest Rates**: Competitive market rates
+- **Qualification**: Based on credit, income, and property
 
-### 3. Market Analysis
-- Local market trends
-- Comparable property sales
-- Rental market conditions
-- Economic indicators
+### Alternative Financing:
+- **Private Money**: Individual lenders offering short-term loans
+- **Hard Money**: Asset-based loans with higher interest rates
+- **Seller Financing**: Property owner provides financing
+- **Partnerships**: Joint ventures with other investors
 
-### 4. Physical Inspection
-- Property condition
-- Required repairs or improvements
-- Maintenance history
-- Systems and appliances
+### Creative Strategies:
+- **Subject-To**: Taking over payments without assuming loan
+- **Lease Options**: Lease with option to purchase
+- **Owner Financing**: Seller carries back financing
+- **Assumable Loans**: Taking over existing mortgage`,
 
-## Due Diligence Checklist
+      `# Chapter 4: Property Management and Operations
 
-- Verify property ownership and title
-- Review property tax records
-- Check for liens or encumbrances
-- Inspect all major systems
-- Review rental history and current leases
-- Analyze comparable properties
-- Calculate all financial metrics
-- Consider exit strategies`,
+Effective property management is crucial for maintaining cash flow, preserving property value, and building long-term wealth.
 
-      `# Chapter 3: Advanced Real Estate Strategies
+## Property Management Functions:
 
-## Creative Financing Methods
+### Tenant Relations:
+- **Screening Process**: Credit checks, income verification, references
+- **Lease Administration**: Lease preparation, renewals, terminations
+- **Rent Collection**: Systematic collection and late payment handling
+- **Tenant Communications**: Maintenance requests, notices, complaints
 
-### Subject-To Deals
-Taking over existing mortgage payments without assuming the loan.
+### Maintenance and Repairs:
+- **Preventive Maintenance**: Regular upkeep to prevent major issues
+- **Emergency Repairs**: 24/7 response to urgent problems
+- **Vendor Management**: Reliable contractors and service providers
+- **Capital Improvements**: Major upgrades to increase property value
 
-### Lease Options
-Renting with the option to purchase at a later date.
+### Financial Management:
+- **Accounting Systems**: Tracking income, expenses, and profits
+- **Budgeting**: Annual operating and capital improvement budgets
+- **Reporting**: Regular financial reports for investors
+- **Tax Preparation**: Organizing records for tax filing
 
-### Wraparound Mortgages
-Creating a new mortgage that "wraps around" an existing mortgage.
+## Management Options:
 
-### Private Money Lenders
-Individuals who lend money for real estate investments.
+### Self-Management:
+- **Full Control**: Direct oversight of all operations
+- **Cost Savings**: No management fees (typically 8-10% of rent)
+- **Time Investment**: Requires significant time and attention
+- **Learning Curve**: Need to develop property management skills
 
-### Hard Money Lenders
-Short-term loans for fix-and-flip projects.
+### Professional Management:
+- **Expertise**: Professional management companies with experience
+- **Time Savings**: Frees up investor time for other activities
+- **Network Access**: Established relationships with vendors and contractors
+- **Cost**: Management fees reduce cash flow but may increase efficiency
 
-## Tax Strategies
+### Hybrid Approach:
+- **Selective Management**: Manage some properties, outsource others
+- **Task Delegation**: Handle tenant relations, outsource maintenance
+- **Learning Opportunity**: Gain experience while having backup support
+- **Cost Optimization**: Balance control and cost-effectiveness`,
 
-### 1031 Exchanges
-Deferring capital gains taxes by exchanging one property for another.
+      `# Chapter 5: Market Analysis and Location Selection
 
-### Depreciation
-Taking tax deductions for the wear and tear on investment properties.
+Location is often the most important factor in real estate investment success. Understanding market dynamics helps identify the best investment opportunities.
 
-### Cost Segregation
-Accelerating depreciation by classifying components separately.
+## Location Analysis Framework:
 
-### Opportunity Zones
-Investing in designated low-income areas for tax benefits.
+### Macro-Level Analysis:
+- **Population Growth**: Increasing population drives demand
+- **Employment Trends**: Job growth and major employers
+- **Economic Diversification**: Multiple industries reduce risk
+- **Infrastructure Development**: Transportation, utilities, public services
 
-## Building a Real Estate Portfolio
+### Micro-Level Analysis:
+- **Neighborhood Characteristics**: Demographics, crime rates, school quality
+- **Property Values**: Recent sales, price trends, appreciation rates
+- **Rental Market**: Vacancy rates, rent levels, tenant quality
+- **Development Activity**: New construction, redevelopment projects
 
-### Start Small
-Begin with single-family homes or small multi-family properties.
+### Investment Criteria:
+- **Cash Flow Potential**: Ability to generate positive cash flow
+- **Appreciation Prospects**: Likelihood of property value increases
+- **Risk Assessment**: Market stability and downside protection
+- **Exit Strategy**: Liquidity and resale potential
 
-### Diversify
-Invest in different types of properties and markets.
+## Market Timing:
 
-### Reinvest Profits
-Use cash flow and appreciation to acquire additional properties.
+### Market Cycles:
+- **Recovery Phase**: Market bottoming, increasing demand
+- **Expansion Phase**: Strong growth, rising prices and rents
+- **Hyper Supply Phase**: Overbuilding, softening demand
+- **Recession Phase**: Declining prices, increasing vacancies
 
-### Build Systems
-Create processes for finding, analyzing, and managing properties.
+### Investment Strategies by Phase:
+- **Recovery**: Focus on value-add opportunities and distressed properties
+- **Expansion**: Acquire stabilized properties with good cash flow
+- **Hyper Supply**: Be cautious, focus on unique properties or markets
+- **Recession**: Look for forced sellers and distressed opportunities
 
-### Network
-Build relationships with other investors, agents, and service providers.
+### Long-term Perspective:
+- **Market Fundamentals**: Focus on long-term demographic and economic trends
+- **Diversification**: Spread investments across different markets
+- **Patience**: Real estate is a long-term investment, not a get-rich-quick scheme
+- **Value Creation**: Focus on properties where you can add value`,
 
-## Risk Management
+      `# Chapter 6: Advanced Investment Strategies
 
-### Insurance
-Adequate property, liability, and loss of income insurance.
+Experienced investors use advanced strategies to maximize returns, minimize risk, and build substantial real estate portfolios.
 
-### Legal Structure
-Consider LLCs or other entities for liability protection.
+## Value-Add Strategies:
 
-### Market Diversification
-Don't put all your investments in one market.
+### Physical Improvements:
+- **Cosmetic Updates**: Paint, flooring, fixtures, appliances
+- **Functional Improvements**: Layout changes, additional bathrooms
+- **Energy Efficiency**: HVAC upgrades, insulation, windows
+- **Amenities**: Parking, storage, outdoor spaces
 
-### Cash Reserves
-Maintain adequate reserves for vacancies and repairs.
+### Operational Improvements:
+- **Rent Optimization**: Market-rate adjustments, lease terms
+- **Expense Reduction**: Utility management, maintenance efficiency
+- **Tenant Quality**: Better screening, longer lease terms
+- **Management Efficiency**: Systems, processes, technology
 
-### Professional Team
-Work with qualified attorneys, accountants, and property managers.`
+### Development Opportunities:
+- **Land Development**: Subdividing, zoning changes
+- **Redevelopment**: Converting use, adding units
+- **New Construction**: Building from ground up
+- **Joint Ventures**: Partnering with developers
+
+## Portfolio Strategies:
+
+### Diversification:
+- **Geographic**: Multiple markets and regions
+- **Property Types**: Mix of residential and commercial
+- **Investment Sizes**: Small and large properties
+- **Risk Profiles**: Conservative and aggressive investments
+
+### Scaling Strategies:
+- **Leverage Utilization**: Using debt to acquire more properties
+- **1031 Exchanges**: Tax-deferred exchanges to upgrade properties
+- **Syndication**: Raising capital from multiple investors
+- **REIT Conversion**: Converting to publicly traded entity
+
+### Risk Management:
+- **Insurance Coverage**: Adequate property and liability insurance
+- **Reserve Funds**: Cash reserves for vacancies and repairs
+- **Market Monitoring**: Tracking local and national market conditions
+- **Exit Planning**: Strategies for different market scenarios`,
+
+      `# Chapter 7: Tax Strategies and Wealth Building
+
+Understanding real estate tax strategies can significantly enhance investment returns and accelerate wealth building.
+
+## Tax Benefits:
+
+### Depreciation:
+- **Cost Segregation**: Accelerating depreciation through component analysis
+- **Bonus Depreciation**: Immediate deduction for certain improvements
+- **Section 179**: Immediate expensing of business equipment
+- **Passive Loss Rules**: Understanding limitations on passive losses
+
+### 1031 Exchanges:
+- **Like-Kind Exchanges**: Deferring capital gains taxes
+- **Timeline Requirements**: 45-day identification, 180-day closing
+- **Qualified Intermediary**: Required third-party facilitator
+- **Replacement Property**: Rules for identifying and acquiring replacement
+
+### Opportunity Zones:
+- **Tax Deferral**: Deferring capital gains by investing in OZ funds
+- **Tax Reduction**: 10-15% reduction in deferred gains
+- **Tax Elimination**: Elimination of gains on appreciation if held 10+ years
+- **Qualified Investments**: Specific requirements for OZ investments
+
+## Wealth Building Strategies:
+
+### Compound Growth:
+- **Reinvestment**: Reinvesting cash flow into additional properties
+- **Appreciation**: Long-term property value increases
+- **Leverage**: Using borrowed money to amplify returns
+- **Tax Deferral**: Keeping more money working through tax strategies
+
+### Portfolio Optimization:
+- **Asset Allocation**: Balancing real estate with other investments
+- **Risk Management**: Diversifying across markets and property types
+- **Liquidity Planning**: Maintaining some liquid investments
+- **Estate Planning**: Transferring wealth to next generation
+
+### Exit Strategies:
+- **Hold and Rent**: Long-term income generation
+- **Fix and Flip**: Short-term profit through improvements
+- **1031 Exchange**: Tax-deferred property upgrades
+- **Sale and Invest**: Converting to other investment types
+
+## Professional Advisors:
+
+### Essential Team Members:
+- **Real Estate Attorney**: Legal advice and document review
+- **Tax Advisor**: Tax planning and compliance
+- **Insurance Agent**: Property and liability coverage
+- **Property Manager**: Day-to-day operations (if not self-managing)
+- **Lender/Broker**: Financing and market expertise
+
+### Advisory Services:
+- **Financial Planning**: Comprehensive wealth management
+- **Estate Planning**: Transfer strategies and tax optimization
+- **Business Planning**: Entity structure and operations
+- **Investment Analysis**: Market research and due diligence`
     ],
     highlights: [
-      'Real estate provides appreciation, cash flow, and tax benefits',
-      'Key metrics include cash flow, cap rate, and ROI',
-      'Due diligence is crucial before purchasing any investment property'
+      'Real estate offers unique benefits including cash flow, appreciation, tax advantages, and leverage',
+      'Thorough financial analysis and due diligence are essential for profitable investments',
+      'Location is the most important factor in real estate investment success',
+      'Effective property management is crucial for maintaining cash flow and property value',
+      'Advanced strategies like value-add and 1031 exchanges can significantly enhance returns'
     ],
-    bookmarks: [8, 24, 42],
-    progress: 55
+    bookmarks: [2, 4, 6],
+    progress: 25
   },
   {
-    id: '14',
+    id: '5',
     title: 'Advanced Stock Market Playbook',
     author: 'Prism Education Team',
     category: 'Investment Strategies',
-    description: 'Master advanced trading strategies and market analysis techniques for serious investors.',
+    description: 'Master advanced stock market strategies including options, technical analysis, and quantitative methods.',
     coverImage: '/images/books/advanced-stock-market.jpg',
-    pages: 350,
+    pages: 400,
+    readTime: '10 hours',
+    isBookmarked: true,
+    coverColor: 'bg-red-600',
     content: [
       `# Chapter 1: Advanced Market Analysis
 
-## Technical Analysis Fundamentals
+Successful stock market investing requires understanding both fundamental and technical analysis, as well as market psychology and macroeconomic factors.
 
-### Chart Patterns
-Chart patterns are formations that appear on price charts and can signal potential price movements.
+## Fundamental Analysis Deep Dive:
 
-#### Reversal Patterns
-- Head and Shoulders
-- Double Top/Bottom
-- Triple Top/Bottom
-- Rounding Top/Bottom
+### Financial Statement Analysis:
+- **Income Statement**: Revenue, expenses, and profitability trends
+- **Balance Sheet**: Assets, liabilities, and shareholder equity
+- **Cash Flow Statement**: Operating, investing, and financing cash flows
+- **Ratio Analysis**: Profitability, liquidity, leverage, and efficiency ratios
 
-#### Continuation Patterns
-- Triangles (Ascending, Descending, Symmetrical)
-- Flags and Pennants
-- Rectangles
-- Wedges
+### Valuation Methods:
+- **Discounted Cash Flow (DCF)**: Present value of future cash flows
+- **Price-to-Earnings (P/E)**: Stock price relative to earnings
+- **Price-to-Book (P/B)**: Stock price relative to book value
+- **Enterprise Value (EV)**: Market cap plus debt minus cash
 
-### Support and Resistance
-Support levels are price points where buying interest is strong enough to prevent further price declines. Resistance levels are price points where selling pressure prevents further price increases.
+### Competitive Analysis:
+- **Industry Structure**: Porter's Five Forces analysis
+- **Competitive Positioning**: Market share and competitive advantages
+- **Management Quality**: Track record and corporate governance
+- **Growth Prospects**: Market expansion and innovation capabilities
 
-### Moving Averages
-Moving averages smooth out price data to identify trends and potential entry/exit points.
+## Technical Analysis:
 
-#### Simple Moving Average (SMA)
-The average price over a specified number of periods.
+### Chart Patterns:
+- **Support and Resistance**: Key price levels where stocks tend to reverse
+- **Trend Lines**: Direction and strength of price movements
+- **Chart Patterns**: Head and shoulders, triangles, flags, pennants
+- **Volume Analysis**: Confirming price movements with trading volume
 
-#### Exponential Moving Average (EMA)
-Gives more weight to recent prices, making it more responsive to current market conditions.
+### Technical Indicators:
+- **Moving Averages**: Simple and exponential moving averages
+- **Relative Strength Index (RSI)**: Momentum oscillator for overbought/oversold
+- **MACD**: Moving Average Convergence Divergence for trend changes
+- **Bollinger Bands**: Volatility-based support and resistance levels
 
-### Technical Indicators
+### Market Breadth:
+- **Advance-Decline Line**: Tracking overall market direction
+- **New Highs/New Lows**: Market leadership and weakness indicators
+- **Volume Indicators**: On-Balance Volume (OBV), Accumulation/Distribution
+- **Sentiment Indicators**: Put/Call ratios, VIX, surveys`,
 
-#### Momentum Indicators
-- Relative Strength Index (RSI)
-- Moving Average Convergence Divergence (MACD)
-- Stochastic Oscillator
-- Williams %R
+      `# Chapter 2: Options Trading Strategies
 
-#### Trend Indicators
-- Moving Averages
-- Parabolic SAR
-- Average Directional Index (ADX)
+Options provide sophisticated investors with tools for income generation, risk management, and leveraged speculation.
 
-#### Volume Indicators
-- On-Balance Volume (OBV)
-- Volume Rate of Change
-- Accumulation/Distribution Line`,
+## Options Basics:
 
-      `# Chapter 2: Fundamental Analysis
+### Call Options:
+- **Right to Buy**: Option holder can purchase stock at strike price
+- **Bullish Strategy**: Profits when stock price rises above strike price
+- **Time Decay**: Options lose value as expiration approaches
+- **Leverage**: Small premium controls large number of shares
 
-## Financial Statement Analysis
+### Put Options:
+- **Right to Sell**: Option holder can sell stock at strike price
+- **Bearish Strategy**: Profits when stock price falls below strike price
+- **Insurance**: Protective puts limit downside risk
+- **Short Selling Alternative**: Bearish exposure without borrowing stock
 
-### Income Statement
-The income statement shows a company's revenues, expenses, and profits over a specific period.
+### Option Pricing:
+- **Intrinsic Value**: Difference between stock price and strike price
+- **Time Value**: Premium above intrinsic value
+- **Implied Volatility**: Market's expectation of future volatility
+- **Greeks**: Delta, gamma, theta, vega, and rho
 
-#### Key Metrics
-- Revenue Growth
-- Gross Profit Margin
-- Operating Profit Margin
-- Net Profit Margin
-- Earnings Per Share (EPS)
+## Income Generation Strategies:
 
-### Balance Sheet
-The balance sheet shows a company's assets, liabilities, and shareholders' equity at a specific point in time.
+### Covered Calls:
+- **Strategy**: Sell call options against owned stock
+- **Income**: Collect premium from option sales
+- **Risk**: Limited upside potential if stock rises above strike
+- **Best For**: Neutral to slightly bullish outlook
 
-#### Key Metrics
-- Current Ratio
-- Debt-to-Equity Ratio
-- Return on Equity (ROE)
-- Return on Assets (ROA)
-- Book Value Per Share
+### Cash-Secured Puts:
+- **Strategy**: Sell put options with cash to cover assignment
+- **Income**: Collect premium from put sales
+- **Risk**: Obligation to buy stock if assigned
+- **Best For**: Bullish outlook with willingness to own stock
 
-### Cash Flow Statement
-The cash flow statement shows how cash moves in and out of a company.
+### Iron Condors:
+- **Strategy**: Sell both calls and puts with defined risk
+- **Income**: Collect premium from both sides
+- **Risk**: Limited profit, unlimited loss if wrong direction
+- **Best For**: Range-bound markets with low volatility`,
 
-#### Key Metrics
-- Operating Cash Flow
-- Free Cash Flow
-- Cash Flow Per Share
-- Cash Conversion Cycle
+      `# Chapter 3: Quantitative Investment Methods
 
-## Valuation Methods
+Quantitative methods use mathematical models and statistical analysis to identify investment opportunities and manage risk.
 
-### Price-to-Earnings (P/E) Ratio
-The P/E ratio compares a company's stock price to its earnings per share.
+## Factor Investing:
 
-### Price-to-Book (P/B) Ratio
-The P/B ratio compares a company's stock price to its book value per share.
+### Value Factors:
+- **Price-to-Earnings**: Low P/E stocks tend to outperform
+- **Price-to-Book**: Low P/B stocks historically outperform
+- **Price-to-Sales**: Low P/S stocks show superior returns
+- **Enterprise Value Multiples**: EV/EBITDA, EV/Sales ratios
 
-### Price-to-Sales (P/S) Ratio
-The P/S ratio compares a company's stock price to its revenue per share.
+### Momentum Factors:
+- **Price Momentum**: Stocks with strong recent performance
+- **Earnings Momentum**: Companies with accelerating earnings
+- **Relative Strength**: Stocks outperforming their peers
+- **Mean Reversion**: Contrarian strategies for oversold stocks
 
-### Discounted Cash Flow (DCF)
-DCF analysis estimates the present value of a company's future cash flows.
+### Quality Factors:
+- **Profitability**: High ROE, ROA, and profit margins
+- **Growth**: Consistent revenue and earnings growth
+- **Stability**: Low earnings volatility and debt levels
+- **Management**: Strong corporate governance and capital allocation
 
-### Comparable Company Analysis
-Comparing a company's valuation metrics to similar companies in the same industry.`,
+## Statistical Arbitrage:
 
-      `# Chapter 3: Advanced Trading Strategies
+### Pairs Trading:
+- **Concept**: Trading relative value between correlated stocks
+- **Implementation**: Long one stock, short another in same industry
+- **Risk Management**: Stop losses and position sizing
+- **Market Neutral**: Profits from relative performance, not market direction
 
-## Options Trading
+### Mean Reversion:
+- **Strategy**: Betting that extreme moves will reverse
+- **Indicators**: RSI, Bollinger Bands, Z-scores
+- **Time Horizons**: Short to medium-term trades
+- **Risk**: Trend continuation can cause losses
 
-### Basic Options Concepts
-Options are financial derivatives that give the holder the right, but not the obligation, to buy or sell an underlying asset at a specified price within a certain time period.
+### Momentum Strategies:
+- **Strategy**: Betting that trends will continue
+- **Implementation**: Following price and earnings trends
+- **Risk Management**: Stop losses and trend following rules
+- **Performance**: Strong in trending markets, weak in choppy markets`,
 
-### Call Options
-Give the holder the right to buy an asset at a specified price.
+      `# Chapter 4: Risk Management and Portfolio Construction
 
-### Put Options
-Give the holder the right to sell an asset at a specified price.
+Effective risk management is crucial for long-term investment success and capital preservation.
 
-### Options Strategies
+## Risk Types:
 
-#### Covered Calls
-Selling call options on stocks you already own to generate additional income.
+### Market Risk:
+- **Systematic Risk**: Risk that affects entire market
+- **Beta**: Measure of stock's sensitivity to market movements
+- **Diversification**: Reducing risk through portfolio allocation
+- **Correlation**: Understanding relationships between assets
 
-#### Protective Puts
-Buying put options to protect against downside risk in your portfolio.
+### Specific Risk:
+- **Company-Specific**: Risks unique to individual companies
+- **Industry Risk**: Risks affecting entire sectors
+- **Geographic Risk**: Country and regional risks
+- **Currency Risk**: Exchange rate fluctuations
 
-#### Straddles
-Buying both a call and put option with the same strike price and expiration.
+### Liquidity Risk:
+- **Market Liquidity**: Ability to buy/sell without price impact
+- **Funding Liquidity**: Ability to meet cash flow needs
+- **Bid-Ask Spreads**: Transaction costs in trading
+- **Market Depth**: Volume available at different price levels
 
-#### Spreads
-Combining multiple options to limit risk and cost.
+## Portfolio Construction:
 
-## Advanced Portfolio Management
+### Asset Allocation:
+- **Strategic Allocation**: Long-term target allocation
+- **Tactical Allocation**: Short-term adjustments based on market conditions
+- **Risk Parity**: Equal risk contribution from each asset
+- **Factor Exposure**: Targeting specific risk factors
 
-### Modern Portfolio Theory (MPT)
-MPT is a framework for constructing portfolios that maximize expected return for a given level of risk.
+### Position Sizing:
+- **Kelly Criterion**: Optimal position size based on edge and odds
+- **Risk Parity**: Equal dollar risk from each position
+- **Volatility Targeting**: Adjusting size based on asset volatility
+- **Correlation Adjustment**: Reducing size for correlated positions
 
-### Risk Management
-- Position Sizing
-- Stop Losses
-- Diversification
-- Correlation Analysis
+### Rebalancing:
+- **Calendar Rebalancing**: Regular rebalancing on fixed schedule
+- **Threshold Rebalancing**: Rebalancing when allocations drift
+- **Volatility Targeting**: Rebalancing to maintain target volatility
+- **Tax Considerations**: Minimizing tax impact of rebalancing`,
 
-### Alternative Investments
-- Hedge Funds
-- Private Equity
-- Commodities
-- Cryptocurrencies
-- Real Estate Investment Trusts (REITs)
+      `# Chapter 5: Alternative Investments and Strategies
 
-## Market Psychology and Behavioral Finance
+Advanced investors often incorporate alternative investments to diversify risk and enhance returns.
 
-### Common Biases
-- Confirmation Bias
-- Overconfidence
-- Loss Aversion
-- Herding Behavior
-- Anchoring
+## Alternative Asset Classes:
 
-### Market Cycles
-- Bull Markets
-- Bear Markets
-- Recessions
-- Recovery Periods
+### Real Estate Investment Trusts (REITs):
+- **Diversification**: Exposure to real estate without direct ownership
+- **Liquidity**: Publicly traded, daily pricing
+- **Income**: High dividend yields from rental income
+- **Correlation**: Low correlation with traditional stocks and bonds
 
-### Sentiment Analysis
-- Fear and Greed Index
-- Put/Call Ratio
-- VIX (Volatility Index)
-- Investor Surveys`
+### Commodities:
+- **Inflation Hedge**: Protection against rising prices
+- **Diversification**: Low correlation with financial assets
+- **Volatility**: High volatility requires risk management
+- **Storage Costs**: Physical storage or futures roll costs
+
+### Private Equity:
+- **Illiquidity Premium**: Higher returns for lack of liquidity
+- **Active Management**: Professional management and value creation
+- **Long Time Horizons**: 7-10 year investment periods
+- **High Minimums**: Typically requires substantial capital
+
+### Hedge Funds:
+- **Alternative Strategies**: Long/short, market neutral, arbitrage
+- **Professional Management**: Sophisticated investment approaches
+- **Fee Structure**: High fees (2% management, 20% performance)
+- **Liquidity Restrictions**: Limited redemption periods
+
+## Advanced Strategies:
+
+### Long/Short Equity:
+- **Market Neutral**: Profiting from stock selection, not market direction
+- **Alpha Generation**: Skill-based returns independent of market
+- **Risk Management**: Hedging market exposure
+- **Capital Efficiency**: Using short sales to increase long exposure
+
+### Merger Arbitrage:
+- **Event-Driven**: Profiting from announced mergers and acquisitions
+- **Risk Assessment**: Analyzing deal completion probability
+- **Time Arbitrage**: Holding positions until deal completion
+- **Spread Capture**: Profiting from deal spreads
+
+### Distressed Investing:
+- **Value Opportunities**: Investing in troubled companies
+- **Turnaround Potential**: Identifying recovery opportunities
+- **High Risk/Reward**: Significant potential returns and losses
+- **Specialized Knowledge**: Requires deep credit and restructuring expertise`,
+
+      `# Chapter 6: Market Psychology and Behavioral Finance
+
+Understanding market psychology and behavioral biases is crucial for avoiding common investment mistakes.
+
+## Behavioral Biases:
+
+### Cognitive Biases:
+- **Confirmation Bias**: Seeking information that confirms existing beliefs
+- **Overconfidence**: Overestimating one's abilities and knowledge
+- **Anchoring**: Relying too heavily on first information received
+- **Availability Heuristic**: Overweighting recent or memorable information
+
+### Emotional Biases:
+- **Loss Aversion**: Feeling losses more acutely than equivalent gains
+- **Herding**: Following the crowd rather than independent analysis
+- **FOMO**: Fear of missing out on profitable opportunities
+- **Recency Bias**: Overweighting recent market events
+
+### Framing Effects:
+- **Mental Accounting**: Treating money differently based on source
+- **Endowment Effect**: Valuing owned assets more than equivalent assets
+- **Sunk Cost Fallacy**: Continuing investments based on past costs
+- **Status Quo Bias**: Preferring current situation over change
+
+## Market Psychology:
+
+### Market Cycles:
+- **Euphoria**: Excessive optimism and high valuations
+- **Denial**: Refusing to acknowledge market problems
+- **Fear**: Panic selling and extreme pessimism
+- **Despair**: Capitulation and market bottoms
+
+### Sentiment Indicators:
+- **Investor Surveys**: AAII, Investors Intelligence sentiment surveys
+- **Put/Call Ratios**: Options activity indicating fear or greed
+- **VIX**: Volatility index measuring market fear
+- **Margin Debt**: Leverage levels indicating speculation
+
+### Contrarian Strategies:
+- **Buying Fear**: Investing when others are selling
+- **Selling Greed**: Taking profits when others are buying
+- **Value Opportunities**: Finding bargains in unloved sectors
+- **Patience**: Waiting for opportunities rather than chasing performance`,
+
+      `# Chapter 7: Technology and Algorithmic Trading
+
+Modern investing increasingly relies on technology and algorithmic approaches for analysis, execution, and risk management.
+
+## Technology Tools:
+
+### Data Analysis:
+- **Financial Data Providers**: Bloomberg, Refinitiv, FactSet
+- **Alternative Data**: Satellite imagery, social media, web scraping
+- **Real-Time Feeds**: Live market data and news
+- **Historical Databases**: Long-term data for backtesting
+
+### Analytical Software:
+- **Excel/Google Sheets**: Basic analysis and modeling
+- **Python/R**: Statistical analysis and machine learning
+- **MATLAB**: Quantitative finance and engineering
+- **Specialized Platforms**: TradingView, MetaTrader, ThinkOrSwim
+
+### Execution Platforms:
+- **Direct Market Access**: Low-latency order routing
+- **Algorithmic Trading**: Automated execution strategies
+- **Smart Order Routing**: Finding best execution venues
+- **Risk Management Systems**: Real-time position monitoring
+
+## Algorithmic Strategies:
+
+### High-Frequency Trading:
+- **Speed**: Microsecond execution advantages
+- **Market Making**: Providing liquidity for profit
+- **Arbitrage**: Exploiting price differences across venues
+- **Regulation**: Increasing oversight and restrictions
+
+### Quantitative Models:
+- **Factor Models**: Systematic factor exposure strategies
+- **Machine Learning**: AI-driven pattern recognition
+- **Backtesting**: Historical validation of strategies
+- **Out-of-Sample Testing**: Validation on unseen data
+
+### Risk Management:
+- **Real-Time Monitoring**: Continuous position tracking
+- **Automated Stops**: Systematic loss limitation
+- **Correlation Analysis**: Understanding portfolio relationships
+- **Stress Testing**: Scenario analysis and worst-case planning
+
+## Future Trends:
+
+### Artificial Intelligence:
+- **Natural Language Processing**: Analyzing news and social media
+- **Computer Vision**: Processing satellite and drone imagery
+- **Deep Learning**: Complex pattern recognition
+- **Robo-Advisors**: Automated portfolio management
+
+### Blockchain and Cryptocurrency:
+- **Digital Assets**: New asset classes and investment opportunities
+- **Decentralized Finance**: Alternative financial infrastructure
+- **Smart Contracts**: Automated financial agreements
+- **Regulatory Evolution**: Changing legal and regulatory landscape
+
+### Sustainable Investing:
+- **ESG Integration**: Environmental, social, and governance factors
+- **Impact Investing**: Investments with measurable social impact
+- **Carbon Credits**: Trading environmental offsets
+- **Green Bonds**: Financing environmental projects`
     ],
     highlights: [
-      'Technical analysis uses chart patterns and indicators to predict price movements',
-      'Fundamental analysis evaluates company financials and valuation metrics',
-      'Options trading provides leverage and risk management opportunities'
+      'Advanced market analysis combines fundamental and technical analysis with market psychology',
+      'Options provide sophisticated tools for income generation and risk management',
+      'Quantitative methods use mathematical models to identify opportunities',
+      'Risk management is crucial for long-term investment success',
+      'Technology and algorithms are transforming modern investing'
     ],
-    bookmarks: [12, 28, 45],
-    progress: 30
+    bookmarks: [1, 3, 5, 7],
+    progress: 15
   }
 ]
 
@@ -2140,14 +1743,11 @@ export const categories = [
   'All',
   'Investment Strategies',
   'AI & Future of Work',
+  'Entrepreneurship & Startups',
+  'Real Estate Investing',
   'Modern Finance'
 ]
 
 export function getBookById(id: string): Book | undefined {
   return booksData.find(book => book.id === id)
-}
-
-export function getBooksByCategory(category: string): Book[] {
-  if (category === 'All') return booksData
-  return booksData.filter(book => book.category === category)
 }

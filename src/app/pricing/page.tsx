@@ -14,7 +14,7 @@ const plans = [
     description: "Complete AI portfolio intelligence platform",
     monthlyPrice: 150,
     yearlyPrice: 1500,
-    twoYearPrice: 2500,
+    twoYearPrice: 2750,
     features: [
       "AI Portfolio Assistant with live market data",
       "Advanced portfolio analytics & charts",

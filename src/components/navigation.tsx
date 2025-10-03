@@ -43,7 +43,9 @@ export function Navigation() {
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           <div className="flex items-center justify-between px-4">
-            <Logo size="md" showText={true} />
+            <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+              <Logo size="md" showText={true} />
+            </Link>
             <ThemeToggle />
           </div>
           <div className="mt-8 flex-grow flex flex-col">
@@ -84,7 +86,9 @@ export function Navigation() {
       {/* Mobile menu button */}
       <div className="md:hidden">
         <div className="flex items-center justify-between p-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-          <Logo size="md" showText={true} />
+          <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+            <Logo size="md" showText={true} />
+          </Link>
           <div className="flex items-center space-x-2">
             <ThemeToggle />
             <Button

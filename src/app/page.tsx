@@ -254,8 +254,12 @@ export default function HomePage() {
                 Prism is being built to empower investors. Our mission is to give you the tools to learn from mistakes, adapt quickly to market conditions, and always stay three steps ahead.
               </p>
               
-              <p className="text-lg sm:text-xl text-slate-400 leading-relaxed font-light mb-12">
+              <p className="text-lg sm:text-xl text-slate-400 leading-relaxed font-light mb-8">
                 Unlike traditional platforms, Prism combines AI-powered portfolio intelligence, gamified learning, and real-time insights so you can strategize and grow with confidence. Prism isn&apos;t just analytics—it&apos;s a movement to give power back to the investor.
+              </p>
+              
+              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-light mb-12">
+                Enhance your knowledge and master the keys of every investment opportunity through our complete financial literacy library.
               </p>
             </div>
 
@@ -319,14 +323,14 @@ export default function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl sm:text-6xl font-black mb-6 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-              Four Pillars of Excellence
+              Five Pillars of Excellence
             </h2>
             <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-              Built on the foundation of privacy, intelligence, strategy, and growth
+              Built on the foundation of privacy, intelligence, strategy, growth, and knowledge
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
             {[
               {
                 icon: Shield,
@@ -351,6 +355,12 @@ export default function HomePage() {
                 title: "Gamified Growth",
                 description: "Achievement system with 100+ badges and rewards",
                 gradient: "from-orange-500 to-red-500"
+              },
+              {
+                icon: Users,
+                title: "Library of Knowledge",
+                description: "A complete financial literacy library designed to help you master every corner of investing with structured lessons and real-world strategies",
+                gradient: "from-indigo-500 to-blue-600"
               }
             ].map((pillar, index) => (
               <motion.div

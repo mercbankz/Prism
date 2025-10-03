@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       prism_pro: {
         monthly: { price: 15000, currency: 'usd', interval: 'month' }, // $150 in cents
         yearly: { price: 150000, currency: 'usd', interval: 'year' },   // $1500 in cents
-        twoyear: { price: 250000, currency: 'usd', interval: 'year' }   // $2500 in cents (custom)
+        twoyear: { price: 275000, currency: 'usd', interval: 'year' }   // $2750 in cents (custom)
       }
     }
 
