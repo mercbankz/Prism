@@ -1,27 +1,19 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { Logo } from "@/components/shared/Logo"
 
 interface LoadingSpinnerProps {
   className?: string
-  size?: "sm" | "md" | "lg"
+  size?: "sm" | "md" | "lg" | "xl"
+  showText?: boolean
 }
 
-export function LoadingSpinner({ className, size = "md" }: LoadingSpinnerProps) {
-  const sizeClasses = {
-    sm: "w-4 h-4",
-    md: "w-6 h-6", 
-    lg: "w-8 h-8"
-  }
-
+export function LoadingSpinner({ className, size = "md", showText = false }: LoadingSpinnerProps) {
   return (
-    <div
-      className={cn(
-        "animate-spin rounded-full border-2 border-gray-300 border-t-primary",
-        sizeClasses[size],
-        className
-      )}
-    />
+    <div className={cn("flex flex-col items-center justify-center", className)}>
+      <Logo size={size} showText={showText} animated={true} />
+    </div>
   )
 }
 

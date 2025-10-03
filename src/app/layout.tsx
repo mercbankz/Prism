@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   creator: 'Prism',
   publisher: 'Prism',
   robots: 'index, follow',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -23,12 +28,21 @@ export const metadata: Metadata = {
     title: 'Prism — AI Portfolio Intelligence',
     description: 'Analyze. Learn. Play. Grow.',
     siteName: 'Prism',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Prism Logo',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Prism — AI Portfolio Intelligence',
     description: 'Analyze. Learn. Play. Grow.',
     creator: '@prism_app',
+    images: ['/logo.png'],
   },
 }
 

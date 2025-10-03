@@ -1,6 +1,6 @@
 "use client"
 
-import { ChessGame } from '@/components/chess-game'
+import { ChessGame } from '@/components/chess/ChessGame'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { motion } from 'framer-motion'
 import { 
@@ -112,7 +112,7 @@ export default function ChessPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <ChessGame onGameEnd={handleGameEnd} />
+        <ChessGame />
       </motion.div>
 
       {/* Statistics */}

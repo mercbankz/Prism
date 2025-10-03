@@ -1382,6 +1382,757 @@ Thoroughly research AI companies before investing.
     ],
     bookmarks: [5, 18, 32],
     progress: 45
+  },
+  {
+    id: '11',
+    title: 'AI & Coding Foundations',
+    author: 'Prism Education Team',
+    category: 'AI & Future of Work',
+    description: 'Master the fundamentals of artificial intelligence and programming to unlock career opportunities in tech and finance.',
+    coverImage: '/images/books/ai-coding-foundations.jpg',
+    pages: 320,
+    content: [
+      `# Chapter 1: Introduction to AI and Machine Learning
+
+## What is Artificial Intelligence?
+
+Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think and learn like humans. AI has become one of the most transformative technologies of our time, revolutionizing industries from healthcare to finance.
+
+## Types of AI
+
+### Narrow AI (Weak AI)
+Narrow AI is designed to perform a narrow task (e.g., facial recognition, internet searches, driving a car). Most AI in use today is narrow AI.
+
+### General AI (Strong AI)
+General AI would have the ability to understand, learn, and apply knowledge in different contexts, similar to human intelligence. This is still largely theoretical.
+
+### Super AI
+Super AI would surpass human intelligence in all areas and would be capable of improving itself.
+
+## Machine Learning Fundamentals
+
+Machine learning is a subset of AI that enables computers to learn and improve from experience without being explicitly programmed.
+
+### Supervised Learning
+Learning with labeled training data to make predictions about new, unseen data.
+
+### Unsupervised Learning
+Finding hidden patterns in data without labeled examples.
+
+### Reinforcement Learning
+Learning through interaction with an environment, receiving rewards or penalties for actions.
+
+## Applications in Finance
+
+### Algorithmic Trading
+AI algorithms can analyze market data and execute trades at optimal times.
+
+### Risk Assessment
+AI can assess credit risk, market risk, and operational risk more accurately than traditional methods.
+
+### Fraud Detection
+AI can identify unusual patterns that may indicate fraudulent activity.
+
+### Portfolio Optimization
+AI can optimize portfolio allocation based on risk tolerance and investment objectives.`,
+
+      `# Chapter 2: Programming Fundamentals
+
+## Why Learn to Code?
+
+### Career Opportunities
+- Software development
+- Data science
+- Web development
+- Mobile app development
+- AI and machine learning
+- Financial technology
+
+### Problem-Solving Skills
+Programming teaches logical thinking and problem-solving skills that are valuable in any career.
+
+### Automation
+Programming allows you to automate repetitive tasks, saving time and reducing errors.
+
+## Getting Started with Python
+
+### Why Python?
+- Simple and readable syntax
+- Versatile applications
+- Strong community support
+- Extensive libraries for AI and data science
+
+### Basic Python Concepts
+
+#### Variables and Data Types
+\`\`\`python
+# String
+name = "Alice"
+age = 25
+height = 5.6
+is_student = True
+
+print(name, age, height, is_student)
+\`\`\`
+
+#### Control Structures
+\`\`\`python
+# Conditional statements
+age = 18
+
+if age >= 18:
+    print("You are an adult")
+elif age >= 13:
+    print("You are a teenager")
+else:
+    print("You are a child")
+\`\`\`
+
+#### Functions
+\`\`\`python
+def greet(name):
+    return f"Hello, {name}!"
+
+message = greet("Alice")
+print(message)
+\`\`\``,
+
+      `# Chapter 3: AI Tools and Libraries
+
+## Essential Python Libraries
+
+### NumPy
+NumPy is the fundamental package for scientific computing with Python.
+
+\`\`\`python
+import numpy as np
+
+# Create arrays
+arr = np.array([1, 2, 3, 4, 5])
+print(arr)
+\`\`\`
+
+### Pandas
+Pandas is used for data manipulation and analysis.
+
+\`\`\`python
+import pandas as pd
+
+# Create DataFrame
+data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+df = pd.DataFrame(data)
+print(df)
+\`\`\`
+
+### Scikit-learn
+Scikit-learn is a machine learning library for Python.
+
+\`\`\`python
+from sklearn.linear_model import LinearRegression
+
+# Create and train model
+model = LinearRegression()
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+\`\`\`
+
+## Building Your First AI Project
+
+### Stock Price Prediction
+1. Collect historical stock data
+2. Clean and preprocess the data
+3. Split data into training and testing sets
+4. Train a machine learning model
+5. Make predictions and evaluate performance
+
+### Portfolio Optimization
+1. Define investment constraints
+2. Calculate expected returns and risk
+3. Use optimization algorithms
+4. Generate optimal portfolio weights
+5. Backtest the strategy`
+    ],
+    highlights: [
+      'AI is transforming industries from healthcare to finance',
+      'Python is the preferred language for AI and data science',
+      'Essential libraries include NumPy, Pandas, and Scikit-learn'
+    ],
+    bookmarks: [3, 12, 25],
+    progress: 30
+  },
+  {
+    id: '12',
+    title: 'Entrepreneurship & Startups',
+    author: 'Prism Education Team',
+    category: 'Modern Finance',
+    description: 'Learn how to build and scale successful startups in the modern economy.',
+    coverImage: '/images/books/entrepreneurship-startups.jpg',
+    pages: 280,
+    content: [
+      `# Chapter 1: The Entrepreneurial Mindset
+
+## What is Entrepreneurship?
+
+Entrepreneurship is the process of creating, launching, and running a new business venture. It involves identifying opportunities, taking risks, and creating value in the marketplace.
+
+## Characteristics of Successful Entrepreneurs
+
+### Vision and Passion
+Successful entrepreneurs have a clear vision of what they want to achieve and are passionate about their mission.
+
+### Risk Tolerance
+Entrepreneurs must be comfortable with uncertainty and willing to take calculated risks.
+
+### Resilience
+Building a business involves setbacks and failures. Entrepreneurs must be able to bounce back and learn from mistakes.
+
+### Adaptability
+The business environment is constantly changing. Entrepreneurs must be able to adapt their strategies and approaches.
+
+### Leadership Skills
+Entrepreneurs must be able to inspire and lead teams to achieve common goals.
+
+## The Entrepreneurial Process
+
+### 1. Opportunity Recognition
+Identifying gaps in the market or problems that need solving.
+
+### 2. Market Research
+Understanding customer needs, competition, and market dynamics.
+
+### 3. Business Planning
+Creating a comprehensive plan for how the business will operate and grow.
+
+### 4. Resource Acquisition
+Securing funding, talent, and other resources needed to launch the business.
+
+### 5. Launch and Growth
+Executing the business plan and scaling the operation.
+
+## Types of Entrepreneurship
+
+### Small Business Entrepreneurship
+Starting and running small, local businesses like restaurants, retail stores, or service providers.
+
+### Scalable Startup Entrepreneurship
+Building businesses with high growth potential that can scale nationally or globally.
+
+### Social Entrepreneurship
+Creating businesses that address social or environmental problems while generating profit.
+
+### Corporate Entrepreneurship
+Innovating within existing companies to create new products, services, or business models.`,
+
+      `# Chapter 2: From Idea to Business Plan
+
+## Validating Your Business Idea
+
+### Problem-Solution Fit
+Your business idea should solve a real problem that people are willing to pay to have solved.
+
+### Market Validation
+Test your idea with potential customers before investing significant resources.
+
+### Competitive Analysis
+Understand your competition and how your solution differs or improves upon existing options.
+
+## Components of a Business Plan
+
+### Executive Summary
+A brief overview of your business, including your mission, key products/services, and financial projections.
+
+### Company Description
+Detailed information about your company, including its legal structure, location, and history.
+
+### Market Analysis
+Research on your target market, including customer demographics, market size, and growth potential.
+
+### Organization and Management
+Information about your team, organizational structure, and management approach.
+
+### Service or Product Line
+Description of your products or services, including their benefits and competitive advantages.
+
+### Marketing and Sales
+Your strategy for reaching customers and generating sales.
+
+### Funding Request
+If you're seeking investment, include information about how much funding you need and how you'll use it.
+
+### Financial Projections
+Projections for revenue, expenses, and profitability over the next 3-5 years.
+
+## Funding Options
+
+### Bootstrapping
+Using personal savings and revenue to fund the business.
+
+### Friends and Family
+Raising money from personal networks.
+
+### Angel Investors
+Individual investors who provide capital in exchange for equity.
+
+### Venture Capital
+Professional investment firms that provide larger amounts of capital for high-growth businesses.
+
+### Bank Loans
+Traditional debt financing from banks and other financial institutions.
+
+### Crowdfunding
+Raising money from a large number of people through online platforms.`,
+
+      `# Chapter 3: Scaling and Growth
+
+## Growth Strategies
+
+### Market Penetration
+Increasing market share in existing markets with current products.
+
+### Market Development
+Expanding into new markets with existing products.
+
+### Product Development
+Creating new products for existing markets.
+
+### Diversification
+Developing new products for new markets.
+
+## Key Performance Indicators (KPIs)
+
+### Financial KPIs
+- Revenue growth
+- Profit margins
+- Cash flow
+- Customer acquisition cost (CAC)
+- Customer lifetime value (CLV)
+
+### Operational KPIs
+- Employee productivity
+- Customer satisfaction
+- Inventory turnover
+- Quality metrics
+
+### Marketing KPIs
+- Website traffic
+- Conversion rates
+- Social media engagement
+- Brand awareness
+
+## Common Challenges and Solutions
+
+### Cash Flow Management
+- Monitor cash flow regularly
+- Maintain adequate cash reserves
+- Negotiate favorable payment terms
+- Consider factoring or invoice financing
+
+### Talent Acquisition
+- Develop a strong company culture
+- Offer competitive compensation
+- Provide growth opportunities
+- Use multiple recruitment channels
+
+### Market Competition
+- Differentiate your offering
+- Focus on customer service
+- Innovate continuously
+- Build strong relationships
+
+### Scaling Operations
+- Invest in systems and processes
+- Hire the right people
+- Maintain quality standards
+- Plan for growth challenges`
+    ],
+    highlights: [
+      'Entrepreneurship involves identifying opportunities and creating value',
+      'Successful entrepreneurs have vision, passion, and resilience',
+      'Market validation is crucial before investing significant resources'
+    ],
+    bookmarks: [6, 22, 35],
+    progress: 40
+  },
+  {
+    id: '13',
+    title: 'Real Estate Investing Strategies',
+    author: 'Prism Education Team',
+    category: 'Modern Finance',
+    description: 'Comprehensive guide to building wealth through strategic real estate investments.',
+    coverImage: '/images/books/real-estate-strategies.jpg',
+    pages: 300,
+    content: [
+      `# Chapter 1: Introduction to Real Estate Investing
+
+## Why Invest in Real Estate?
+
+Real estate has long been considered one of the most reliable ways to build wealth. Here are the key benefits:
+
+### Appreciation
+Property values tend to increase over time, providing capital gains.
+
+### Cash Flow
+Rental properties can generate monthly income through rent payments.
+
+### Tax Benefits
+Real estate investors enjoy various tax deductions and benefits.
+
+### Inflation Hedge
+Real estate often keeps pace with or exceeds inflation.
+
+### Leverage
+You can control a valuable asset with a relatively small down payment.
+
+## Types of Real Estate Investments
+
+### Residential Properties
+- Single-family homes
+- Multi-family properties (duplexes, triplexes, fourplexes)
+- Condominiums and townhouses
+
+### Commercial Properties
+- Office buildings
+- Retail spaces
+- Industrial properties
+- Warehouses
+
+### Specialized Properties
+- Hotels and hospitality
+- Self-storage facilities
+- Mobile home parks
+- Senior living facilities
+
+## Investment Strategies
+
+### Buy and Hold
+Purchase properties to rent out for long-term appreciation and cash flow.
+
+### Fix and Flip
+Buy distressed properties, renovate them, and sell for a profit.
+
+### Wholesaling
+Find discounted properties and assign the contract to other investors for a fee.
+
+### Real Estate Investment Trusts (REITs)
+Invest in publicly traded companies that own and manage real estate.
+
+### Real Estate Crowdfunding
+Pool money with other investors to buy larger properties.`,
+
+      `# Chapter 2: Analyzing Investment Properties
+
+## Key Metrics for Real Estate Investing
+
+### Cash Flow
+Monthly rental income minus all expenses (mortgage, taxes, insurance, maintenance, vacancy allowance).
+
+### Cash-on-Cash Return
+Annual cash flow divided by the initial cash investment.
+
+### Cap Rate (Capitalization Rate)
+Net operating income divided by the property's purchase price.
+
+### Gross Rent Multiplier
+Purchase price divided by annual gross rental income.
+
+### Return on Investment (ROI)
+Total return (cash flow + appreciation) divided by total investment.
+
+## Property Analysis Process
+
+### 1. Location Analysis
+- Neighborhood quality and trends
+- Proximity to amenities
+- School district quality
+- Crime rates
+- Future development plans
+
+### 2. Financial Analysis
+- Purchase price and financing terms
+- Rental income potential
+- Operating expenses
+- Maintenance and repair costs
+- Tax implications
+
+### 3. Market Analysis
+- Local market trends
+- Comparable property sales
+- Rental market conditions
+- Economic indicators
+
+### 4. Physical Inspection
+- Property condition
+- Required repairs or improvements
+- Maintenance history
+- Systems and appliances
+
+## Due Diligence Checklist
+
+- Verify property ownership and title
+- Review property tax records
+- Check for liens or encumbrances
+- Inspect all major systems
+- Review rental history and current leases
+- Analyze comparable properties
+- Calculate all financial metrics
+- Consider exit strategies`,
+
+      `# Chapter 3: Advanced Real Estate Strategies
+
+## Creative Financing Methods
+
+### Subject-To Deals
+Taking over existing mortgage payments without assuming the loan.
+
+### Lease Options
+Renting with the option to purchase at a later date.
+
+### Wraparound Mortgages
+Creating a new mortgage that "wraps around" an existing mortgage.
+
+### Private Money Lenders
+Individuals who lend money for real estate investments.
+
+### Hard Money Lenders
+Short-term loans for fix-and-flip projects.
+
+## Tax Strategies
+
+### 1031 Exchanges
+Deferring capital gains taxes by exchanging one property for another.
+
+### Depreciation
+Taking tax deductions for the wear and tear on investment properties.
+
+### Cost Segregation
+Accelerating depreciation by classifying components separately.
+
+### Opportunity Zones
+Investing in designated low-income areas for tax benefits.
+
+## Building a Real Estate Portfolio
+
+### Start Small
+Begin with single-family homes or small multi-family properties.
+
+### Diversify
+Invest in different types of properties and markets.
+
+### Reinvest Profits
+Use cash flow and appreciation to acquire additional properties.
+
+### Build Systems
+Create processes for finding, analyzing, and managing properties.
+
+### Network
+Build relationships with other investors, agents, and service providers.
+
+## Risk Management
+
+### Insurance
+Adequate property, liability, and loss of income insurance.
+
+### Legal Structure
+Consider LLCs or other entities for liability protection.
+
+### Market Diversification
+Don't put all your investments in one market.
+
+### Cash Reserves
+Maintain adequate reserves for vacancies and repairs.
+
+### Professional Team
+Work with qualified attorneys, accountants, and property managers.`
+    ],
+    highlights: [
+      'Real estate provides appreciation, cash flow, and tax benefits',
+      'Key metrics include cash flow, cap rate, and ROI',
+      'Due diligence is crucial before purchasing any investment property'
+    ],
+    bookmarks: [8, 24, 42],
+    progress: 55
+  },
+  {
+    id: '14',
+    title: 'Advanced Stock Market Playbook',
+    author: 'Prism Education Team',
+    category: 'Investment Strategies',
+    description: 'Master advanced trading strategies and market analysis techniques for serious investors.',
+    coverImage: '/images/books/advanced-stock-market.jpg',
+    pages: 350,
+    content: [
+      `# Chapter 1: Advanced Market Analysis
+
+## Technical Analysis Fundamentals
+
+### Chart Patterns
+Chart patterns are formations that appear on price charts and can signal potential price movements.
+
+#### Reversal Patterns
+- Head and Shoulders
+- Double Top/Bottom
+- Triple Top/Bottom
+- Rounding Top/Bottom
+
+#### Continuation Patterns
+- Triangles (Ascending, Descending, Symmetrical)
+- Flags and Pennants
+- Rectangles
+- Wedges
+
+### Support and Resistance
+Support levels are price points where buying interest is strong enough to prevent further price declines. Resistance levels are price points where selling pressure prevents further price increases.
+
+### Moving Averages
+Moving averages smooth out price data to identify trends and potential entry/exit points.
+
+#### Simple Moving Average (SMA)
+The average price over a specified number of periods.
+
+#### Exponential Moving Average (EMA)
+Gives more weight to recent prices, making it more responsive to current market conditions.
+
+### Technical Indicators
+
+#### Momentum Indicators
+- Relative Strength Index (RSI)
+- Moving Average Convergence Divergence (MACD)
+- Stochastic Oscillator
+- Williams %R
+
+#### Trend Indicators
+- Moving Averages
+- Parabolic SAR
+- Average Directional Index (ADX)
+
+#### Volume Indicators
+- On-Balance Volume (OBV)
+- Volume Rate of Change
+- Accumulation/Distribution Line`,
+
+      `# Chapter 2: Fundamental Analysis
+
+## Financial Statement Analysis
+
+### Income Statement
+The income statement shows a company's revenues, expenses, and profits over a specific period.
+
+#### Key Metrics
+- Revenue Growth
+- Gross Profit Margin
+- Operating Profit Margin
+- Net Profit Margin
+- Earnings Per Share (EPS)
+
+### Balance Sheet
+The balance sheet shows a company's assets, liabilities, and shareholders' equity at a specific point in time.
+
+#### Key Metrics
+- Current Ratio
+- Debt-to-Equity Ratio
+- Return on Equity (ROE)
+- Return on Assets (ROA)
+- Book Value Per Share
+
+### Cash Flow Statement
+The cash flow statement shows how cash moves in and out of a company.
+
+#### Key Metrics
+- Operating Cash Flow
+- Free Cash Flow
+- Cash Flow Per Share
+- Cash Conversion Cycle
+
+## Valuation Methods
+
+### Price-to-Earnings (P/E) Ratio
+The P/E ratio compares a company's stock price to its earnings per share.
+
+### Price-to-Book (P/B) Ratio
+The P/B ratio compares a company's stock price to its book value per share.
+
+### Price-to-Sales (P/S) Ratio
+The P/S ratio compares a company's stock price to its revenue per share.
+
+### Discounted Cash Flow (DCF)
+DCF analysis estimates the present value of a company's future cash flows.
+
+### Comparable Company Analysis
+Comparing a company's valuation metrics to similar companies in the same industry.`,
+
+      `# Chapter 3: Advanced Trading Strategies
+
+## Options Trading
+
+### Basic Options Concepts
+Options are financial derivatives that give the holder the right, but not the obligation, to buy or sell an underlying asset at a specified price within a certain time period.
+
+### Call Options
+Give the holder the right to buy an asset at a specified price.
+
+### Put Options
+Give the holder the right to sell an asset at a specified price.
+
+### Options Strategies
+
+#### Covered Calls
+Selling call options on stocks you already own to generate additional income.
+
+#### Protective Puts
+Buying put options to protect against downside risk in your portfolio.
+
+#### Straddles
+Buying both a call and put option with the same strike price and expiration.
+
+#### Spreads
+Combining multiple options to limit risk and cost.
+
+## Advanced Portfolio Management
+
+### Modern Portfolio Theory (MPT)
+MPT is a framework for constructing portfolios that maximize expected return for a given level of risk.
+
+### Risk Management
+- Position Sizing
+- Stop Losses
+- Diversification
+- Correlation Analysis
+
+### Alternative Investments
+- Hedge Funds
+- Private Equity
+- Commodities
+- Cryptocurrencies
+- Real Estate Investment Trusts (REITs)
+
+## Market Psychology and Behavioral Finance
+
+### Common Biases
+- Confirmation Bias
+- Overconfidence
+- Loss Aversion
+- Herding Behavior
+- Anchoring
+
+### Market Cycles
+- Bull Markets
+- Bear Markets
+- Recessions
+- Recovery Periods
+
+### Sentiment Analysis
+- Fear and Greed Index
+- Put/Call Ratio
+- VIX (Volatility Index)
+- Investor Surveys`
+    ],
+    highlights: [
+      'Technical analysis uses chart patterns and indicators to predict price movements',
+      'Fundamental analysis evaluates company financials and valuation metrics',
+      'Options trading provides leverage and risk management opportunities'
+    ],
+    bookmarks: [12, 28, 45],
+    progress: 30
   }
 ]
 

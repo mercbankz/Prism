@@ -39,6 +39,7 @@
     "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
     "chess.js": "^1.4.0",
+    "chessboardjsx": "^2.4.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "crypto-js": "^4.2.0",
