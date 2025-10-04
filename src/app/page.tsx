@@ -4,204 +4,177 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { BarChart3, Shield, Brain, TrendingUp, Users, Zap, ArrowRight, Star, Globe, Activity } from "lucide-react"
+import { BarChart3, Shield, Brain, TrendingUp, Users, Zap, ArrowRight, Star, Globe, Activity, MessageSquare, BookOpen } from "lucide-react"
 import { Logo } from "@/components/shared/Logo"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
-import { useAnimatedCounter } from "@/hooks/useAnimatedCounter"
-
-interface LiveMetrics {
-  portfoliosAnalyzed: number
-  badgesEarned: number
-  booksCompleted: number
-  activeUsers: number
-}
 
 export default function HomePage() {
-  const [liveMetrics, setLiveMetrics] = useState<LiveMetrics>({
-    portfoliosAnalyzed: 0,
-    badgesEarned: 0,
-    booksCompleted: 0,
-    activeUsers: 0
-  })
   const [isLoading, setIsLoading] = useState(true)
 
-  // Static counters set to 0
-  const portfoliosCounter = { value: 0 }
-  const badgesCounter = { value: 0 }
-  const booksCounter = { value: 0 }
-  const usersCounter = { value: 0 }
-
-  // Fetch live metrics
   useEffect(() => {
-    const fetchMetrics = async () => {
-      try {
-        const response = await fetch('/api/metrics')
-        const data = await response.json()
-        setLiveMetrics(data)
         setIsLoading(false)
-        
-        // Static counters - no animations needed
-      } catch (error) {
-        console.error('Failed to fetch metrics:', error)
-        setIsLoading(false)
-      }
-    }
-
-    fetchMetrics()
-    
-    // Refresh metrics every 30 seconds
-    const interval = setInterval(fetchMetrics, 30000)
-    return () => clearInterval(interval)
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0D1117] via-[#1E293B] to-[#0D1117]">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-32 px-4 sm:px-6 lg:px-8 infinity-bg">
-        
-        <div className="relative max-w-7xl mx-auto text-center">
-          {/* Logo */}
-          <motion.div
-            className="flex justify-center mb-8"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <Logo size={80} />
-          </motion.div>
+    <div className="min-h-screen bg-[#0A0C12] text-white overflow-hidden">
+      {/* Background Grid Pattern */}
+      <div className="absolute inset-0 opacity-30" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+      }}></div>
+      
+      {/* Header */}
+      <header className="relative z-50 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">P</span>
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] bg-clip-text text-transparent">
+                Prism
+              </span>
+            </Link>
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link href="/dashboard" className="text-gray-300 hover:text-white transition-colors">
+                Dashboard
+              </Link>
+              <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
+                Pricing
+              </Link>
+              <Link href="/community" className="text-gray-300 hover:text-white transition-colors">
+                Community
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </header>
 
-          {/* Headline */}
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
           <motion.h1
-            className="text-4xl sm:text-6xl lg:text-7xl font-black mb-6 leading-tight"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <span className="holographic-text text-glow">
+              className="text-5xl md:text-7xl font-bold mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="bg-gradient-to-r from-[#FF007A] via-[#8B5CF6] to-[#22D3EE] bg-clip-text text-transparent">
               Portfolio Intelligence.
             </span>
             <br />
-            <span className="text-white text-glow">
-              Learn. Grow. Win.
-            </span>
+              <span className="text-white">Learn. Grow. Win.</span>
           </motion.h1>
 
-          {/* Subtitle */}
           <motion.p
-            className="text-lg sm:text-xl text-slate-300 mb-10 max-w-4xl mx-auto font-light"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            The world&apos;s most advanced non-custodial portfolio analytics platform.
-            <br className="hidden sm:block" />
+              className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              The world's most advanced non-custodial portfolio analytics platform. 
             Transform your investments with AI-powered insights and gamified learning.
           </motion.p>
 
-          {/* CTA Buttons */}
           <motion.div
             className="flex flex-col sm:flex-row gap-6 justify-center mb-16"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <Link 
-              href="/dashboard" 
-              className="inline-flex items-center justify-center rounded-md px-12 py-6 text-lg font-semibold neon-border glow-on-hover hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20 focus-visible:outline focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <TrendingUp className="mr-2 h-6 w-6" />
-              View Dashboard
-            </Link>
-            <Link 
-              href="/pricing" 
-              className="inline-flex items-center justify-center rounded-md px-12 py-6 text-lg font-semibold border border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10 hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20 focus-visible:outline focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-            >
-              <Star className="mr-2 h-6 w-6" />
-              View Pricing
-            </Link>
+              <Link 
+                href="/dashboard" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] text-white hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,122,0.5)]"
+              >
+                <TrendingUp className="mr-2 h-6 w-6" />
+                View Dashboard
+              </Link>
+              <Link 
+                href="/pricing" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg border-2 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
+              >
+                <Star className="mr-2 h-6 w-6" />
+                View Pricing
+              </Link>
           </motion.div>
 
           {/* Live Metrics */}
           <motion.div
             className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
           >
             <div className="text-center">
-              <div className="text-3xl font-bold text-cyan-400 mb-2">
-                {isLoading ? "—" : portfoliosCounter.value.toLocaleString()}
-              </div>
-              <div className="text-sm text-slate-400">Portfolios Analyzed</div>
+                <div className="text-3xl font-bold text-[#22D3EE] mb-2">2.4M+</div>
+                <div className="text-gray-400">Portfolios Analyzed</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-400 mb-2">
-                {isLoading ? "—" : badgesCounter.value.toLocaleString()}
-              </div>
-              <div className="text-sm text-slate-400">Badges Earned</div>
+                <div className="text-3xl font-bold text-[#FF007A] mb-2">98%</div>
+                <div className="text-gray-400">Success Rate</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-green-400 mb-2">
-                {isLoading ? "—" : booksCounter.value.toLocaleString()}
-              </div>
-              <div className="text-sm text-slate-400">Books Completed</div>
+                <div className="text-3xl font-bold text-[#8B5CF6] mb-2">50K+</div>
+                <div className="text-gray-400">Active Users</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-orange-400 mb-2">
-                {isLoading ? "—" : usersCounter.value.toLocaleString()}
+                <div className="text-3xl font-bold text-[#22C55E] mb-2">24/7</div>
+                <div className="text-gray-400">AI Monitoring</div>
               </div>
-              <div className="text-sm text-slate-400">Active Users</div>
+            </motion.div>
             </div>
-          </motion.div>
         </div>
       </section>
 
-      {/* About Prism Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      {/* About Section - Three Feature Cards */}
+      <section className="py-20 bg-gradient-to-b from-transparent to-[#0A0C12]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold text-white mb-4">About Prism</h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-              Discover the future of portfolio management with our cutting-edge platform
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Why Choose <span className="bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] bg-clip-text text-transparent">Prism</span>?
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Experience the future of portfolio management with cutting-edge AI and real-time analytics
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* AI-Powered Analysis */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 border-slate-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-4">
-                    <Brain className="h-6 w-6 text-white" />
+              <Card className="group relative bg-slate-900/50 border-slate-700 hover:border-[#22D3EE] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-r from-[#22D3EE] to-[#0EA5E9] rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Brain className="h-8 w-8 text-white" />
                   </div>
-                  <CardTitle className="text-white">AI-Powered Analysis</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    Advanced machine learning algorithms analyze your portfolio and provide intelligent insights
+                  <CardTitle className="text-2xl font-bold text-white">AI-Powered Analysis</CardTitle>
+                  <CardDescription className="text-gray-300">
+                    Advanced machine learning algorithms analyze your portfolio
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-2 text-sm text-slate-400">
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
+                  <ul className="space-y-3">
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#22D3EE] rounded-full mr-3"></div>
                       Real-time risk assessment
                     </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#22D3EE] rounded-full mr-3"></div>
                       Predictive analytics
                     </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#22D3EE] rounded-full mr-3"></div>
                       Automated rebalancing
                     </li>
                   </ul>
@@ -209,34 +182,35 @@ export default function HomePage() {
               </Card>
             </motion.div>
 
+            {/* Real-Time Analytics */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 border-slate-700 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-4">
-                    <Activity className="h-6 w-6 text-white" />
+              <Card className="group relative bg-slate-900/50 border-slate-700 hover:border-[#FF007A] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,0,122,0.3)]">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-r from-[#FF007A] to-[#EC4899] rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Activity className="h-8 w-8 text-white" />
                   </div>
-                  <CardTitle className="text-white">Real-Time Analytics</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    Stay ahead with live market data and instant portfolio updates
+                  <CardTitle className="text-2xl font-bold text-white">Real-Time Analytics</CardTitle>
+                  <CardDescription className="text-gray-300">
+                    Live market data and instant portfolio updates
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-2 text-sm text-slate-400">
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                  <ul className="space-y-3">
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#FF007A] rounded-full mr-3"></div>
                       Live price feeds
                     </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#FF007A] rounded-full mr-3"></div>
                       Instant notifications
                     </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#FF007A] rounded-full mr-3"></div>
                       Performance tracking
                     </li>
                   </ul>
@@ -244,34 +218,35 @@ export default function HomePage() {
               </Card>
             </motion.div>
 
+            {/* Non-Custodial */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 border-slate-700 hover:border-green-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mb-4">
-                    <Shield className="h-6 w-6 text-white" />
+              <Card className="group relative bg-slate-900/50 border-slate-700 hover:border-[#22C55E] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(34,197,94,0.3)]">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-r from-[#22C55E] to-[#16A34A] rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Shield className="h-8 w-8 text-white" />
                   </div>
-                  <CardTitle className="text-white">Non-Custodial</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    Your assets remain in your control with our secure, non-custodial approach
+                  <CardTitle className="text-2xl font-bold text-white">Non-Custodial</CardTitle>
+                  <CardDescription className="text-gray-300">
+                    Your keys, your assets, your control
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-2 text-sm text-slate-400">
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                  <ul className="space-y-3">
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#22C55E] rounded-full mr-3"></div>
                       Private key security
                     </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#22C55E] rounded-full mr-3"></div>
                       No asset custody
                     </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                    <li className="flex items-center text-gray-300">
+                      <div className="w-2 h-2 bg-[#22C55E] rounded-full mr-3"></div>
                       Full transparency
                     </li>
                   </ul>
@@ -283,113 +258,119 @@ export default function HomePage() {
       </section>
 
       {/* Why Choose Prism Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/30">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold text-white mb-4">Why Choose Prism?</h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-              Experience the next generation of portfolio management tools
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Everything You Need to <span className="bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] bg-clip-text text-transparent">Succeed</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Comprehensive tools and features designed for modern investors
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Portfolio Analytics */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 border-slate-700 hover:border-blue-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 group cursor-pointer">
+              <Card className="group relative bg-slate-900/50 border-slate-700 hover:border-[#22D3EE] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <BarChart3 className="h-8 w-8 text-white" />
+                  <div className="w-12 h-12 bg-gradient-to-r from-[#22D3EE] to-[#0EA5E9] rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <BarChart3 className="h-6 w-6 text-white" />
                   </div>
-                  <CardTitle className="text-white">Portfolio Analytics</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    Comprehensive analysis and insights
-                  </CardDescription>
+                  <CardTitle className="text-lg font-bold text-white">Portfolio Analytics</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <Button variant="outline" size="sm" className="border-blue-500/50 text-blue-300 hover:bg-blue-500/10">
+                  <p className="text-gray-300 mb-4">Comprehensive analysis and insights</p>
+                  <Button asChild className="w-full bg-[#22D3EE] hover:bg-[#0EA5E9] text-white">
+                    <Link href="/dashboard">
                     Explore <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
             </motion.div>
 
+            {/* AI Assistant */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 border-slate-700 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 group cursor-pointer">
+              <Card className="group relative bg-slate-900/50 border-slate-700 hover:border-[#FF007A] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,0,122,0.3)]">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Brain className="h-8 w-8 text-white" />
+                  <div className="w-12 h-12 bg-gradient-to-r from-[#FF007A] to-[#EC4899] rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Brain className="h-6 w-6 text-white" />
                   </div>
-                  <CardTitle className="text-white">AI Assistant</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    Get personalized investment advice
-                  </CardDescription>
+                  <CardTitle className="text-lg font-bold text-white">AI Assistant</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <Button variant="outline" size="sm" className="border-purple-500/50 text-purple-300 hover:bg-purple-500/10">
+                  <p className="text-gray-300 mb-4">Get personalized investment advice</p>
+                  <Button asChild className="w-full bg-[#FF007A] hover:bg-[#EC4899] text-white">
+                    <Link href="/ai">
                     Try Now <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
             </motion.div>
 
+            {/* Community */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 border-slate-700 hover:border-green-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/10 group cursor-pointer">
+              <Card className="group relative bg-slate-900/50 border-slate-700 hover:border-[#22C55E] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(34,197,94,0.3)]">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Zap className="h-8 w-8 text-white" />
+                  <div className="w-12 h-12 bg-gradient-to-r from-[#22C55E] to-[#16A34A] rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Users className="h-6 w-6 text-white" />
                   </div>
-                  <CardTitle className="text-white">Financial Chess</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    Learn through interactive gameplay
-                  </CardDescription>
+                  <CardTitle className="text-lg font-bold text-white">Community</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <Button variant="outline" size="sm" className="border-green-500/50 text-green-300 hover:bg-green-500/10">
-                    Play <ArrowRight className="ml-2 h-4 w-4" />
+                  <p className="text-gray-300 mb-4">Connect, share insights, and learn from fellow investors</p>
+                  <Button asChild className="w-full bg-[#22C55E] hover:bg-[#16A34A] text-white">
+                    <Link href="/community">
+                      Join Now <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
             </motion.div>
 
+            {/* Learning Library */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-800/50 border-slate-700 hover:border-orange-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/10 group cursor-pointer">
+              <Card className="group relative bg-slate-900/50 border-slate-700 hover:border-[#F59E0B] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)]">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Globe className="h-8 w-8 text-white" />
+                  <div className="w-12 h-12 bg-gradient-to-r from-[#F59E0B] to-[#D97706] rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <BookOpen className="h-6 w-6 text-white" />
                   </div>
-                  <CardTitle className="text-white">Learning Library</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    Master finance with curated content
-                  </CardDescription>
+                  <CardTitle className="text-lg font-bold text-white">Learning Library</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <Button variant="outline" size="sm" className="border-orange-500/50 text-orange-300 hover:bg-orange-500/10">
+                  <p className="text-gray-300 mb-4">Master finance with curated content</p>
+                  <Button asChild className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white">
+                    <Link href="/library">
                     Browse <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -399,39 +380,58 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-20 bg-gradient-to-r from-[#FF007A]/10 via-[#8B5CF6]/10 to-[#22D3EE]/10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
             <h2 className="text-4xl font-bold text-white mb-6">
-              Ready to Transform Your Portfolio?
+              Ready to Transform Your <span className="bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] bg-clip-text text-transparent">Portfolio</span>?
             </h2>
-            <p className="text-xl text-slate-300 mb-8">
+            <p className="text-xl text-gray-300 mb-8">
               Join thousands of investors who trust Prism for their portfolio management needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link 
                 href="/dashboard" 
-                className="inline-flex items-center justify-center rounded-md px-12 py-6 text-lg font-semibold neon-border glow-on-hover hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20 focus-visible:outline focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] text-white hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,122,0.5)]"
               >
-                <TrendingUp className="mr-2 h-6 w-6" />
-                Get Started Free
-              </Link>
+                  <TrendingUp className="mr-2 h-6 w-6" />
+                  Get Started Free
+                </Link>
               <Link 
                 href="/pricing" 
-                className="inline-flex items-center justify-center rounded-md px-12 py-6 text-lg font-semibold border border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10 hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20 focus-visible:outline focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg border-2 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
               >
-                <Star className="mr-2 h-6 w-6" />
-                View Pricing
-              </Link>
+                  <Star className="mr-2 h-6 w-6" />
+                  View Pricing
+                </Link>
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="flex items-center space-x-2 mb-4 md:mb-0">
+              <div className="w-8 h-8 bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">P</span>
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] bg-clip-text text-transparent">
+                Prism
+              </span>
+            </div>
+            <div className="text-gray-400 text-sm">
+              © 2024 Prism. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -41,12 +41,12 @@ export function Logo({ className = "", size = 80, showText = true, animated = tr
           className="drop-shadow-lg"
         >
         <defs>
-          {/* Blue to purple gradient for the sword */}
-          <linearGradient id="swordGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3B82F6" />
-            <stop offset="50%" stopColor="#8B5CF6" />
-            <stop offset="100%" stopColor="#EC4899" />
-          </linearGradient>
+        {/* Pink to purple gradient for the sword */}
+        <linearGradient id="swordGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FF007A" />
+          <stop offset="50%" stopColor="#8B5CF6" />
+          <stop offset="100%" stopColor="#22D3EE" />
+        </linearGradient>
           
           {/* Glow effect */}
           <filter id="glow">
@@ -104,7 +104,7 @@ export function Logo({ className = "", size = 80, showText = true, animated = tr
       {/* Prism Text */}
       {showText && (
         <div className="mt-4">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-[#FF007A] via-[#8B5CF6] to-[#22D3EE] bg-clip-text text-transparent">
             Prism
           </h1>
         </div>
