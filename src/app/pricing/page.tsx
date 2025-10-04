@@ -263,15 +263,97 @@ export default function PricingPage() {
                 Start Your Journey
               </Link>
             </Button>
-            <Button 
-              asChild
-              variant="outline"
-              className="border-2 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white px-8 py-4 text-lg hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
+            <button 
+              onClick={() => {
+                document.getElementById('why-prism-exists')?.scrollIntoView({ 
+                  behavior: 'smooth' 
+                })
+              }}
+              className="border-2 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white px-8 py-4 text-lg hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] rounded-lg"
             >
-              <Link href="/">
-                Learn More
-              </Link>
-            </Button>
+              Learn More
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Why Prism Exists Section */}
+        <motion.div 
+          id="why-prism-exists"
+          className="mt-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-[#E5E8FF] mb-4">
+              Why Choose <span className="bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] bg-clip-text text-transparent">Prism Guardian</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              A revolution in portfolio analytics — built to give power back to investors.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Card className="bg-slate-900/50 border-slate-700 hover:border-[#FF007A] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,122,0.3)]">
+                <CardHeader>
+                  <CardTitle className="text-[#E5E8FF] text-xl">Why Prism Was Created</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#E5E8FF]/70 leading-relaxed">
+                    Prism was born from a vision to bring transparency, accuracy, and AI-assisted portfolio mastery to every investor. 
+                    We believe that sophisticated portfolio analysis shouldn't be reserved for institutional players — 
+                    every individual investor deserves access to professional-grade insights and tools.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <Card className="bg-slate-900/50 border-slate-700 hover:border-[#8B5CF6] transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+                <CardHeader>
+                  <CardTitle className="text-[#E5E8FF] text-xl">Prism's Mission</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#E5E8FF]/70 leading-relaxed">
+                    We're leading the next evolution in portfolio analysis through non-custodial AI, user ownership, and predictive analytics. 
+                    Our mission is to democratize investment intelligence by making complex data analysis accessible, 
+                    understandable, and actionable for investors of all levels.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <Card className="bg-slate-900/50 border-slate-700 hover:border-[#22D3EE] transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+                <CardHeader>
+                  <CardTitle className="text-[#E5E8FF] text-xl">Our Impact</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#E5E8FF]/70 leading-relaxed">
+                    Prism is transforming investment intelligence by automating complex data analysis and making professional-grade insights 
+                    accessible to everyone. We're empowering investors to make smarter decisions, optimize their portfolios, 
+                    and achieve their financial goals with confidence and clarity.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </motion.div>
       </div>

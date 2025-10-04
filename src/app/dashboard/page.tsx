@@ -25,7 +25,8 @@ import {
   Tooltip,
   Legend,
   Area,
-  AreaChart
+  AreaChart,
+  ReferenceLine
 } from "recharts"
 import { motion } from "framer-motion"
 import { 
@@ -59,7 +60,8 @@ const generatePortfolioData = (range: string) => {
   
   // Market cycle parameters for realistic fluctuations
   const longCycle = Math.sin((Date.now() / (365 * 24 * 60 * 60 * 1000)) * 2 * Math.PI) * 0.0003
-  const mediumCycle = Math.sin((Date.now() / (90 * 24 * 60 * 60 * 1000)) * 2 * Math.PI) * 0.0005
+  const 
+  mediumCycle = Math.sin((Date.now() / (90 * 24 * 60 * 60 * 1000)) * 2 * Math.PI) * 0.0005
   const shortCycle = Math.sin((Date.now() / (30 * 24 * 60 * 60 * 1000)) * 2 * Math.PI) * 0.0008
   
   for (let i = 0; i <= days; i++) {
@@ -194,6 +196,39 @@ const entirePortfolio = [
   
   // Real Estate Holdings
   { symbol: 'REIT', name: 'Real Estate Trust', currentPrice: 85.67, investedAmount: 5000, quantity: 58.4, change: 1.2, allocation: 6.3, category: 'Real Estate' },
+]
+
+const financialEvents = [
+  {
+    title: "FOMC Rate Decision",
+    date: "Jan 31, 2024",
+    type: "negative",
+    description: "Federal Reserve interest rate announcement"
+  },
+  {
+    title: "CPI Inflation Report",
+    date: "Feb 14, 2024", 
+    type: "neutral",
+    description: "Consumer Price Index data release"
+  },
+  {
+    title: "Tech Earnings Season",
+    date: "Feb 20-28, 2024",
+    type: "positive", 
+    description: "Major tech companies Q4 earnings"
+  },
+  {
+    title: "Jobs Report",
+    date: "Mar 8, 2024",
+    type: "neutral",
+    description: "Non-farm payroll employment data"
+  },
+  {
+    title: "Bitcoin Halving",
+    date: "Apr 15, 2024",
+    type: "positive",
+    description: "Bitcoin block reward reduction event"
+  }
 ]
 
 
@@ -639,6 +674,35 @@ export default function Page() {
                   }}
                   style={{ filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))' }}
                 />
+                
+                {/* Market Event Annotations */}
+                {portfolioPerformanceData.map((point, index) => {
+                  // Add major dip annotation (example: FOMC Rate Hike)
+                  if (point.dailyChange && point.dailyChange <= -3) {
+                    return (
+                      <ReferenceLine 
+                        key={`dip-${index}`}
+                        x={point.date} 
+                        stroke="#EF4444" 
+                        strokeWidth={2}
+                        strokeDasharray="4 4"
+                      />
+                    )
+                  }
+                  // Add major spike annotation (example: Tech Rally)
+                  if (point.dailyChange && point.dailyChange >= 4) {
+                    return (
+                      <ReferenceLine 
+                        key={`spike-${index}`}
+                        x={point.date} 
+                        stroke="#22C55E" 
+                        strokeWidth={2}
+                        strokeDasharray="4 4"
+                      />
+                    )
+                  }
+                  return null
+                })}
               </AreaChart>
             </ResponsiveContainer>
           </motion.div>
@@ -647,13 +711,13 @@ export default function Page() {
 
       {/* Charts and Assets */}
       <motion.div 
-        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        className="grid grid-cols-1 lg:grid-cols-3 gap-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
         {/* Portfolio Allocation */}
-        <Card>
+        <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <PieChartIcon className="h-5 w-5" />
@@ -1466,6 +1530,55 @@ export default function Page() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Financial Events & Alerts */}
+      <motion.div 
+        className="grid grid-cols-1 gap-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1.0 }}
+      >
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Calendar className="h-5 w-5" />
+              Financial Events & Alerts
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {financialEvents.map((event, index) => (
+                <div key={index} className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                  <div className="flex items-center space-x-4">
+                    <div className={`w-3 h-3 rounded-full ${event.type === 'positive' ? 'bg-green-400' : event.type === 'negative' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
+                    <div>
+                      <h4 className="font-medium text-white">{event.title}</h4>
+                      <p className="text-sm text-gray-400">{event.date}</p>
+                    </div>
+                    <Badge 
+                      variant={event.type === 'positive' ? 'default' : event.type === 'negative' ? 'destructive' : 'secondary'}
+                      className={event.type === 'positive' ? 'bg-green-600' : event.type === 'negative' ? 'bg-red-600' : 'bg-gray-600'}
+                    >
+                      {event.type === 'positive' ? '📈' : event.type === 'negative' ? '📉' : '📊'} {event.type}
+                    </Badge>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      setSelectedEventForAlert(event)
+                      setShowAlertModal(true)
+                    }}
+                    className="hover:scale-105 transition-all duration-200"
+                  >
+                    Set Alert
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
 
       {/* Enhanced Alert Creation Modal */}
       <SetAlertDialog 

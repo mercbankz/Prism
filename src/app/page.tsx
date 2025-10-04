@@ -8,13 +8,25 @@ import { BarChart3, Shield, Brain, TrendingUp, Users, Zap, ArrowRight, Star, Glo
 import { Logo } from "@/components/shared/Logo"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
+import { MembershipLockModal } from "@/components/MembershipLockModal"
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true)
+  const [showMembershipModal, setShowMembershipModal] = useState(false)
+  const [isSubscribed, setIsSubscribed] = useState(false) // For demo purposes, set to false
 
   useEffect(() => {
-        setIsLoading(false)
+    setIsLoading(false)
+    // Check subscription status (demo: always false for now)
+    setIsSubscribed(false)
   }, [])
+
+  const handleToolClick = (e: React.MouseEvent, href: string) => {
+    if (!isSubscribed) {
+      e.preventDefault()
+      setShowMembershipModal(true)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#0A0C12] text-white overflow-hidden">
@@ -289,10 +301,20 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent className="text-center">
                   <p className="text-gray-300 mb-4">Comprehensive analysis and insights</p>
-                  <Button asChild className="w-full bg-[#22D3EE] hover:bg-[#0EA5E9] text-white">
-                    <Link href="/dashboard">
-                    Explore <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
+                  <Button 
+                    asChild={isSubscribed}
+                    onClick={!isSubscribed ? (e) => handleToolClick(e, "/dashboard") : undefined}
+                    className="w-full bg-[#22D3EE] hover:bg-[#0EA5E9] text-white"
+                  >
+                    {isSubscribed ? (
+                      <Link href="/dashboard">
+                        Explore <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    ) : (
+                      <span>
+                        Explore <ArrowRight className="ml-2 h-4 w-4" />
+                      </span>
+                    )}
                   </Button>
                 </CardContent>
               </Card>
@@ -314,10 +336,20 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent className="text-center">
                   <p className="text-gray-300 mb-4">Get personalized investment advice</p>
-                  <Button asChild className="w-full bg-[#FF007A] hover:bg-[#EC4899] text-white">
-                    <Link href="/ai">
-                    Try Now <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
+                  <Button 
+                    asChild={isSubscribed}
+                    onClick={!isSubscribed ? (e) => handleToolClick(e, "/ai") : undefined}
+                    className="w-full bg-[#FF007A] hover:bg-[#EC4899] text-white"
+                  >
+                    {isSubscribed ? (
+                      <Link href="/ai">
+                        Try Now <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    ) : (
+                      <span>
+                        Try Now <ArrowRight className="ml-2 h-4 w-4" />
+                      </span>
+                    )}
                   </Button>
                 </CardContent>
               </Card>
@@ -339,10 +371,20 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent className="text-center">
                   <p className="text-gray-300 mb-4">Connect, share insights, and learn from fellow investors</p>
-                  <Button asChild className="w-full bg-[#22C55E] hover:bg-[#16A34A] text-white">
-                    <Link href="/community">
-                      Join Now <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
+                  <Button 
+                    asChild={isSubscribed}
+                    onClick={!isSubscribed ? (e) => handleToolClick(e, "/community") : undefined}
+                    className="w-full bg-[#22C55E] hover:bg-[#16A34A] text-white"
+                  >
+                    {isSubscribed ? (
+                      <Link href="/community">
+                        Join Now <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    ) : (
+                      <span>
+                        Join Now <ArrowRight className="ml-2 h-4 w-4" />
+                      </span>
+                    )}
                   </Button>
                 </CardContent>
               </Card>
@@ -364,10 +406,20 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent className="text-center">
                   <p className="text-gray-300 mb-4">Master finance with curated content</p>
-                  <Button asChild className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white">
-                    <Link href="/library">
-                    Browse <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
+                  <Button 
+                    asChild={isSubscribed}
+                    onClick={!isSubscribed ? (e) => handleToolClick(e, "/library") : undefined}
+                    className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white"
+                  >
+                    {isSubscribed ? (
+                      <Link href="/library">
+                        Browse <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    ) : (
+                      <span>
+                        Browse <ArrowRight className="ml-2 h-4 w-4" />
+                      </span>
+                    )}
                   </Button>
                 </CardContent>
               </Card>
@@ -426,6 +478,12 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Membership Lock Modal */}
+      <MembershipLockModal 
+        open={showMembershipModal} 
+        onOpenChange={setShowMembershipModal} 
+      />
     </div>
   )
 }
