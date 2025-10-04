@@ -1,410 +1,336 @@
 "use client"
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import React, { useState } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { motion } from "framer-motion"
 import { 
   Users, 
   MessageCircle, 
   UserPlus, 
-  Send, 
-  Heart, 
-  Share2, 
-  MoreHorizontal,
-  Bell,
-  Settings,
+  Bell, 
   Search,
-  Filter,
-  Plus
-} from 'lucide-react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-
-// Mock data for community features
-const mockPosts = [
-  {
-    id: 1,
-    user: { name: "Alex Chen", avatar: "/avatars/alex.jpg", verified: true },
-    content: "Just hit my 6-month portfolio milestone! 🎉 Diversified across crypto, stocks, and bonds. The AI assistant's rebalancing suggestions have been game-changing.",
-    timestamp: "2 hours ago",
-    likes: 24,
-    comments: 8,
-    shares: 3,
-    tags: ["portfolio", "milestone", "ai-assistant"]
-  },
-  {
-    id: 2,
-    user: { name: "Sarah Johnson", avatar: "/avatars/sarah.jpg", verified: false },
-    content: "Market volatility got you down? Remember: time in the market beats timing the market. Stay disciplined with your investment strategy! 💪",
-    timestamp: "4 hours ago",
-    likes: 18,
-    comments: 12,
-    shares: 5,
-    tags: ["market", "strategy", "discipline"]
-  },
-  {
-    id: 3,
-    user: { name: "Mike Rodriguez", avatar: "/avatars/mike.jpg", verified: true },
-    content: "Anyone else using the Financial Chess feature? The AI opponent's moves based on real market events is fascinating! 🤖♟️",
-    timestamp: "6 hours ago",
-    likes: 31,
-    comments: 15,
-    shares: 7,
-    tags: ["financial-chess", "ai", "gaming"]
-  }
-]
-
-const mockFriends = [
-  { id: 1, name: "Alex Chen", avatar: "/avatars/alex.jpg", status: "online", mutual: 12 },
-  { id: 2, name: "Sarah Johnson", avatar: "/avatars/sarah.jpg", status: "offline", mutual: 8 },
-  { id: 3, name: "Mike Rodriguez", avatar: "/avatars/mike.jpg", status: "online", mutual: 15 },
-  { id: 4, name: "Emma Davis", avatar: "/avatars/emma.jpg", status: "away", mutual: 5 }
-]
-
-const mockMessages = [
-  { id: 1, user: "Alex Chen", avatar: "/avatars/alex.jpg", lastMessage: "Thanks for the portfolio tip!", timestamp: "2m ago", unread: 0 },
-  { id: 2, user: "Sarah Johnson", avatar: "/avatars/sarah.jpg", lastMessage: "What do you think about the Fed meeting?", timestamp: "1h ago", unread: 2 },
-  { id: 3, user: "Mike Rodriguez", avatar: "/avatars/mike.jpg", lastMessage: "Great analysis on crypto trends", timestamp: "3h ago", unread: 1 }
-]
-
-const mockGroups = [
-  { id: 1, name: "Crypto Enthusiasts", members: 1.2, description: "Discussing the latest in cryptocurrency", isPrivate: false },
-  { id: 2, name: "Value Investors", members: 0.8, description: "Deep dive into fundamental analysis", isPrivate: true },
-  { id: 3, name: "AI Trading Strategies", members: 0.5, description: "Exploring AI-powered investment strategies", isPrivate: false }
-]
+  Send,
+  Image,
+  Link,
+  MoreHorizontal,
+  Heart,
+  Share2,
+  MessageSquare,
+  Settings
+} from "lucide-react"
 
 export default function CommunityPage() {
   const [activeTab, setActiveTab] = useState("feed")
-  const [newPost, setNewPost] = useState("")
-  const [showNewPost, setShowNewPost] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const mockPosts = [
+    {
+      id: 1,
+      user: {
+        name: "Alex Chen",
+        avatar: "/avatars/alex.jpg",
+        verified: true,
+        followers: 1250
+      },
+      content: "Just hit a 25% gain on my crypto portfolio this month! The key was diversifying into DeFi protocols early. What strategies are you all using?",
+      timestamp: "2 hours ago",
+      likes: 42,
+      comments: 8,
+      shares: 3,
+      category: "Crypto",
+      tags: ["#DeFi", "#Portfolio", "#Gains"]
+    },
+    {
+      id: 2,
+      user: {
+        name: "Sarah Johnson",
+        avatar: "/avatars/sarah.jpg",
+        verified: false,
+        followers: 890
+      },
+      content: "Market analysis: Tech stocks showing strong momentum. AAPL and MSFT looking particularly bullish for Q2. Thoughts on the current tech rally?",
+      timestamp: "4 hours ago",
+      likes: 28,
+      comments: 12,
+      shares: 5,
+      category: "Stocks",
+      tags: ["#Tech", "#Analysis", "#Q2"]
+    },
+    {
+      id: 3,
+      user: {
+        name: "Mike Rodriguez",
+        avatar: "/avatars/mike.jpg",
+        verified: true,
+        followers: 2100
+      },
+      content: "Bond market update: Yields are stabilizing after the Fed's latest announcement. Good time to rebalance fixed income allocations.",
+      timestamp: "6 hours ago",
+      likes: 15,
+      comments: 4,
+      shares: 2,
+      category: "Bonds",
+      tags: ["#Bonds", "#Fed", "#Rebalance"]
+    }
+  ]
+
+  const mockFriends = [
+    { name: "Emma Wilson", avatar: "/avatars/emma.jpg", status: "online", mutual: 12 },
+    { name: "David Kim", avatar: "/avatars/david.jpg", status: "offline", mutual: 8 },
+    { name: "Lisa Park", avatar: "/avatars/lisa.jpg", status: "online", mutual: 15 }
+  ]
+
+  const mockMessages = [
+    { name: "Alex Chen", avatar: "/avatars/alex.jpg", lastMessage: "Thanks for the tip on that DeFi protocol!", timestamp: "2m ago", unread: 2 },
+    { name: "Sarah Johnson", avatar: "/avatars/sarah.jpg", lastMessage: "What do you think about the tech rally?", timestamp: "1h ago", unread: 0 },
+    { name: "Mike Rodriguez", avatar: "/avatars/mike.jpg", lastMessage: "Bond yields are looking interesting", timestamp: "3h ago", unread: 1 }
+  ]
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="min-h-screen bg-slate-950 text-white">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
-        <motion.div 
-          className="mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">Community</h1>
-              <p className="text-muted-foreground">Connect, share insights, and grow together</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm">
-                <Bell className="h-4 w-4 mr-2" />
-                Notifications
-              </Button>
-              <Button variant="outline" size="sm">
-                <Settings className="h-4 w-4 mr-2" />
-                Settings
-              </Button>
-            </div>
-          </div>
-        </motion.div>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-[#E5E8FF] mb-2">Community</h1>
+          <p className="text-[#E5E8FF]/70">Connect, share insights, and learn from fellow investors</p>
+        </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-6">
-            <TabsTrigger value="feed" className="flex items-center gap-2">
-              <MessageCircle className="h-4 w-4" />
-              Feed
-            </TabsTrigger>
-            <TabsTrigger value="friends" className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              Friends
-            </TabsTrigger>
-            <TabsTrigger value="messages" className="flex items-center gap-2">
-              <MessageCircle className="h-4 w-4" />
-              Messages
-            </TabsTrigger>
-            <TabsTrigger value="groups" className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              Groups
-            </TabsTrigger>
-          </TabsList>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Navigation Tabs */}
+            <Card>
+              <CardContent className="p-4">
+                <div className="space-y-2">
+                  {[
+                    { id: "feed", label: "Feed", icon: MessageCircle },
+                    { id: "friends", label: "Friends", icon: Users },
+                    { id: "messages", label: "Messages", icon: MessageSquare },
+                    { id: "groups", label: "Groups", icon: Users }
+                  ].map((tab) => {
+                    const Icon = tab.icon
+                    return (
+                      <Button
+                        key={tab.id}
+                        variant={activeTab === tab.id ? "default" : "ghost"}
+                        className={`w-full justify-start ${activeTab === tab.id ? "bg-blue-600" : "hover:bg-slate-700"}`}
+                        onClick={() => setActiveTab(tab.id)}
+                      >
+                        <Icon className="mr-2 h-4 w-4" />
+                        {tab.label}
+                      </Button>
+                    )
+                  })}
+                </div>
+              </CardContent>
+            </Card>
 
-          {/* Feed Tab */}
-          <TabsContent value="feed" className="space-y-6">
-            {/* Create Post */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
+            {/* Friends List */}
+            {activeTab === "friends" && (
               <Card>
-                <CardContent className="p-6">
-                  <div className="flex gap-4">
-                    <Avatar>
-                      <AvatarImage src="/avatars/user.jpg" />
-                      <AvatarFallback>You</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <Textarea
-                        placeholder="Share your investment insights, ask questions, or celebrate milestones..."
-                        value={newPost}
-                        onChange={(e) => setNewPost(e.target.value)}
-                        className="min-h-[100px] resize-none border-0 focus-visible:ring-0 text-base"
-                      />
-                      <div className="flex items-center justify-between mt-4">
+                <CardHeader>
+                  <CardTitle className="text-lg">Friends</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {mockFriends.map((friend, index) => (
+                      <div key={index} className="flex items-center justify-between p-2 hover:bg-slate-700 rounded-lg transition-colors">
+                        <div className="flex items-center gap-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src={friend.avatar} alt={friend.name} />
+                          <AvatarFallback>{friend.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                        </Avatar>
+                          <div>
+                            <div className="text-sm font-medium">{friend.name}</div>
+                            <div className="text-xs text-slate-400">{friend.mutual} mutual friends</div>
+                          </div>
+                        </div>
                         <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="sm">
-                            <Plus className="h-4 w-4 mr-2" />
-                            Image
-                          </Button>
-                          <Button variant="ghost" size="sm">
-                            <Share2 className="h-4 w-4 mr-2" />
-                            Link
+                          <div className={`w-2 h-2 rounded-full ${friend.status === 'online' ? 'bg-green-400' : 'bg-slate-400'}`}></div>
+                          <Button size="sm" variant="outline" className="text-xs">
+                            <UserPlus className="h-3 w-3 mr-1" />
+                            Add
                           </Button>
                         </div>
-                        <Button 
-                          onClick={() => setShowNewPost(!showNewPost)}
-                          disabled={!newPost.trim()}
-                        >
-                          <Send className="h-4 w-4 mr-2" />
-                          Post
-                        </Button>
                       </div>
-                    </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            )}
 
-            {/* Posts Feed */}
-            <div className="space-y-6">
-              {mockPosts.map((post, index) => (
-                <motion.div
-                  key={post.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                >
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="flex gap-4">
-                        <Avatar>
-                          <AvatarImage src={post.user.avatar} />
-                          <AvatarFallback>{post.user.name[0]}</AvatarFallback>
+            {/* Messages List */}
+            {activeTab === "messages" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Messages</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {mockMessages.map((message, index) => (
+                      <div key={index} className="flex items-center gap-3 p-2 hover:bg-slate-700 rounded-lg transition-colors cursor-pointer">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src={message.avatar} alt={message.name} />
+                          <AvatarFallback>{message.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                         </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <h3 className="font-semibold text-foreground">{post.user.name}</h3>
-                            {post.user.verified && (
-                              <Badge variant="secondary" className="text-xs">Verified</Badge>
-                            )}
-                            <span className="text-sm text-muted-foreground">•</span>
-                            <span className="text-sm text-muted-foreground">{post.timestamp}</span>
-                            <Button variant="ghost" size="sm" className="ml-auto">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <div className="text-sm font-medium truncate">{message.name}</div>
+                            <div className="text-xs text-slate-400">{message.timestamp}</div>
                           </div>
-                          <p className="text-foreground mb-4 leading-relaxed">{post.content}</p>
-                          
-                          {/* Tags */}
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {post.tags.map((tag, tagIndex) => (
-                              <Badge key={tagIndex} variant="outline" className="text-xs">
-                                #{tag}
-                              </Badge>
-                            ))}
-                          </div>
+                          <div className="text-xs text-slate-400 truncate">{message.lastMessage}</div>
+                        </div>
+                        {message.unread > 0 && (
+                          <Badge className="bg-blue-600 text-white text-xs">{message.unread}</Badge>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
 
-                          {/* Engagement */}
-                          <div className="flex items-center gap-6 pt-4 border-t">
-                            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-red-500">
-                              <Heart className="h-4 w-4 mr-2" />
-                              {post.likes}
+          {/* Main Content */}
+          <div className="lg:col-span-3">
+            {activeTab === "feed" && (
+              <div className="space-y-6">
+                {/* Create Post */}
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex gap-3">
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage src="/avatars/user.jpg" alt="User" />
+                        <AvatarFallback>U</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 space-y-3">
+                        <Textarea 
+                          placeholder="Share your investment insights, market analysis, or ask questions..."
+                          className="min-h-[80px] bg-slate-800 border-slate-600 text-white placeholder-slate-400"
+                        />
+                        <div className="flex items-center justify-between">
+                          <div className="flex gap-2">
+                            <Button size="sm" variant="ghost" className="text-slate-400 hover:text-white">
+                              <Image className="h-4 w-4 mr-1" />
+                              Image
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-muted-foreground">
-                              <MessageCircle className="h-4 w-4 mr-2" />
-                              {post.comments}
-                            </Button>
-                            <Button variant="ghost" size="sm" className="text-muted-foreground">
-                              <Share2 className="h-4 w-4 mr-2" />
-                              {post.shares}
+                            <Button size="sm" variant="ghost" className="text-slate-400 hover:text-white">
+                              <Link className="h-4 w-4 mr-1" />
+                              Link
                             </Button>
                           </div>
+                          <Button className="bg-blue-600 hover:bg-blue-700">
+                            <Send className="h-4 w-4 mr-1" />
+                            Post
+                          </Button>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </TabsContent>
+                    </div>
+                  </CardContent>
+                </Card>
 
-          {/* Friends Tab */}
-          <TabsContent value="friends" className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Friends</h2>
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="Search friends..." className="pl-10 w-64" />
-                  </div>
-                  <Button variant="outline">
-                    <Filter className="h-4 w-4 mr-2" />
-                    Filter
-                  </Button>
+                {/* Posts Feed */}
+                <div className="space-y-4">
+                  {mockPosts.map((post, index) => (
+                    <motion.div
+                      key={post.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="flex items-start gap-3">
+                            <Avatar className="h-10 w-10">
+                              <AvatarImage src={post.user.avatar} alt={post.user.name} />
+                              <AvatarFallback>{post.user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className="font-medium">{post.user.name}</div>
+                                {post.user.verified && (
+                                  <Badge className="bg-blue-600 text-white text-xs">Verified</Badge>
+                                )}
+                                <div className="text-xs text-slate-400">{post.timestamp}</div>
+                                <Button size="sm" variant="ghost" className="ml-auto">
+                                  <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                              </div>
+                              
+                              <div className="mb-3">
+                                <p className="text-sm leading-relaxed">{post.content}</p>
+                                <div className="flex gap-2 mt-2">
+                                  {post.tags.map((tag, tagIndex) => (
+                                    <Badge key={tagIndex} variant="outline" className="text-xs">
+                                      {tag}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-4 text-sm text-slate-400">
+                                <Button variant="ghost" size="sm" className="hover:text-red-400">
+                                  <Heart className="h-4 w-4 mr-1" />
+                                  {post.likes}
+                                </Button>
+                                <Button variant="ghost" size="sm" className="hover:text-blue-400">
+                                  <MessageSquare className="h-4 w-4 mr-1" />
+                                  {post.comments}
+                                </Button>
+                                <Button variant="ghost" size="sm" className="hover:text-green-400">
+                                  <Share2 className="h-4 w-4 mr-1" />
+                                  {post.shares}
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
+            )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {mockFriends.map((friend, index) => (
-                  <motion.div
-                    key={friend.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <Card>
-                      <CardContent className="p-6 text-center">
-                        <div className="relative mb-4">
-                          <Avatar className="w-16 h-16 mx-auto">
-                            <AvatarImage src={friend.avatar} />
-                            <AvatarFallback>{friend.name[0]}</AvatarFallback>
-                          </Avatar>
-                          <div className={`absolute bottom-1 right-1 w-4 h-4 rounded-full border-2 border-background ${
-                            friend.status === 'online' ? 'bg-green-500' : 
-                            friend.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
-                          }`} />
-                        </div>
-                        <h3 className="font-semibold text-foreground mb-1">{friend.name}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">{friend.mutual} mutual friends</p>
-                        <div className="flex gap-2">
-                          <Button size="sm" className="flex-1">
-                            <MessageCircle className="h-4 w-4 mr-2" />
-                            Message
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            <UserPlus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </TabsContent>
-
-          {/* Messages Tab */}
-          <TabsContent value="messages" className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Messages</h2>
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  New Message
-                </Button>
-              </div>
-
-              <div className="space-y-4">
-                {mockMessages.map((message, index) => (
-                  <motion.div
-                    key={message.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-                      <CardContent className="p-4">
-                        <div className="flex items-center gap-4">
-                          <Avatar>
-                            <AvatarImage src={message.avatar} />
-                            <AvatarFallback>{message.user[0]}</AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between mb-1">
-                              <h3 className="font-semibold text-foreground">{message.user}</h3>
-                              <span className="text-sm text-muted-foreground">{message.timestamp}</span>
-                            </div>
-                            <p className="text-muted-foreground truncate">{message.lastMessage}</p>
+            {activeTab === "groups" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Investment Groups</CardTitle>
+                  <CardDescription>Join groups based on your investment interests</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      { name: "Crypto Enthusiasts", members: 1250, description: "Discussing DeFi, NFTs, and blockchain technology" },
+                      { name: "Tech Stock Traders", members: 890, description: "Analysis and insights on technology stocks" },
+                      { name: "Bond Investors", members: 450, description: "Fixed income strategies and market analysis" },
+                      { name: "Real Estate Investors", members: 320, description: "REITs and real estate investment strategies" }
+                    ].map((group, index) => (
+                      <Card key={index} className="hover:bg-slate-800 transition-colors cursor-pointer">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <h3 className="font-semibold">{group.name}</h3>
+                            <Badge variant="outline">{group.members} members</Badge>
                           </div>
-                          {message.unread > 0 && (
-                            <Badge variant="destructive" className="ml-auto">
-                              {message.unread}
-                            </Badge>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </TabsContent>
-
-          {/* Groups Tab */}
-          <TabsContent value="groups" className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Groups</h2>
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create Group
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {mockGroups.map((group, index) => (
-                  <motion.div
-                    key={group.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <Card>
-                      <CardContent className="p-6">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="font-semibold text-foreground mb-1">{group.name}</h3>
-                            <div className="flex items-center gap-2">
-                              <Badge variant={group.isPrivate ? "destructive" : "secondary"} className="text-xs">
-                                {group.isPrivate ? "Private" : "Public"}
-                              </Badge>
-                              <span className="text-sm text-muted-foreground">
-                                {group.members}K members
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-muted-foreground text-sm mb-4">{group.description}</p>
-                        <Button size="sm" className="w-full">
-                          Join Group
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </TabsContent>
-        </Tabs>
+                          <p className="text-sm text-slate-400 mb-3">{group.description}</p>
+                          <Button size="sm" className="w-full">
+                            Join Group
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )
 }
-
-
