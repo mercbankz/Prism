@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import Link from "next/link"
+import dynamic from 'next/dynamic'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -316,23 +317,26 @@ export default function Page() {
 
   // Real-time data integration with safe fallback
   const portfolioSymbols = ['AAPL', 'MSFT', 'GOOGL', 'TSLA', 'AMZN', 'NVDA', 'BTC', 'ETH', 'SOL']
-  let realtimeData, isConnected, realtimeError;
   
-  try {
-    const realtimeHook = useRealtimePortfolio(portfolioSymbols);
-    realtimeData = realtimeHook.data || new Map();
-    isConnected = realtimeHook.isConnected || false;
-    realtimeError = realtimeHook.error || null;
-  } catch (error) {
-    console.warn('Real-time data hook failed, using static data:', error);
-    realtimeData = new Map();
-    isConnected = false;
-    realtimeError = 'Real-time data unavailable';
-  }
+  // Always call the hook, but handle SSR safely inside the hook
+  const realtimeHook = useRealtimePortfolio(portfolioSymbols);
+  const realtimeData = realtimeHook.data || new Map();
+  const isConnected = realtimeHook.isConnected || false;
+  const realtimeError = realtimeHook.error || null;
 
   useEffect(() => {
     setPortfolioPerformanceData(generatePortfolioData(selectedRange))
   }, [selectedRange])
+
+  // SSR-safe localStorage access
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedRange = localStorage.getItem('portfolio-range')
+      if (savedRange && ['1M', '3M', '6M', '1Y', 'ALL'].includes(savedRange)) {
+        setSelectedRange(savedRange as '1M' | '3M' | '6M' | '1Y' | 'ALL')
+      }
+    }
+  }, [])
 
   // Update portfolio data when real-time data changes
   useEffect(() => {

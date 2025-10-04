@@ -35,7 +35,7 @@ export function Navigation() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-50">
+      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-50 relative">
         <motion.div 
           className="flex flex-col flex-grow pt-5 bg-card border-r overflow-y-auto"
           initial={{ x: -256 }}
@@ -63,7 +63,7 @@ export function Navigation() {
                     <Link
                       href={item.href}
                       className={cn(
-                        "group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-all duration-200",
+                        "group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-all duration-200 focus-visible:outline focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
                         isActive
                           ? "bg-primary text-primary-foreground shadow-md"
                           : "text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:shadow-sm"

@@ -124,7 +124,7 @@ export function useSafeAsync<T>(
     } finally {
       setLoading(false)
     }
-  }, [asyncFn, ...deps])
+  }, [asyncFn, ...(deps || [])])
 
   React.useEffect(() => {
     execute()
