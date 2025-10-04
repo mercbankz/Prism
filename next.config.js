@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   compress: true,
   poweredByHeader: false,
+  output: 'standalone',
   images: {
     domains: [
       'localhost',
@@ -11,6 +12,9 @@ const nextConfig = {
       'images.unsplash.com',
       'via.placeholder.com'
     ],
+  },
+  experimental: {
+    outputFileTracingRoot: undefined,
   },
 }
 

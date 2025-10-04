@@ -9,6 +9,7 @@ import { Toaster } from 'sonner'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://prism-je8z8brfk-toonzkham-4663s-projects.vercel.app'),
   title: 'Prism — AI Portfolio Intelligence',
   description: 'Analyze. Learn. Play. Grow.',
   keywords: 'portfolio, analytics, AI, crypto, stocks, investment, finance',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://prism.app',
+    url: 'https://prism-je8z8brfk-toonzkham-4663s-projects.vercel.app',
     title: 'Prism — AI Portfolio Intelligence',
     description: 'Analyze. Learn. Play. Grow.',
     siteName: 'Prism',

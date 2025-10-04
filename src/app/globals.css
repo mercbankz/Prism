@@ -2,6 +2,229 @@
 @tailwind components;
 @tailwind utilities;
 
+/* InfinityVM-style background effects */
+@layer components {
+  .infinity-bg {
+    background: radial-gradient(ellipse at center, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .infinity-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+    animation: infinityPulse 8s ease-in-out infinite;
+  }
+
+  .infinity-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(45deg, transparent 48%, rgba(59, 130, 246, 0.03) 49%, rgba(59, 130, 246, 0.03) 51%, transparent 52%),
+      linear-gradient(-45deg, transparent 48%, rgba(147, 51, 234, 0.03) 49%, rgba(147, 51, 234, 0.03) 51%, transparent 52%);
+    background-size: 60px 60px;
+    animation: infinityMove 20s linear infinite;
+  }
+
+  .neon-glow {
+    box-shadow: 
+      0 0 20px rgba(59, 130, 246, 0.3),
+      0 0 40px rgba(147, 51, 234, 0.2),
+      0 0 60px rgba(59, 130, 246, 0.1);
+  }
+
+  .neon-border {
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 
+      inset 0 0 10px rgba(59, 130, 246, 0.1),
+      0 0 20px rgba(59, 130, 246, 0.2);
+  }
+
+  .holographic-text {
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: holographicShift 3s ease-in-out infinite;
+  }
+
+  .floating-card {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .glow-on-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+      0 10px 30px rgba(59, 130, 246, 0.3),
+      0 20px 60px rgba(147, 51, 234, 0.2);
+    transition: all 0.3s ease;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  }
+
+  .bg-neon-gradient {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(16, 185, 129, 0.1));
+  }
+}
+
+@keyframes infinityPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes infinityMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+@keyframes holographicShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Holographic text effect */
+.holographic-text {
+  background: linear-gradient(45deg, #3B82F6, #8B5CF6, #EC4899, #3B82F6);
+  background-size: 300% 300%;
+  animation: holographic 3s ease-in-out infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes holographic {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Text glow effect */
+.text-glow {
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* Neon border effect */
+.neon-border {
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #3B82F6, #8B5CF6, #EC4899) border-box;
+  border-radius: 8px;
+  position: relative;
+}
+
+.neon-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, #3B82F6, #8B5CF6, #EC4899);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask-composite: xor;
+}
+
+/* Glow on hover */
+.glow-on-hover:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* GPU acceleration for all animations */
+.portfolio-hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+}
+
+.portfolio-hover-effect:hover {
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Portfolio Allocation Chart Responsive Enhancements */
+@media (max-width: 768px) {
+  .portfolio-chart-labels {
+    font-size: 10px !important;
+  }
+  
+  .portfolio-chart-lines {
+    stroke-width: 1.5 !important;
+  }
+}
+
+/* Responsive Prism Logo Sizing */
+@media (max-width: 768px) {
+  .animate-float {
+    transform: translateZ(0) scale(0.8);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .animate-float {
+    transform: translateZ(0) scale(1.0);
+  }
+}
+
+@media (min-width: 1025px) {
+  .animate-float {
+    transform: translateZ(0) scale(1.1);
+  }
+}
+
+/* Chart Responsive Optimizations */
+@media (max-width: 1024px) {
+  .portfolio-chart-container {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+}
+
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  .animate-prism-rotate:hover {
+    animation: prismRotate 6s linear infinite;
+    transform: translateZ(0) scale(1.0);
+  }
+}
+
+/* Enhanced hover effects for portfolio elements */
+.portfolio-hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portfolio-hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -23,7 +246,7 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -56,26 +279,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* Custom styles for Prism */
-.prism-gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.chess-board {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.sentiment-positive {
-  @apply bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200;
-}
-
-.sentiment-negative {
-  @apply bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200;
-}
-
-.sentiment-neutral {
-  @apply bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200;
 }

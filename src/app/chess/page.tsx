@@ -90,6 +90,11 @@ export default function ChessPage() {
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div className="bg-primary h-2 rounded-full" style={{ width: '75%' }}></div>
                 </div>
+                <div className="flex justify-between text-sm">
+                  <span>Wins: {userScore}</span>
+                  <span>Losses: {aiScore}</span>
+                  <span>Draws: {gamesPlayed - userScore - aiScore}</span>
+                </div>
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between">

@@ -9,7 +9,7 @@ import { Logo } from "@/components/shared/Logo"
 import {
   BarChart3,
   Bot,
-  Crown,
+  Users,
   Library,
   Award,
   Settings,
@@ -22,7 +22,7 @@ import { motion, AnimatePresence } from "framer-motion"
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: BarChart3 },
   { name: "AI Assistant", href: "/ai", icon: Bot },
-  { name: "Financial Chess", href: "/chess", icon: Crown },
+  { name: "Community", href: "/community", icon: Users },
   { name: "Library", href: "/library", icon: Library },
   { name: "Badges", href: "/badges", icon: Award },
   { name: "Settings", href: "/settings", icon: Settings },

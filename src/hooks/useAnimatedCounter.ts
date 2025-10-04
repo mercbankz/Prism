@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 interface UseAnimatedCounterOptions {
   duration?: number
@@ -20,7 +20,7 @@ export function useAnimatedCounter(
     return 1 - Math.pow(1 - t, 3)
   }
 
-  const animate = () => {
+  const animate = useCallback(() => {
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current)
     }
@@ -49,7 +49,7 @@ export function useAnimatedCounter(
     }
 
     animationRef.current = requestAnimationFrame(animateFrame)
-  }
+  }, [targetValue, duration, easeOut, currentValue])
 
   useEffect(() => {
     if (startOnMount) {
@@ -60,13 +60,13 @@ export function useAnimatedCounter(
       
       return () => clearTimeout(timer)
     }
-  }, [])
+  }, [startOnMount, animate])
 
   useEffect(() => {
     if (!startOnMount) {
       animate()
     }
-  }, [targetValue])
+  }, [targetValue, startOnMount, animate])
 
   useEffect(() => {
     return () => {
@@ -82,3 +82,4 @@ export function useAnimatedCounter(
     animate
   }
 }
+

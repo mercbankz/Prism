@@ -119,7 +119,7 @@ export class BinanceAdapter implements IntegrationAdapter {
         if (totalBalance > 0) {
           // Try to get USD price
           let currentPrice = 0
-          let usdSymbol = `${balance.asset}USDT`
+          const usdSymbol = `${balance.asset}USDT`
           
           if (priceMap.has(usdSymbol)) {
             currentPrice = priceMap.get(usdSymbol) || 0
