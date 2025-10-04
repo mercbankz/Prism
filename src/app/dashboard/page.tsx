@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { SetAlertDialog } from "@/components/SetAlertDialog"
+import { SimpleAlertModal } from "@/components/SimpleAlertModal"
 import { ErrorBoundary } from "@/components/ErrorBoundary"
 import { formatCurrency, formatPercentage } from "@/lib/utils"
 import { useRealtimePortfolio, formatCurrency as rtFormatCurrency, formatPercentage as rtFormatPercentage, getChangeColorClass } from '@/lib/realtime'
@@ -343,6 +344,7 @@ export default function Page() {
   
   // Alert management state
   const [showAlertModal, setShowAlertModal] = useState(false)
+  const [showSimpleAlertModal, setShowSimpleAlertModal] = useState(false)
   const [selectedEventForAlert, setSelectedEventForAlert] = useState<any>(null)
   const [userAlerts, setUserAlerts] = useState<any[]>([])
   
@@ -711,13 +713,13 @@ export default function Page() {
 
       {/* Charts and Assets */}
       <motion.div 
-        className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 gap-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
         {/* Portfolio Allocation */}
-        <Card className="lg:col-span-2">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <PieChartIcon className="h-5 w-5" />
@@ -736,10 +738,32 @@ export default function Page() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64 md:h-80 relative overflow-visible">
-              {/* Portfolio Allocation Chart with Connection Lines */}
+            <div className="h-80 md:h-96 relative overflow-visible bg-gradient-to-br from-slate-900/30 to-slate-800/20 rounded-xl p-6 border border-slate-700/50 backdrop-blur-sm">
+              {/* Modern Flat-Radial Portfolio Allocation Chart */}
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
+                  <defs>
+                    <linearGradient id="stocksGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FF007A" />
+                      <stop offset="100%" stopColor="#8B5CF6" />
+                    </linearGradient>
+                    <linearGradient id="cryptoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#22C55E" />
+                      <stop offset="100%" stopColor="#16A34A" />
+                    </linearGradient>
+                    <linearGradient id="bondsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#3B82F6" />
+                      <stop offset="100%" stopColor="#2563EB" />
+                    </linearGradient>
+                    <linearGradient id="cashGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#F59E0B" />
+                      <stop offset="100%" stopColor="#D97706" />
+                    </linearGradient>
+                    <linearGradient id="realEstateGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#EF4444" />
+                      <stop offset="100%" stopColor="#DC2626" />
+                    </linearGradient>
+                  </defs>
                   <Pie
                     data={selectedPieSlice ? livePortfolioData.find(d => d.name === selectedPieSlice)?.assets || [] : livePortfolioData}
                     cx="50%"
@@ -756,17 +780,27 @@ export default function Page() {
                     }}
                     style={{ cursor: 'pointer' }}
                   >
-                    {(selectedPieSlice ? livePortfolioData.find(d => d.name === selectedPieSlice)?.assets || [] : livePortfolioData).map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={selectedPieSlice ? 
-                          `hsl(${index * 60}, 70%, 60%)` : 
-                          (entry as any).color
-                        } 
-                        stroke="hsl(var(--background))"
-                        strokeWidth={2}
-                      />
-                    ))}
+                    {(selectedPieSlice ? livePortfolioData.find(d => d.name === selectedPieSlice)?.assets || [] : livePortfolioData).map((entry, index) => {
+                      const gradientColors = [
+                        'url(#stocksGradient)',
+                        'url(#cryptoGradient)', 
+                        'url(#bondsGradient)',
+                        'url(#cashGradient)',
+                        'url(#realEstateGradient)'
+                      ]
+                      return (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={selectedPieSlice ? 
+                            `hsl(${index * 60}, 70%, 60%)` : 
+                            gradientColors[index] || (entry as any).color
+                          } 
+                          stroke="rgba(255, 255, 255, 0.1)"
+                          strokeWidth={1}
+                          className="hover:opacity-90 transition-all duration-300"
+                        />
+                      )
+                    })}
                   </Pie>
                   <Tooltip 
                     formatter={(value: any, name: string, props: any) => [
@@ -960,7 +994,7 @@ export default function Page() {
 
 
         {/* Enhanced Financial Events & Alerts */}
-        <Card className="col-span-2">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
@@ -1006,15 +1040,8 @@ export default function Page() {
                         variant="outline"
                         className="text-xs px-2 py-1 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
                         onClick={() => {
-                          setSelectedEventForAlert({
-                            title: 'Fed Meeting',
-                            date: 'Jan 31, 2024',
-                            time: '2:00 PM EST',
-                            status: 'upcoming',
-                            signal: 'neutral',
-                            impacts: 'Bonds, Cash, REIT, All Assets'
-                          })
-                          setShowAlertModal(true)
+                          setSelectedEventForAlert('Fed Meeting')
+                          setShowSimpleAlertModal(true)
                         }}
                       >
                         Set Alert
@@ -1038,15 +1065,8 @@ export default function Page() {
                         variant="outline"
                         className="text-xs px-2 py-1 border-green-400 text-green-400 hover:bg-green-400 hover:text-white"
                         onClick={() => {
-                          setSelectedEventForAlert({
-                            title: 'Tech Earnings Season',
-                            date: 'Feb 5-15, 2024',
-                            time: 'Various times',
-                            status: 'upcoming',
-                            signal: 'positive',
-                            impacts: 'AAPL, MSFT, GOOGL, AMZN, NVDA, META'
-                          })
-                          setShowAlertModal(true)
+                          setSelectedEventForAlert('Tech Earnings Season')
+                          setShowSimpleAlertModal(true)
                         }}
                       >
                         Set Alert
@@ -1070,15 +1090,8 @@ export default function Page() {
                         variant="outline"
                         className="text-xs px-2 py-1 border-green-400 text-green-400 hover:bg-green-400 hover:text-white"
                         onClick={() => {
-                          setSelectedEventForAlert({
-                            title: 'Bitcoin ETF Decision',
-                            date: 'Feb 20, 2024',
-                            time: '4:00 PM EST',
-                            status: 'upcoming',
-                            signal: 'positive',
-                            impacts: 'BTC, ETH, SOL, AVAX, MATIC'
-                          })
-                          setShowAlertModal(true)
+                          setSelectedEventForAlert('Bitcoin ETF Decision')
+                          setShowSimpleAlertModal(true)
                         }}
                       >
                         Set Alert
@@ -1102,15 +1115,8 @@ export default function Page() {
                         variant="outline"
                         className="text-xs px-2 py-1 border-red-400 text-red-400 hover:bg-red-400 hover:text-white"
                         onClick={() => {
-                          setSelectedEventForAlert({
-                            title: 'Jobs Report',
-                            date: 'Mar 8, 2024',
-                            time: '8:30 AM EST',
-                            status: 'upcoming',
-                            signal: 'negative',
-                            impacts: 'All assets, Market volatility'
-                          })
-                          setShowAlertModal(true)
+                          setSelectedEventForAlert('Jobs Report')
+                          setShowSimpleAlertModal(true)
                         }}
                       >
                         Set Alert
@@ -1176,7 +1182,7 @@ export default function Page() {
         </Card>
 
         {/* Entire Portfolio */}
-        <Card className="col-span-2">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Target className="h-5 w-5" />
@@ -1585,6 +1591,16 @@ export default function Page() {
         open={showAlertModal} 
         onOpenChange={setShowAlertModal}
         eventData={selectedEventForAlert}
+      />
+
+      {/* Simple Alert Modal */}
+      <SimpleAlertModal 
+        open={showSimpleAlertModal} 
+        onOpenChange={setShowSimpleAlertModal}
+        eventTitle={selectedEventForAlert}
+        onSaveAlert={(alert) => {
+          setUserAlerts(prev => [...prev, alert])
+        }}
       />
       </div>
     </ErrorBoundary>

@@ -120,8 +120,8 @@ export default function HomePage() {
                 <div className="text-gray-400">Portfolios Analyzed</div>
             </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-[#FF007A] mb-2">24/7</div>
-                <div className="text-gray-400">AI Monitoring</div>
+                <div className="text-3xl font-bold text-[#8B5CF6] mb-2">98%</div>
+                <div className="text-gray-400">Real-Time Insights</div>
               </div>
             <div className="text-center">
                 <div className="text-3xl font-bold text-[#8B5CF6] mb-2">50K+</div>
