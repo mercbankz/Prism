@@ -28,9 +28,6 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">P</span>
-              </div>
               <span className="text-xl font-bold bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] bg-clip-text text-transparent">
                 Prism
               </span>
@@ -84,11 +81,11 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <Link 
-                href="/dashboard" 
+                href="/signup" 
                 className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] text-white hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,122,0.5)]"
               >
                 <TrendingUp className="mr-2 h-6 w-6" />
-                View Dashboard
+                Sign Up
               </Link>
               <Link 
                 href="/pricing" 
@@ -110,10 +107,10 @@ export default function HomePage() {
                 <div className="text-3xl font-bold text-[#22D3EE] mb-2">2.4M+</div>
                 <div className="text-gray-400">Portfolios Analyzed</div>
             </div>
-            <div className="text-center">
-                <div className="text-3xl font-bold text-[#FF007A] mb-2">98%</div>
-                <div className="text-gray-400">Success Rate</div>
-            </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-[#FF007A] mb-2">24/7</div>
+                <div className="text-gray-400">AI Monitoring</div>
+              </div>
             <div className="text-center">
                 <div className="text-3xl font-bold text-[#8B5CF6] mb-2">50K+</div>
                 <div className="text-gray-400">Active Users</div>
@@ -396,19 +393,19 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link 
-                href="/dashboard" 
+                href="/signup" 
                 className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] text-white hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,122,0.5)]"
               >
-                  <TrendingUp className="mr-2 h-6 w-6" />
-                  Get Started Free
-                </Link>
+                <TrendingUp className="mr-2 h-6 w-6" />
+                Sign Up Now
+              </Link>
               <Link 
                 href="/pricing" 
                 className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg border-2 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white hover:scale-105 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
               >
-                  <Star className="mr-2 h-6 w-6" />
-                  View Pricing
-                </Link>
+                <Star className="mr-2 h-6 w-6" />
+                View Pricing
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -419,9 +416,6 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <div className="w-8 h-8 bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">P</span>
-              </div>
               <span className="text-xl font-bold bg-gradient-to-r from-[#FF007A] to-[#8B5CF6] bg-clip-text text-transparent">
                 Prism
               </span>
