@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { SetAlertDialog } from "@/components/SetAlertDialog"
+import { ErrorBoundary } from "@/components/ErrorBoundary"
 import { formatCurrency, formatPercentage } from "@/lib/utils"
 import { useRealtimePortfolio, formatCurrency as rtFormatCurrency, formatPercentage as rtFormatPercentage, getChangeColorClass } from '@/lib/realtime'
 import { 
@@ -319,9 +320,9 @@ export default function Page() {
   
   try {
     const realtimeHook = useRealtimePortfolio(portfolioSymbols);
-    realtimeData = realtimeHook.data;
-    isConnected = realtimeHook.isConnected;
-    realtimeError = realtimeHook.error;
+    realtimeData = realtimeHook.data || new Map();
+    isConnected = realtimeHook.isConnected || false;
+    realtimeError = realtimeHook.error || null;
   } catch (error) {
     console.warn('Real-time data hook failed, using static data:', error);
     realtimeData = new Map();
@@ -394,7 +395,8 @@ export default function Page() {
   const isPositive = totalChange >= 0
 
   return (
-    <div className="p-6 space-y-6 bg-gradient-to-br from-[#0D1117] via-[#1E293B] to-[#0D1117] min-h-screen">
+    <ErrorBoundary>
+      <div className="p-6 space-y-6 bg-gradient-to-br from-[#0D1117] via-[#1E293B] to-[#0D1117] min-h-screen">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -1467,6 +1469,7 @@ export default function Page() {
         onOpenChange={setShowAlertModal}
         eventData={selectedEventForAlert}
       />
-    </div>
+      </div>
+    </ErrorBoundary>
   )
 }

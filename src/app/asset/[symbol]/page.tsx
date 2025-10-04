@@ -35,6 +35,7 @@ import {
   AreaChart
 } from "recharts"
 import { motion } from "framer-motion"
+import { ErrorBoundary } from "@/components/ErrorBoundary"
 
 export default function AssetDetailsPage() {
   const params = useParams()
@@ -91,7 +92,8 @@ export default function AssetDetailsPage() {
   const isPositive = assetData.change >= 0
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <ErrorBoundary>
+      <div className="min-h-screen bg-slate-950 text-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -332,7 +334,8 @@ export default function AssetDetailsPage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </ErrorBoundary>
   )
 }
 
