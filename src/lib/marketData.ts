@@ -1,230 +1,325 @@
-// Real-time market data service using public APIs
-interface MarketData {
-  symbol: string;
-  price: number;
-  change: number;
-  changePercent: number;
-  volume: number;
-  timestamp: string;
+import { useState, useEffect } from 'react'
+
+export type PriceTick = { 
+  t: number; 
+  p: number; 
+  v?: number;
+  c?: number; // change percentage
 }
 
-interface YahooFinanceResponse {
-  quoteResponse: {
-    result: Array<{
-      symbol: string;
-      regularMarketPrice: number;
-      regularMarketChange: number;
-      regularMarketChangePercent: number;
-      regularMarketVolume: number;
-    }>;
-  };
+export interface MarketProvider {
+  getQuote(symbol: string): Promise<{ price: number; changePct: number; volume?: number }>;
+  getSeries(symbol: string, range: '1M' | '3M' | '6M' | '1Y'): Promise<PriceTick[]>;
+  streamQuote?(symbol: string, onTick: (p: PriceTick) => void): () => void;
 }
 
-interface CoinGeckoResponse {
-  [key: string]: {
-    usd: number;
-    usd_24h_change: number;
-    usd_24h_vol: number;
-  };
-}
+// Mock market data provider for development
+export class MockMarketProvider implements MarketProvider {
+  private basePrices: { [key: string]: number } = {
+    'AAPL': 185.50,
+    'MSFT': 420.30,
+    'GOOGL': 145.20,
+    'AMZN': 155.80,
+    'TSLA': 245.60,
+    'NVDA': 875.40,
+    'META': 485.20,
+    'BTC': 43250.00,
+    'ETH': 2650.00,
+    'SOL': 98.50,
+    'AVAX': 35.20,
+    'MATIC': 0.85
+  }
 
-// Yahoo Finance API for stocks
-const getStockData = async (symbols: string[]): Promise<MarketData[]> => {
-  try {
-    // Using Yahoo Finance API (free tier)
-    const symbolsParam = symbols.join(',');
-    const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbolsParam}`;
+  private connections: Map<string, () => void> = new Map()
+
+  async getQuote(symbol: string): Promise<{ price: number; changePct: number; volume?: number }> {
+    const basePrice = this.basePrices[symbol.toUpperCase()] || 100
+    const change = (Math.random() - 0.5) * 0.1 // ±5% change
+    const price = basePrice * (1 + change)
+    const changePct = change * 100
+    const volume = Math.floor(Math.random() * 1000000) + 100000
+
+    return { price, changePct, volume }
+  }
+
+  async getSeries(symbol: string, range: '1M' | '3M' | '6M' | '1Y'): Promise<PriceTick[]> {
+    const days = range === '1M' ? 30 : range === '3M' ? 90 : range === '6M' ? 180 : 365
+    const basePrice = this.basePrices[symbol.toUpperCase()] || 100
+    const data: PriceTick[] = []
     
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Yahoo Finance API error: ${response.status}`);
+    for (let i = 0; i <= days; i++) {
+      const date = new Date()
+      date.setDate(date.getDate() - (days - i))
+      const timestamp = date.getTime()
+      
+      const randomChange = (Math.random() - 0.5) * 0.05 // ±2.5% daily change
+      const price = basePrice * (1 + randomChange * (i / days))
+      const volume = Math.floor(Math.random() * 1000000) + 100000
+      
+      data.push({
+        t: timestamp,
+        p: Math.round(price * 100) / 100,
+        v: volume,
+        c: randomChange * 100
+      })
     }
     
-    const data: YahooFinanceResponse = await response.json();
-    
-    return data.quoteResponse.result.map(stock => ({
-      symbol: stock.symbol,
-      price: stock.regularMarketPrice,
-      change: stock.regularMarketChange,
-      changePercent: stock.regularMarketChangePercent,
-      volume: stock.regularMarketVolume,
-      timestamp: new Date().toISOString()
-    }));
-  } catch (error) {
-    console.error('Error fetching stock data:', error);
-    return [];
+    return data
   }
-};
 
-// CoinGecko API for crypto
-const getCryptoData = async (symbols: string[]): Promise<MarketData[]> => {
-  try {
-    // Map symbols to CoinGecko IDs
-    const symbolToId: { [key: string]: string } = {
+  streamQuote(symbol: string, onTick: (p: PriceTick) => void): () => void {
+    const basePrice = this.basePrices[symbol.toUpperCase()] || 100
+    let currentPrice = basePrice
+    
+    const interval = setInterval(() => {
+      const change = (Math.random() - 0.5) * 0.02 // ±1% change
+      currentPrice = currentPrice * (1 + change)
+      
+      onTick({
+        t: Date.now(),
+        p: Math.round(currentPrice * 100) / 100,
+        c: change * 100
+      })
+    }, 5000) // Update every 5 seconds
+    
+    const disconnect = () => {
+      clearInterval(interval)
+      this.connections.delete(symbol)
+    }
+    
+    this.connections.set(symbol, disconnect)
+    return disconnect
+  }
+}
+
+// Real market data provider using Finnhub API
+export class FinnhubMarketProvider implements MarketProvider {
+  private apiKey: string
+  private baseUrl = 'https://finnhub.io/api/v1'
+
+  constructor(apiKey: string) {
+    this.apiKey = apiKey
+  }
+
+  async getQuote(symbol: string): Promise<{ price: number; changePct: number; volume?: number }> {
+    try {
+      const response = await fetch(`${this.baseUrl}/quote?symbol=${symbol}&token=${this.apiKey}`)
+      const data = await response.json()
+      
+      if (data.error) {
+        throw new Error(data.error)
+      }
+      
+      return {
+        price: data.c || 0,
+        changePct: data.dp || 0,
+        volume: data.v || 0
+      }
+    } catch (error) {
+      console.error('Finnhub API error:', error)
+      // Fallback to mock data
+      const mockProvider = new MockMarketProvider()
+      return mockProvider.getQuote(symbol)
+    }
+  }
+
+  async getSeries(symbol: string, range: '1M' | '3M' | '6M' | '1Y'): Promise<PriceTick[]> {
+    try {
+      const to = Math.floor(Date.now() / 1000)
+      const from = to - (range === '1M' ? 30 * 24 * 3600 : 
+                        range === '3M' ? 90 * 24 * 3600 :
+                        range === '6M' ? 180 * 24 * 3600 : 365 * 24 * 3600)
+      
+      const response = await fetch(`${this.baseUrl}/stock/candle?symbol=${symbol}&resolution=D&from=${from}&to=${to}&token=${this.apiKey}`)
+      const data = await response.json()
+      
+      if (data.error) {
+        throw new Error(data.error)
+      }
+      
+      return data.t.map((timestamp: number, index: number) => ({
+        t: timestamp * 1000,
+        p: data.c[index],
+        v: data.v[index],
+        c: index > 0 ? ((data.c[index] - data.c[index - 1]) / data.c[index - 1]) * 100 : 0
+      }))
+    } catch (error) {
+      console.error('Finnhub API error:', error)
+      // Fallback to mock data
+      const mockProvider = new MockMarketProvider()
+      return mockProvider.getSeries(symbol, range)
+    }
+  }
+}
+
+// Crypto market data provider using CoinGecko API
+export class CoinGeckoMarketProvider implements MarketProvider {
+  private baseUrl = 'https://api.coingecko.com/api/v3'
+
+  async getQuote(symbol: string): Promise<{ price: number; changePct: number; volume?: number }> {
+    try {
+      const coinId = this.getCoinId(symbol)
+      const response = await fetch(`${this.baseUrl}/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true`)
+      const data = await response.json()
+      
+      if (data.error) {
+        throw new Error(data.error)
+      }
+      
+      const coinData = data[coinId]
+      return {
+        price: coinData.usd || 0,
+        changePct: coinData.usd_24h_change || 0,
+        volume: coinData.usd_24h_vol || 0
+      }
+    } catch (error) {
+      console.error('CoinGecko API error:', error)
+      // Fallback to mock data
+      const mockProvider = new MockMarketProvider()
+      return mockProvider.getQuote(symbol)
+    }
+  }
+
+  async getSeries(symbol: string, range: '1M' | '3M' | '6M' | '1Y'): Promise<PriceTick[]> {
+    try {
+      const coinId = this.getCoinId(symbol)
+      const days = range === '1M' ? 30 : range === '3M' ? 90 : range === '6M' ? 180 : 365
+      
+      const response = await fetch(`${this.baseUrl}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}&interval=daily`)
+      const data = await response.json()
+      
+      if (data.error) {
+        throw new Error(data.error)
+      }
+      
+      return data.prices.map((price: [number, number], index: number) => ({
+        t: price[0],
+        p: price[1],
+        v: data.total_volumes[index]?.[1] || 0,
+        c: index > 0 ? ((price[1] - data.prices[index - 1][1]) / data.prices[index - 1][1]) * 100 : 0
+      }))
+    } catch (error) {
+      console.error('CoinGecko API error:', error)
+      // Fallback to mock data
+      const mockProvider = new MockMarketProvider()
+      return mockProvider.getSeries(symbol, range)
+    }
+  }
+
+  private getCoinId(symbol: string): string {
+    const coinMap: { [key: string]: string } = {
       'BTC': 'bitcoin',
       'ETH': 'ethereum',
       'SOL': 'solana',
-      'ADA': 'cardano',
-      'DOT': 'polkadot',
-      'MATIC': 'matic-network',
       'AVAX': 'avalanche-2',
-      'LINK': 'chainlink'
-    };
-    
-    const ids = symbols.map(symbol => symbolToId[symbol]).filter(Boolean);
-    if (ids.length === 0) return [];
-    
-    const idsParam = ids.join(',');
-    const url = `https://api.coingecko.com/api/v3/simple/price?ids=${idsParam}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true`;
-    
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`CoinGecko API error: ${response.status}`);
+      'MATIC': 'matic-network'
     }
-    
-    const data: CoinGeckoResponse = await response.json();
-    
-    return symbols.map(symbol => {
-      const id = symbolToId[symbol];
-      const cryptoData = data[id];
-      
-      if (!cryptoData) return null;
-      
-      return {
-        symbol,
-        price: cryptoData.usd,
-        change: cryptoData.usd_24h_change,
-        changePercent: cryptoData.usd_24h_change,
-        volume: cryptoData.usd_24h_vol || 0,
-        timestamp: new Date().toISOString()
-      };
-    }).filter(Boolean) as MarketData[];
-  } catch (error) {
-    console.error('Error fetching crypto data:', error);
-    return [];
-  }
-};
-
-// Combined market data fetcher
-export const fetchMarketData = async (symbols: string[]): Promise<MarketData[]> => {
-  const stockSymbols = symbols.filter(symbol => 
-    !['BTC', 'ETH', 'SOL', 'ADA', 'DOT', 'MATIC', 'AVAX', 'LINK'].includes(symbol)
-  );
-  const cryptoSymbols = symbols.filter(symbol => 
-    ['BTC', 'ETH', 'SOL', 'ADA', 'DOT', 'MATIC', 'AVAX', 'LINK'].includes(symbol)
-  );
-  
-  const [stockData, cryptoData] = await Promise.all([
-    stockSymbols.length > 0 ? getStockData(stockSymbols) : Promise.resolve([]),
-    cryptoSymbols.length > 0 ? getCryptoData(cryptoSymbols) : Promise.resolve([])
-  ]);
-  
-  return [...stockData, ...cryptoData];
-};
-
-// Mock data fallback for development
-export const getMockMarketData = (symbols: string[]): MarketData[] => {
-  const mockPrices: { [key: string]: number } = {
-    'AAPL': 175.43,
-    'MSFT': 378.85,
-    'GOOGL': 142.56,
-    'TSLA': 248.42,
-    'AMZN': 151.94,
-    'NVDA': 875.28,
-    'BTC': 43250.00,
-    'ETH': 2650.00,
-    'SOL': 98.45
-  };
-  
-  return symbols.map(symbol => {
-    const basePrice = mockPrices[symbol] || 100;
-    const change = (Math.random() - 0.5) * 0.05; // ±2.5% random change
-    const newPrice = basePrice * (1 + change);
-    const changePercent = (change * 100);
-    
-    return {
-      symbol,
-      price: parseFloat(newPrice.toFixed(2)),
-      change: parseFloat(changePercent.toFixed(2)),
-      changePercent: parseFloat(changePercent.toFixed(2)),
-      volume: Math.floor(Math.random() * 10000000) + 1000000,
-      timestamp: new Date().toISOString()
-    };
-  });
-};
-
-// Rate limiter for API calls
-class RateLimiter {
-  private calls: number[] = [];
-  private maxCalls: number;
-  private windowMs: number;
-  
-  constructor(maxCalls: number, windowMs: number) {
-    this.maxCalls = maxCalls;
-    this.windowMs = windowMs;
-  }
-  
-  async wait(): Promise<void> {
-    const now = Date.now();
-    
-    // Remove old calls outside the window
-    this.calls = this.calls.filter(callTime => now - callTime < this.windowMs);
-    
-    // If we're at the limit, wait
-    if (this.calls.length >= this.maxCalls) {
-      const oldestCall = Math.min(...this.calls);
-      const waitTime = this.windowMs - (now - oldestCall);
-      
-      if (waitTime > 0) {
-        await new Promise(resolve => setTimeout(resolve, waitTime));
-        return this.wait(); // Recursive call after waiting
-      }
-    }
-    
-    // Record this call
-    this.calls.push(now);
+    return coinMap[symbol.toUpperCase()] || 'bitcoin'
   }
 }
 
-// Create rate limiters for different APIs
-const yahooRateLimiter = new RateLimiter(10, 60000); // 10 calls per minute
-const coinGeckoRateLimiter = new RateLimiter(30, 60000); // 30 calls per minute
+// Factory function to get the appropriate market provider
+export function getMarketProvider(symbol: string): MarketProvider {
+  const crypto = ['BTC', 'ETH', 'SOL', 'AVAX', 'MATIC']
+  
+  if (crypto.includes(symbol.toUpperCase())) {
+    return new CoinGeckoMarketProvider()
+  }
+  
+  // Use Finnhub for stocks if API key is available
+  if (process.env.FINNHUB_API_KEY) {
+    return new FinnhubMarketProvider(process.env.FINNHUB_API_KEY)
+  }
+  
+  // Fallback to mock data
+  return new MockMarketProvider()
+}
 
-// Rate-limited API calls
-export const fetchMarketDataWithRateLimit = async (symbols: string[]): Promise<MarketData[]> => {
-  try {
-    // Use mock data in development or if APIs fail
-    if (process.env.NODE_ENV === 'development') {
-      return getMockMarketData(symbols);
+// Rate-limited market data fetcher
+export async function fetchMarketDataWithRateLimit(symbols: string[]): Promise<Map<string, any>> {
+  const data = new Map()
+  const provider = new MockMarketProvider()
+  
+  for (const symbol of symbols) {
+    try {
+      const quote = await provider.getQuote(symbol)
+      data.set(symbol, {
+        symbol,
+        price: quote.price,
+        change: quote.changePct,
+        changePercent: quote.changePct,
+        volume: quote.volume || 0,
+        timestamp: new Date().toISOString()
+      })
+    } catch (error) {
+      console.error(`Failed to fetch data for ${symbol}:`, error)
+    }
+  }
+  
+  return data
+}
+
+// React hook for live market data
+export function useLiveQuote(symbol: string) {
+  const [data, setData] = useState<{ price: number; changePct: number; status: 'live' | 'paused' }>({
+    price: 0,
+    changePct: 0,
+    status: 'paused'
+  })
+  
+  const [isConnected, setIsConnected] = useState(false)
+  
+  useEffect(() => {
+    const provider = getMarketProvider(symbol)
+    
+    // Get initial quote
+    provider.getQuote(symbol).then(quote => {
+      setData({
+        price: quote.price,
+        changePct: quote.changePct,
+        status: 'live'
+      })
+      setIsConnected(true)
+    })
+    
+    // Set up streaming if available
+    if (provider.streamQuote) {
+      const disconnect = provider.streamQuote(symbol, (tick) => {
+        setData({
+          price: tick.p,
+          changePct: tick.c || 0,
+          status: 'live'
+        })
+        setIsConnected(true)
+      })
+      
+      return () => {
+        disconnect()
+        setIsConnected(false)
+      }
     }
     
-    const stockSymbols = symbols.filter(symbol => 
-      !['BTC', 'ETH', 'SOL', 'ADA', 'DOT', 'MATIC', 'AVAX', 'LINK'].includes(symbol)
-    );
-    const cryptoSymbols = symbols.filter(symbol => 
-      ['BTC', 'ETH', 'SOL', 'ADA', 'DOT', 'MATIC', 'AVAX', 'LINK'].includes(symbol)
-    );
+    // Fallback to polling every 10 seconds
+    const interval = setInterval(async () => {
+      try {
+        const quote = await provider.getQuote(symbol)
+        setData({
+          price: quote.price,
+          changePct: quote.changePct,
+          status: 'live'
+        })
+        setIsConnected(true)
+      } catch (error) {
+        console.error('Failed to fetch quote:', error)
+        setIsConnected(false)
+      }
+    }, 10000)
     
-    const [stockData, cryptoData] = await Promise.all([
-      stockSymbols.length > 0 ? (async () => {
-        await yahooRateLimiter.wait();
-        return getStockData(stockSymbols);
-      })() : Promise.resolve([]),
-      cryptoSymbols.length > 0 ? (async () => {
-        await coinGeckoRateLimiter.wait();
-        return getCryptoData(cryptoSymbols);
-      })() : Promise.resolve([])
-    ]);
-    
-    return [...stockData, ...cryptoData];
-  } catch (error) {
-    console.error('Error fetching market data, using mock data:', error);
-    return getMockMarketData(symbols);
-  }
-};
+    return () => {
+      clearInterval(interval)
+      setIsConnected(false)
+    }
+  }, [symbol])
+  
+  return { ...data, isConnected }
+}

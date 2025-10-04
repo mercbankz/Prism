@@ -157,7 +157,7 @@ export const useRealtimePortfolio = (symbols: string[]) => {
       isPollingRef.current = true;
       const data = await fetchMarketDataWithRateLimit(symbols);
       
-      if (data.length > 0) {
+      if (data.size > 0) {
         const newDataMap = new Map<string, MarketData>();
         data.forEach(item => {
           newDataMap.set(item.symbol, item);

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { SetAlertDialog } from "@/components/SetAlertDialog"
 import { formatCurrency, formatPercentage } from "@/lib/utils"
 import { useRealtimePortfolio, formatCurrency as rtFormatCurrency, formatPercentage as rtFormatPercentage, getChangeColorClass } from '@/lib/realtime'
 import { 
@@ -109,7 +110,7 @@ const portfolioData = [
   { 
     name: 'Stocks', 
     value: 400000, 
-    color: '#3B82F6', // Blue for Stocks (original theme)
+    color: '#7C3AED', // Purple for Stocks
     assets: [
       { name: 'Apple Inc.', symbol: 'AAPL', value: 80000, percentage: 20.0, change: 2.5 },
       { name: 'Microsoft Corp.', symbol: 'MSFT', value: 60000, percentage: 15.0, change: 1.8 },
@@ -122,7 +123,7 @@ const portfolioData = [
   { 
     name: 'Crypto', 
     value: 250000, 
-    color: '#8B5CF6', // Purple for Crypto (original theme)
+    color: '#22C55E', // Green for Crypto
     assets: [
       { name: 'Bitcoin', symbol: 'BTC', value: 150000, percentage: 60.0, change: -1.2 },
       { name: 'Ethereum', symbol: 'ETH', value: 70000, percentage: 28.0, change: -2.1 },
@@ -133,7 +134,7 @@ const portfolioData = [
   { 
     name: 'Bonds', 
     value: 200000, 
-    color: '#10B981', // Green for Bonds (original theme)
+    color: '#3B82F6', // Blue for Bonds
     assets: [
       { name: 'US Treasury 10Y', symbol: 'UST10Y', value: 100000, percentage: 50.0, change: 0.3 },
       { name: 'Corporate Bonds', symbol: 'CORP', value: 80000, percentage: 40.0, change: 0.5 },
@@ -143,7 +144,7 @@ const portfolioData = [
   { 
     name: 'Cash', 
     value: 100000, 
-    color: '#F59E0B', // Amber for Cash (original theme)
+    color: '#F59E0B', // Yellow for Cash
     assets: [
       { name: 'High Yield Savings', symbol: 'HYSA', value: 60000, percentage: 60.0, change: 0.1 },
       { name: 'Money Market', symbol: 'MM', value: 40000, percentage: 40.0, change: 0.1 }
@@ -475,10 +476,10 @@ export default function Page() {
                 >
                 <defs>
                   <linearGradient id="portfolioGradientPositive" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#00BFFF" stopOpacity={0.3}/>
-                    <stop offset="30%" stopColor="#00BFFF" stopOpacity={0.15}/>
-                    <stop offset="70%" stopColor="#00BFFF" stopOpacity={0.08}/>
-                    <stop offset="100%" stopColor="#00BFFF" stopOpacity={0.02}/>
+                    <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.3}/>
+                    <stop offset="30%" stopColor="#3B82F6" stopOpacity={0.15}/>
+                    <stop offset="70%" stopColor="#3B82F6" stopOpacity={0.08}/>
+                    <stop offset="100%" stopColor="#3B82F6" stopOpacity={0.02}/>
                   </linearGradient>
                   <linearGradient id="portfolioGradientNegative" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#EF4444" stopOpacity={0.3}/>
@@ -491,9 +492,9 @@ export default function Page() {
                     <stop offset="100%" stopColor="#6B7280" stopOpacity={0.02}/>
                   </linearGradient>
                   <linearGradient id="portfolioLinePositive" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#00BFFF"/>
-                    <stop offset="50%" stopColor="#0099CC"/>
-                    <stop offset="100%" stopColor="#007799"/>
+                    <stop offset="0%" stopColor="#3B82F6"/>
+                    <stop offset="50%" stopColor="#2563EB"/>
+                    <stop offset="100%" stopColor="#1D4ED8"/>
                   </linearGradient>
                   <linearGradient id="portfolioLineNegative" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stopColor="#EF4444"/>
@@ -1461,128 +1462,11 @@ export default function Page() {
       </Dialog>
 
       {/* Enhanced Alert Creation Modal */}
-      <Dialog open={showAlertModal} onOpenChange={setShowAlertModal}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              Set Event Alert
-            </DialogTitle>
-            <DialogDescription>
-              Create personalized alerts for financial events impacting your portfolio
-            </DialogDescription>
-          </DialogHeader>
-          {selectedEventForAlert && (
-            <div className="space-y-6">
-              <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-600">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="font-medium text-white">{selectedEventForAlert.title}</span>
-                  <Badge className={`text-xs ${
-                    selectedEventForAlert.signal === 'positive' ? 'bg-green-600' :
-                    selectedEventForAlert.signal === 'negative' ? 'bg-red-600' :
-                    'bg-slate-600'
-                  } text-white`}>
-                    {selectedEventForAlert.signal === 'positive' ? '📈 Positive' :
-                     selectedEventForAlert.signal === 'negative' ? '📉 Negative' :
-                     '📊 Neutral'}
-                  </Badge>
-                </div>
-                <div className="text-sm text-slate-300 mb-1">{selectedEventForAlert.date} • {selectedEventForAlert.time}</div>
-                <div className="text-xs text-slate-400">Impacts: {selectedEventForAlert.impacts}</div>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-white mb-2 block">Custom Reminder Message</label>
-                  <textarea 
-                    className="w-full p-3 bg-slate-800 border border-slate-600 rounded-md text-sm text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="e.g., Check portfolio impact, Review market conditions, Consider rebalancing..."
-                    rows={3}
-                    defaultValue={`Reminder: ${selectedEventForAlert.title} is coming up. Check your portfolio for potential impacts.`}
-                  />
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium text-white mb-3 block">Notification Delivery</label>
-                  <div className="space-y-3">
-                    <label className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-600 hover:bg-slate-700/50 transition-colors cursor-pointer">
-                      <input type="radio" name="delivery" value="email" className="text-blue-600" defaultChecked />
-                      <div className="flex-1">
-                        <div className="text-sm font-medium text-white">Email Notification</div>
-                        <div className="text-xs text-slate-400">Receive alerts via email</div>
-                      </div>
-                    </label>
-                    <label className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-600 hover:bg-slate-700/50 transition-colors cursor-pointer">
-                      <input type="radio" name="delivery" value="web" className="text-blue-600" />
-                      <div className="flex-1">
-                        <div className="text-sm font-medium text-white">In-App Notification</div>
-                        <div className="text-xs text-slate-400">Banner alerts when you're active</div>
-                      </div>
-                    </label>
-                    <label className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-600 hover:bg-slate-700/50 transition-colors cursor-pointer">
-                      <input type="radio" name="delivery" value="both" className="text-blue-600" />
-                      <div className="flex-1">
-                        <div className="text-sm font-medium text-white">Both Methods</div>
-                        <div className="text-xs text-slate-400">Email + In-app notifications</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium text-white mb-2 block">Alert Timing</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="text-xs text-slate-400 mb-1 block">Date</label>
-                      <input 
-                        type="date" 
-                        className="w-full p-2 bg-slate-800 border border-slate-600 rounded-md text-sm text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        defaultValue={selectedEventForAlert.date}
-                      />
-                    </div>
-                    <div>
-                      <label className="text-xs text-slate-400 mb-1 block">Time</label>
-                      <input 
-                        type="time" 
-                        className="w-full p-2 bg-slate-800 border border-slate-600 rounded-md text-sm text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        defaultValue="09:00"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={() => setShowAlertModal(false)} className="border-slate-600 text-slate-300 hover:bg-slate-700">
-              Cancel
-            </Button>
-            <Button 
-              onClick={() => {
-                // Add alert to userAlerts with enhanced data
-                const newAlert = {
-                  id: Date.now(),
-                  eventTitle: selectedEventForAlert.title,
-                  date: selectedEventForAlert.date,
-                  time: selectedEventForAlert.time,
-                  signal: selectedEventForAlert.signal,
-                  impacts: selectedEventForAlert.impacts,
-                  deliveryMethod: 'Email & In-App', // Get from form
-                  status: 'Active',
-                  message: 'Custom reminder message',
-                  createdAt: new Date().toISOString()
-                }
-                setUserAlerts([...userAlerts, newAlert])
-                setShowAlertModal(false)
-                setSelectedEventForAlert(null)
-              }}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold"
-            >
-              Create Alert
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <SetAlertDialog 
+        open={showAlertModal} 
+        onOpenChange={setShowAlertModal}
+        eventData={selectedEventForAlert}
+      />
     </div>
   )
 }

@@ -106,13 +106,13 @@ export default function HomePage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Button asChild size="lg" className="text-lg px-12 py-6 neon-border glow-on-hover">
+            <Button asChild size="lg" className="text-lg px-12 py-6 neon-border glow-on-hover hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20">
               <Link href="/dashboard">
                 <TrendingUp className="mr-2 h-6 w-6" />
                 View Dashboard
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="text-lg px-12 py-6 border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10">
+            <Button asChild variant="outline" size="lg" className="text-lg px-12 py-6 border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10 hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20">
               <Link href="/pricing">
                 <Star className="mr-2 h-6 w-6" />
                 View Pricing
@@ -412,13 +412,13 @@ export default function HomePage() {
               Join thousands of investors who trust Prism for their portfolio management needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button asChild size="lg" className="text-lg px-12 py-6 neon-border glow-on-hover">
+              <Button asChild size="lg" className="text-lg px-12 py-6 neon-border glow-on-hover hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20">
                 <Link href="/dashboard">
                   <TrendingUp className="mr-2 h-6 w-6" />
                   Get Started Free
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="text-lg px-12 py-6 border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10">
+              <Button asChild variant="outline" size="lg" className="text-lg px-12 py-6 border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10 hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20">
                 <Link href="/pricing">
                   <Star className="mr-2 h-6 w-6" />
                   View Pricing
